@@ -80,8 +80,8 @@ if {[file exists $env(PNR_DIR)/$env(TOP).openlane.fp.tcl]} {
   initialize_floorplan -site obssite -aspect_ratio [expr $PX/$PY] -utilization [expr $PR*100] -core_space "$margin $margin $margin $margin"
 }
 
-add_global_connection -net VDD -inst_pattern .* -pin_pattern VDD -power
-add_global_connection -net VSS -inst_pattern .* -pin_pattern VSS -power
+add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
 set_voltage_domain -name CORE -power VDD -ground VSS
 
 insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
@@ -143,54 +143,55 @@ tapcell\
 ## Power planning & SRAMs placement
 ####################################
 
-add_global_connection -net VDD -inst_pattern .* -pin_pattern VDD -power
-add_global_connection -net VSS -inst_pattern .* -pin_pattern VSS -power
+add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
+global_connect
 
-#define_pdn_grid \
-#    -name stdcell_grid \
-#    -starts_with POWER \
-#    -voltage_domain CORE \
-#    -pins "Metal4 Metal5"
+define_pdn_grid \
+    -name stdcell_grid \
+    -starts_with POWER \
+    -voltage_domain CORE \
+    -pins "TopMetal1 Metal5"
 
-#add_pdn_stripe \
-#    -grid stdcell_grid \
-#    -layer Metal4 \
-#    -width 1.0 \
-#    -pitch $pitch \
-#    -offset $pitch \
-#    -spacing 0.46 \
-#    -starts_with POWER -extend_to_boundary
+add_pdn_stripe \
+    -grid stdcell_grid \
+    -layer TopMetal1 \
+    -width 3.2 \
+    -pitch $pitch \
+    -offset $pitch \
+    -spacing 1.64 \
+    -starts_with POWER -extend_to_boundary
 
-#add_pdn_stripe \
-#    -grid stdcell_grid \
-#    -layer Metal5 \
-#    -width 3.2 \
-#    -pitch $pitch \
-#    -offset $pitch \
-#    -spacing 1.6 \
-#    -starts_with POWER -extend_to_boundary
+add_pdn_stripe \
+    -grid stdcell_grid \
+    -layer Metal5 \
+    -width 3.2 \
+    -pitch $pitch \
+    -offset $pitch \
+    -spacing 1.6 \
+    -starts_with POWER -extend_to_boundary
 
-#add_pdn_connect \
-#    -grid stdcell_grid \
-#        -layers "Metal4 Metal5"
+add_pdn_connect \
+    -grid stdcell_grid \
+        -layers "Metal5 TopMetal1"
 
 add_pdn_stripe \
         -grid stdcell_grid \
         -layer Metal1 \
-        -width 0.2 \
+        -width 0.3 \
         -followpins \
-        -starts_with POWER
+        -extend_to_core_ring
 
-#add_pdn_connect \
-#    -grid stdcell_grid \
-#        -layers "Metal1 Metal4"
+add_pdn_connect \
+    -grid stdcell_grid \
+        -layers "Metal1 Metal5"
 
-#add_pdn_ring \
-#        -grid stdcell_grid \
-#        -layers "Metal4 Metal5" \
-#        -widths "3.2 3.0" \
-#        -spacings "0.4 1.6" \
-#        -core_offset "$row $row"
+add_pdn_ring \
+        -grid stdcell_grid \
+        -layers "TopMetal1 Metal5" \
+        -widths "3.2 3.0" \
+        -spacings "1.64 1.64" \
+        -core_offset "$row $row"
 
 #define_pdn_grid \
 #    -macro \
@@ -205,16 +206,14 @@ add_pdn_stripe \
 
 pdngen
 
-catch
-
 ###################################
 ## Placement
 ####################################
 
 place_pins -random \
 	-random_seed 42 \
-	-hor_layers Metal3 \
-	-ver_layers Metal2
+	-hor_layers Metal4 \
+	-ver_layers Metal3
 
 # -density 1.0 -overflow 0.9 -init_density_penalty 0.0001 -initial_place_max_iter 20 -bin_grid_count 64
 global_placement -density 0.85
@@ -241,22 +240,33 @@ if { [catch {check_placement -verbose} errmsg] } {
 ####################################
 # CTS
 ####################################
-set_routing_layers -signal [subst "met1"]-[subst "met5"] -clock [subst "met3"]-[subst "met5"]
+set_global_routing_layer_adjustment Metal2-Metal5 0.05
 
-set_global_routing_layer_adjustment * 0.3
-set_global_routing_layer_adjustment li1 0.99
-set_global_routing_layer_adjustment met1 0
-set_global_routing_layer_adjustment met2 0
-set_global_routing_layer_adjustment met3 0
-set_global_routing_layer_adjustment met4 0
-set_global_routing_layer_adjustment met5 0
+set_routing_layers -signal Metal2-Metal5 -clock Metal2-Metal5
 
-set_wire_rc -signal -layer "met2"
-set_wire_rc -clock -layer "met5"
+# correlateRC.py gcd,ibex,aes,jpeg,chameleon,riscv32i,chameleon_hier
+# cap units pf/um
+set_layer_rc -layer Metal1    -capacitance 3.49E-05 -resistance 0.135e-03
+set_layer_rc -layer Metal2    -capacitance 1.81E-05 -resistance 0.103e-03
+set_layer_rc -layer Metal3    -capacitance 2.14962E-04 -resistance 0.103e-03
+set_layer_rc -layer Metal4    -capacitance 1.48128E-04 -resistance 0.103e-03
+set_layer_rc -layer Metal5    -capacitance 1.54087E-04 -resistance 0.103e-03
+set_layer_rc -layer TopMetal1 -capacitance 1.54087E-04 -resistance 0.021e-03
+set_layer_rc -layer TopMetal2 -capacitance 1.54087E-04 -resistance 0.0145e-03
+# end correlate
+
+set_layer_rc -via Via1    -resistance 2.0E-3
+set_layer_rc -via Via2    -resistance 2.0E-3
+set_layer_rc -via Via3    -resistance 2.0E-3
+set_layer_rc -via Via4    -resistance 2.0E-3
+set_layer_rc -via TopVia1 -resistance 0.4E-3
+set_layer_rc -via TopVia2 -resistance 0.22E-3
+
+set_wire_rc -signal -layer Metal2
+set_wire_rc -clock  -layer Metal5
 
 estimate_parasitics -placement
 repair_clock_inverters
-configure_cts_characterization -max_cap 1.53169e-12 -max_slew 0.75e-9
 clock_tree_synthesis -buf_list $BUFCells -root_buf BUFFD1 -sink_clustering_size 25 -sink_clustering_max_diameter 50 -sink_clustering_enable
 set_propagated_clock [all_clocks]
 
@@ -274,6 +284,8 @@ if { [catch {check_placement -verbose} errmsg] } {
 }
 
 report_cts -out_file $PNR_DIR/reports/cts.rpt
+
+catch
 
 ###############################################
 # Global routing
