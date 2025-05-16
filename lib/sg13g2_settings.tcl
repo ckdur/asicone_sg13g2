@@ -1,7 +1,7 @@
 set ROOT_DIR $env(ROOT_DIR)
 set LIB_PATHS "$ROOT_DIR"
 set LIBS "${ROOT_DIR}/lib/sg13g2.lib"
-set LEFS "${ROOT_DIR}/lib/sg13g2.tlef ${ROOT_DIR}/lib/sg13g2.lef"
+set LEFS "${ROOT_DIR}/lib/sg13g2.tech.lef ${ROOT_DIR}/lib/sg13g2.lef"
 set GDSS "${ROOT_DIR}/lib/sg13g2.gds"
 
 # TODO: Do the characterization of the lib
