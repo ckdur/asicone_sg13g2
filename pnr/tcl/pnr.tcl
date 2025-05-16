@@ -136,12 +136,15 @@ make_tracks TopMetal2 -x_offset 2.0  -x_pitch 4.0  -y_offset 2.0 -y_pitch 4.0
 ####################################
 
 tapcell\
-    -distance 13\
+    -distance [expr $row*16]\
     -tapcell_master "$TAPCells"
 
 ####################################
 ## Power planning & SRAMs placement
 ####################################
+
+add_global_connection -net VDD -inst_pattern .* -pin_pattern VDD -power
+add_global_connection -net VSS -inst_pattern .* -pin_pattern VSS -power
 
 #define_pdn_grid \
 #    -name stdcell_grid \
