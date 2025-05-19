@@ -2533,6 +2533,7 @@ library (mylibrary) {
     cell_footprint: buff;
     pin (i) {
       direction: input;
+      max_transition : 0.8;
       rise_capacitance: 0.0010222148280729817;
       fall_capacitance: 0.00123183460417339;
       capacitance: 0.0011270247161231858;
@@ -2540,7 +2541,8 @@ library (mylibrary) {
     pin (z) {
       direction: output;
       function: "(i)";
-      max_capacitance: 0.0011270247161231858;
+      min_capacitance : 0.001;
+      max_capacitance: 1.6;
       timing () {
         related_pin: "i";
         timing_sense: positive_unate;

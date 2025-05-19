@@ -240,9 +240,9 @@ if { [catch {check_placement -verbose} errmsg] } {
 ####################################
 # CTS
 ####################################
-set_global_routing_layer_adjustment Metal2-Metal5 0.05
+set_global_routing_layer_adjustment Metal1-Metal5 0.05
 
-set_routing_layers -signal Metal2-Metal5 -clock Metal2-Metal5
+set_routing_layers -signal Metal1-Metal5 -clock Metal1-Metal5
 
 # correlateRC.py gcd,ibex,aes,jpeg,chameleon,riscv32i,chameleon_hier
 # cap units pf/um
@@ -285,8 +285,6 @@ if { [catch {check_placement -verbose} errmsg] } {
 
 report_cts -out_file $PNR_DIR/reports/cts.rpt
 
-catch
-
 ###############################################
 # Global routing
 ###############################################
@@ -304,15 +302,18 @@ filler_placement "$FILLERCells"
 ###############################################
 # Detail routing
 ###############################################
+catch
 set_thread_count 2
 detailed_route\
-    -bottom_routing_layer "met1" \
-    -top_routing_layer "met5" \
+    -bottom_routing_layer "Metal1" \
+    -top_routing_layer "Metal5" \
     -output_maze $PNR_DIR/reports/${TOP}_maze.log\
     -output_drc $PNR_DIR/reports/${TOP}.drc\
     -droute_end_iter 64 \
     -or_seed 42\
     -verbose 1
+
+catch
 
 #################################################
 ## Write out final files
