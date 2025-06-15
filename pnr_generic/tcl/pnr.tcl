@@ -36,12 +36,10 @@ foreach LEFFILE $OTHERLEF {
   read_lef "$LEFFILE"
 }
 
-puts "Reading: $env(SYN_NET)"
 read_verilog $env(SYN_NET)
 link_design ${TOP}
 
-puts "SDC reading: ${TOP}.sdc.tcl"
-read_sdc $SYN_DIR/tcl/${TOP}.sdc.tcl
+read_sdc $SYN_DIR/tcl/rtl.sdc.tcl
 
 unset_propagated_clock [all_clocks]
 
@@ -58,36 +56,38 @@ if {![file exists reports]} {
 ## Cells declaration
 ####################################
 
-set BUFCells [list BUFFD1]
-set INVCells [list INVD1]
+set BUFCells [list sg13g2_buf_1]
+set INVCells [list sg13g2_inv_1]
 # TODO
-set FILLERCells [list FILL1 FILL2 FILL4 FILL8]
-set TAPCells [list TAPCELL]
+set FILLERCells [list sg13g2_fill_1 sg13g2_fill_2 sg13g2_fill_4 sg13g2_fill_8]
+set TAPCells [list ]
 set DCAPCells [list ]
 set DIODECells [list ]
+set TIEHCell_pin sg13g2_tiehi/L_HI
+set TIELCell_pin sg13g2_tielo/L_LO
 
 ####################################
 ## Floor Plan
 ####################################
 # TODO: Is there a way to extract from a command?
-set row   6.12
-set track 0.34
+set row   3.78
+set track 0.48
 set pitch [expr 32*$row]
-set margin [expr 3*$row]
+set margin [expr 5*$row]
 
 if {[file exists $env(PNR_DIR)/$env(TOP).openlane.fp.tcl]} {
   # FORMAT: initialize_floorplan [-utilization util] [-aspect_ratio ratio] [-core_space space | {bottom top left right}] [-die_area {lx ly ux uy}] [-core_area {lx ly ux uy}] [-sites site_name]
   source $env(PNR_DIR)/$env(TOP).openlane.fp.tcl
 } else {
-  initialize_floorplan -site obssite -aspect_ratio [expr $PX/$PY] -utilization [expr $PR*100] -core_space "$margin $margin $margin $margin"
+  initialize_floorplan -site CoreSite -aspect_ratio [expr $PX/$PY] -utilization [expr $PR*100] -core_space "$margin $margin $margin $margin"
 }
 
 add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
 set_voltage_domain -name CORE -power VDD -ground VSS
 
-insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
-insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
+insert_tiecells "${TIELCell_pin}" -prefix "TIE_ZERO_"
+insert_tiecells "${TIEHCell_pin}" -prefix "TIE_ONE_"
 
 set ::chip [[::ord::get_db] getChip]
 set ::tech [[::ord::get_db] getTech]
@@ -137,9 +137,9 @@ make_tracks TopMetal2 -x_offset 2.0  -x_pitch 4.0  -y_offset 2.0 -y_pitch 4.0
 ## Tapcell insertion
 ####################################
 
-tapcell\
-    -distance [expr $row*16]\
-    -tapcell_master "$TAPCells"
+#tapcell\
+#    -distance [expr $row*16]\
+#    -tapcell_master "$TAPCells"
 
 ####################################
 ## Power planning & SRAMs placement
@@ -155,27 +155,23 @@ define_pdn_grid \
     -voltage_domain CORE \
     -pins "TopMetal1 Metal5"
 
-if {$die_width > $pitch} {
-    add_pdn_stripe \
-        -grid stdcell_grid \
-        -layer TopMetal1 \
-        -width 3.2 \
-        -pitch $pitch \
-        -offset $pitch \
-        -spacing 1.64 \
-        -starts_with POWER -extend_to_boundary
-}
+add_pdn_stripe \
+    -grid stdcell_grid \
+    -layer TopMetal1 \
+    -width 3.2 \
+    -pitch $pitch \
+    -offset $pitch \
+    -spacing 1.64 \
+    -starts_with POWER -extend_to_boundary
 
-if {$die_width > $pitch} {
-    add_pdn_stripe \
-        -grid stdcell_grid \
-        -layer Metal5 \
-        -width 3.2 \
-        -pitch $pitch \
-        -offset $pitch \
-        -spacing 1.6 \
-        -starts_with POWER -extend_to_boundary
-}
+add_pdn_stripe \
+    -grid stdcell_grid \
+    -layer Metal5 \
+    -width 3.2 \
+    -pitch $pitch \
+    -offset $pitch \
+    -spacing 1.6 \
+    -starts_with POWER -extend_to_boundary
 
 add_pdn_connect \
     -grid stdcell_grid \
@@ -246,9 +242,9 @@ if { [catch {check_placement -verbose} errmsg] } {
 ####################################
 # CTS
 ####################################
-set_global_routing_layer_adjustment Metal1-Metal5 0.05
+set_global_routing_layer_adjustment Metal2-Metal5 0.05
 
-set_routing_layers -signal Metal1-Metal5 -clock Metal1-Metal5
+set_routing_layers -signal Metal2-Metal5 -clock Metal2-Metal5
 
 # correlateRC.py gcd,ibex,aes,jpeg,chameleon,riscv32i,chameleon_hier
 # cap units pf/um
@@ -273,7 +269,7 @@ set_wire_rc -clock  -layer Metal5
 
 estimate_parasitics -placement
 repair_clock_inverters
-clock_tree_synthesis -buf_list $BUFCells -root_buf BUFFD1 -sink_clustering_size 25 -sink_clustering_max_diameter 50 -sink_clustering_enable
+clock_tree_synthesis -buf_list $BUFCells -root_buf [lindex $BUFCells 0] -sink_clustering_size 25 -sink_clustering_max_diameter 50 -sink_clustering_enable
 set_propagated_clock [all_clocks]
 
 estimate_parasitics -placement
@@ -308,10 +304,10 @@ filler_placement "$FILLERCells"
 ###############################################
 # Detail routing
 ###############################################
-#catch
+catch
 set_thread_count 10
 detailed_route\
-    -bottom_routing_layer "Metal1" \
+    -bottom_routing_layer "Metal2" \
     -top_routing_layer "Metal5" \
     -output_maze $PNR_DIR/reports/${TOP}_maze.log\
     -output_drc $PNR_DIR/reports/${TOP}.drc\

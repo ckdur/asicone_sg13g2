@@ -37,7 +37,6 @@ MACRO AN2D1
     USE SIGNAL ; 
     PORT 
       LAYER Metal1 ;
-        RECT 1.565 2.050 1.825 2.210 ;
         RECT 1.615 2.050 1.775 2.690 ;
     END 
   END a1
@@ -46,7 +45,6 @@ MACRO AN2D1
     USE SIGNAL ; 
     PORT 
       LAYER Metal1 ;
-        RECT 0.605 2.050 0.865 2.210 ;
         RECT 0.655 2.050 0.815 2.690 ;
     END 
   END a2
@@ -55,8 +53,6 @@ MACRO AN2D1
     USE SIGNAL ; 
     PORT 
       LAYER Metal1 ;
-        RECT 3.005 0.990 3.265 1.150 ;
-        RECT 3.005 4.630 3.265 4.790 ;
         RECT 3.055 0.990 3.215 4.790 ;
     END 
   END z
@@ -79,254 +75,6 @@ MACRO AN2D1
     END 
   END vss 
   OBS
-      LAYER Metal1 ;
-        RECT 2.045 0.990 2.305 1.150 ;
-        RECT 2.095 0.990 2.255 3.650 ;
-        RECT 2.045 3.490 2.305 3.650 ;
-  END
-END AN2D1
-MACRO AN2D1_1
-  CLASS CORE ; 
-  ORIGIN 0 0 ; 
-  FOREIGN AN2D1_1 0 0 ; 
-  SIZE 3.740 BY 6.120 ; 
-  SYMMETRY X Y ; 
-  SITE obssite ; 
-  PIN a1
-    DIRECTION INPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.605 2.050 0.865 2.210 ;
-        RECT 0.655 1.390 0.815 2.210 ;
-    END 
-  END a1
-  PIN a2
-    DIRECTION INPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 1.565 2.050 1.825 2.210 ;
-        RECT 1.615 1.390 1.775 2.210 ;
-    END 
-  END a2
-  PIN z
-    DIRECTION OUTPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 3.005 0.990 3.265 1.150 ;
-        RECT 3.005 4.630 3.265 4.790 ;
-        RECT 3.055 0.990 3.215 4.790 ;
-    END 
-  END z
-  PIN vdd 
-    DIRECTION INOUT ; 
-    USE POWER ; 
-    SHAPE ABUTMENT ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.000 5.970 3.740 6.270 ;
-    END 
-  END vdd 
-  PIN vss 
-    DIRECTION INOUT ; 
-    USE POWER ; 
-    SHAPE ABUTMENT ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.000 -0.150 3.740 0.150 ;
-    END 
-  END vss 
-  OBS
-      LAYER Metal1 ;
-        RECT 0.125 0.990 0.385 1.150 ;
-        RECT 0.175 0.990 0.335 2.690 ;
-        RECT 0.175 2.530 2.735 2.690 ;
-        RECT 2.525 2.530 2.785 2.690 ;
-  END
-END AN2D1_1
-MACRO AN2D1_2
-  CLASS CORE ; 
-  ORIGIN 0 0 ; 
-  FOREIGN AN2D1_2 0 0 ; 
-  SIZE 4.420 BY 6.120 ; 
-  SYMMETRY X Y ; 
-  SITE obssite ; 
-  PIN a1
-    DIRECTION INPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 1.565 2.050 1.825 2.210 ;
-        RECT 1.615 2.050 1.775 2.690 ;
-    END 
-  END a1
-  PIN a2
-    DIRECTION INPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.605 2.050 0.865 2.210 ;
-        RECT 0.655 2.050 0.815 2.690 ;
-    END 
-  END a2
-  PIN z
-    DIRECTION OUTPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 3.005 0.990 3.265 1.150 ;
-        RECT 3.005 4.630 3.265 4.790 ;
-        RECT 3.055 0.990 3.215 4.790 ;
-    END 
-  END z
-  PIN vdd 
-    DIRECTION INOUT ; 
-    USE POWER ; 
-    SHAPE ABUTMENT ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.000 5.970 4.420 6.270 ;
-    END 
-  END vdd 
-  PIN vss 
-    DIRECTION INOUT ; 
-    USE POWER ; 
-    SHAPE ABUTMENT ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.000 -0.150 4.420 0.150 ;
-    END 
-  END vss 
-  OBS
-      LAYER Metal1 ;
-        RECT 2.045 0.990 2.305 1.150 ;
-        RECT 2.095 0.990 2.255 3.650 ;
-        RECT 2.045 3.490 2.305 3.650 ;
-  END
-END AN2D1_2
-MACRO AN2D1_3
-  CLASS CORE ; 
-  ORIGIN 0 0 ; 
-  FOREIGN AN2D1_3 0 0 ; 
-  SIZE 4.420 BY 6.120 ; 
-  SYMMETRY X Y ; 
-  SITE obssite ; 
-  PIN a1
-    DIRECTION INPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.605 2.050 0.865 2.210 ;
-        RECT 0.655 2.050 0.815 2.690 ;
-    END 
-  END a1
-  PIN a2
-    DIRECTION INPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 1.565 2.050 1.825 2.210 ;
-        RECT 1.615 2.050 1.775 2.690 ;
-    END 
-  END a2
-  PIN z
-    DIRECTION OUTPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 3.005 0.990 3.265 1.150 ;
-        RECT 3.005 4.630 3.265 4.790 ;
-        RECT 3.055 0.990 3.215 4.790 ;
-    END 
-  END z
-  PIN vdd 
-    DIRECTION INOUT ; 
-    USE POWER ; 
-    SHAPE ABUTMENT ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.000 5.970 4.420 6.270 ;
-    END 
-  END vdd 
-  PIN vss 
-    DIRECTION INOUT ; 
-    USE POWER ; 
-    SHAPE ABUTMENT ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.000 -0.150 4.420 0.150 ;
-    END 
-  END vss 
-  OBS
-      LAYER Metal1 ;
-        RECT 0.125 0.990 0.385 1.150 ;
-        RECT 0.175 0.990 2.255 1.150 ;
-        RECT 2.095 0.990 2.255 3.650 ;
-        RECT 2.045 3.490 2.305 3.650 ;
-  END
-END AN2D1_3
-#--------EOF---------
-
-MACRO AN2D1
-  CLASS CORE ; 
-  ORIGIN 0 0 ; 
-  FOREIGN AN2D1 0 0 ; 
-  SIZE 4.420 BY 6.120 ; 
-  SYMMETRY X Y ; 
-  SITE obssite ; 
-  PIN a1
-    DIRECTION INPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 1.565 2.050 1.825 2.210 ;
-        RECT 1.615 2.050 1.775 2.690 ;
-    END 
-  END a1
-  PIN a2
-    DIRECTION INPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.605 2.050 0.865 2.210 ;
-        RECT 0.655 2.050 0.815 2.690 ;
-    END 
-  END a2
-  PIN z
-    DIRECTION OUTPUT ; 
-    USE SIGNAL ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 3.005 0.990 3.265 1.150 ;
-        RECT 3.005 4.630 3.265 4.790 ;
-        RECT 3.055 0.990 3.215 4.790 ;
-    END 
-  END z
-  PIN vdd 
-    DIRECTION INOUT ; 
-    USE POWER ; 
-    SHAPE ABUTMENT ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.000 5.970 4.420 6.270 ;
-    END 
-  END vdd 
-  PIN vss 
-    DIRECTION INOUT ; 
-    USE POWER ; 
-    SHAPE ABUTMENT ; 
-    PORT 
-      LAYER Metal1 ;
-        RECT 0.000 -0.150 4.420 0.150 ;
-    END 
-  END vss 
-  OBS
-      LAYER Metal1 ;
-        RECT 2.045 0.990 2.305 1.150 ;
-        RECT 2.095 0.990 2.255 3.650 ;
-        RECT 2.045 3.490 2.305 3.650 ;
   END
 END AN2D1
 MACRO AN2D1_1

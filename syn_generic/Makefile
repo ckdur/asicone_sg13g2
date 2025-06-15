@@ -1,5 +1,5 @@
 ROOT_DIR=$(abspath ..)
-include $(ROOT_DIR)/settings.mk
+include $(ROOT_DIR)/settings_generic.mk
 SYN_DIR=$(abspath .)
 
 export SYN_DIR
@@ -12,10 +12,10 @@ SYN_NET=$(SYN_DIR)/outputs/$(TOP)_net.v
 
 all: $(SYN_NET)
 
-$(SYN_NET): $(SYN_DIR)/tcl/synthesis.tcl $(SYN_SRC) $(SYN_DIR)/tcl/$(TOP).sdc.tcl
+$(SYN_NET): $(SYN_DIR)/tcl/synthesis.tcl $(SYN_SRC) $(SYN_DIR)/tcl/rtl.sdc.tcl
 	yosys -h tcl $(SYN_DIR)/tcl/synthesis.tcl | tee -a yosys.log
 
-manual: $(SYN_DIR)/tcl/synthesis.tcl $(SYN_SRC) $(SYN_DIR)/tcl/$(TOP).sdc.tcl
+manual: $(SYN_DIR)/tcl/synthesis.tcl $(SYN_SRC) $(SYN_DIR)/tcl/rtl.sdc.tcl
 	yosys -h tcl
 
 clean:
