@@ -16,5 +16,4 @@ if { [info exists ::env(PDK_ROOT)]} {
   set PDK_ROOT "/opt/OpenLane/share/pdk"
 }
 # TODO: Not defined yet
-#set RCX_RULES "$PDK_ROOT/sky130A/libs.tech/openlane/rules.openrcx.sky130A.nom.calibre"
-
+set RCX_RULES "${ROOT_DIR}/lib/sg13g2.rules"

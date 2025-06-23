@@ -155,7 +155,8 @@ define_pdn_grid \
     -voltage_domain CORE \
     -pins "TopMetal1 Metal5"
 
-if {$die_width > $pitch} {
+set pitch2 [expr $pitch*2]
+if {$die_width > $pitch2} {
     add_pdn_stripe \
         -grid stdcell_grid \
         -layer TopMetal1 \
@@ -166,7 +167,7 @@ if {$die_width > $pitch} {
         -starts_with POWER -extend_to_boundary
 }
 
-if {$die_width > $pitch} {
+if {$die_width > $pitch2} {
     add_pdn_stripe \
         -grid stdcell_grid \
         -layer Metal5 \
@@ -318,8 +319,6 @@ detailed_route\
     -droute_end_iter 64 \
     -or_seed 42\
     -verbose 1
-
-catch
 
 #################################################
 ## Write out final files
