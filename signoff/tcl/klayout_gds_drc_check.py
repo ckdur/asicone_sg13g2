@@ -9,10 +9,16 @@ def klayout_gds_drc_check(check_name, drc_script_path, gds_input_file_path, outp
     report_file_path = output_directory / f'{check_name}_check.xml'
     logs_directory = output_directory
     total_file_path = logs_directory / f'{check_name}_check.total'
+    report_path = os.path.abspath(os.path.join(drc_script_path, os.pardir))
+    #run_drc_check_cmd = ['klayout', '-b', '-r', drc_script_path,
+    #                     '-rd', f"input={gds_input_file_path}",
+    #                     '-rd', f"topcell={gds_input_file_path.stem}",
+    #                     '-rd', f"report={report_file_path}"]
     run_drc_check_cmd = ['klayout', '-b', '-r', drc_script_path,
-                         '-rd', f"input={gds_input_file_path}",
-                         '-rd', f"topcell={gds_input_file_path.stem}",
-                         '-rd', f"report={report_file_path}"]
+                         '-rd', f"in_gds={gds_input_file_path}",
+                         '-rd', f"cell={gds_input_file_path.stem}",
+                         '-rd', f"log_file={total_file_path}",
+                         '-rd', f"report_file={report_file_path}"]
     run_drc_check_cmd.extend(klayout_cmd_extra_args)
 
     log_file_path = logs_directory / f'{check_name}_check.log'
@@ -57,17 +63,18 @@ if __name__ == "__main__":
     parser.add_argument('--gds_input_file_path', '-g', required=True, help='GDS File to apply DRC checks on')
     parser.add_argument('--output_directory', '-o', required=True, help='Output Directory')
     parser.add_argument('--design_name', '-d', required=True, help='Design Name')
+    parser.add_argument('--drc_rules', '-r', required=True, help='DRC rules script path')
     args = parser.parse_args()
 
     gds_input_file_path = Path(args.gds_input_file_path)
     output_directory = Path(args.output_directory)
     design_name = args.design_name
 
-    klayout_sky130A_mr_drc_script_path = os.getenv('PDK_ROOT') + "/sky130A/libs.tech/klayout/drc/sky130A_mr.drc"
+    drc_script_path = args.drc_rules
 
     if gds_input_file_path.exists() and gds_input_file_path.suffix == ".gds":
         if output_directory.exists() and output_directory.is_dir():
-            if klayout_gds_drc_check("klayout_feol_drc", klayout_sky130A_mr_drc_script_path, gds_input_file_path, output_directory, ["-rd", "feol=true", "-rd", "top_cell={}".format(design_name)]):
+            if klayout_gds_drc_check("klayout_feol_drc", drc_script_path, gds_input_file_path, output_directory, ["-rd", "feol=true", "-rd", "top_cell={}".format(design_name)]):
                 logging.info("Klayout GDS DRC Clean")
             else:
                 logging.info("Klayout GDS DRC Dirty")

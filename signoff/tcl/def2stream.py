@@ -18,6 +18,10 @@ layoutOptions = tech.load_layout_options
 if len(layer_map) > 0:
     layoutOptions.lefdef_config.map_file = layer_map
 
+if len(lef_files) > 0:
+    layoutOptions.lefdef_config.read_lef_with_def = False
+    layoutOptions.lefdef_config.lef_files = lef_files.split(" ")
+
 # Load def file
 main_layout = pya.Layout()
 print("[INFO] Reporting cells prior to loading DEF ...")
@@ -25,7 +29,7 @@ for i in main_layout.each_cell():
     print("[INFO] '{0}'".format(i.name))
 
 print("[INFO] Reading DEF %s ..." % in_def)
-main_layout.read(in_def + ".def", layoutOptions)
+main_layout.read(in_def, layoutOptions)
 
 # Clear cells
 top_cell_index = main_layout.cell(design_name).cell_index()

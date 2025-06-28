@@ -34,6 +34,7 @@ $(GDS): $(SIGN_DIR)/tcl/gds.tcl $(SIGN_DIR)/tcl/def2stream.py $(DEF)
 ifeq ($(PDK_FILE),none)
 	klayout -zz -rd design_name=$(TOP) \
 	        -rd in_def=$(DEF) \
+	        -rd lef_files="$(ROOT_DIR)/lib/$(TECH).tech.lef $(ROOT_DIR)/lib/$(TECH).lef" \
 	        -rd in_files="$(ROOT_DIR)/lib/$(TECH).gds" \
 	        -rd seal_file="" \
 	        -rd out_file=$(GDS) \
@@ -53,7 +54,7 @@ $(SPICE): $(SIGN_DIR)/tcl/spice.tcl $(DEF)
 	magic -dnull -noconsole -rcfile $(PDK_ROOT)/$(PDK)/libs.tech/magic/$(PDK).magicrc $(SIGN_DIR)/tcl/spice.tcl
 
 drc: $(GDS)
-	python3 $(SIGN_DIR)/tcl/klayout_gds_drc_check.py --gds_input_file_path $(GDS) --output_directory $(SIGN_DIR)/reports --design_name $(TOP)
+	python3 $(SIGN_DIR)/tcl/klayout_gds_drc_check.py --gds_input_file_path $(GDS) --output_directory $(SIGN_DIR)/reports --design_name $(TOP) --drc_rules $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/sg13g2_minimal.lydrc
 
 drc_magic: $(GDS)
 	magic -dnull -noconsole -rcfile $(PDK_ROOT)/$(PDK)/libs.tech/magic/$(PDK).magicrc $(SIGN_DIR)/tcl/run_magic_drc.tcl
