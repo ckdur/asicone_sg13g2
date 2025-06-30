@@ -3,6 +3,7 @@ set LIB_PATHS "$ROOT_DIR"
 set LIBS "${ROOT_DIR}/lib/sg13g2.lib"
 set LEFS "${ROOT_DIR}/lib/sg13g2.tech.lef ${ROOT_DIR}/lib/sg13g2.lef"
 set GDSS "${ROOT_DIR}/lib/sg13g2.gds"
+set CDLS "${ROOT_DIR}/lib/sg13g2.cdl"
 
 # TODO: Do the characterization of the lib
 set LIBS_BC "${ROOT_DIR}/lib/sg13g2.lib"

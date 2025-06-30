@@ -334,6 +334,4 @@ write_def $PNR_DIR/outputs/${TOP}.def
 write_spef $PNR_DIR/outputs/${TOP}.spef
 write_abstract_lef $PNR_DIR/outputs/${TOP}.lef
 # write_timing_model $PNR_DIR/outputs/${TOP}.lib
-
- 
-
+write_cdl -masters ${CDLS} $PNR_DIR/outputs/${TOP}.cdl
