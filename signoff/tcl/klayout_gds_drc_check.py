@@ -16,7 +16,6 @@ def klayout_gds_drc_check(check_name, drc_script_path, gds_input_file_path, outp
     #                     '-rd', f"report={report_file_path}"]
     run_drc_check_cmd = ['klayout', '-b', '-r', drc_script_path,
                          '-rd', f"in_gds={gds_input_file_path}",
-                         '-rd', f"cell={gds_input_file_path.stem}",
                          '-rd', f"log_file={total_file_path}",
                          '-rd', f"report_file={report_file_path}"]
     run_drc_check_cmd.extend(klayout_cmd_extra_args)
@@ -74,7 +73,7 @@ if __name__ == "__main__":
 
     if gds_input_file_path.exists() and gds_input_file_path.suffix == ".gds":
         if output_directory.exists() and output_directory.is_dir():
-            if klayout_gds_drc_check("klayout_feol_drc", drc_script_path, gds_input_file_path, output_directory, ["-rd", "feol=true", "-rd", "top_cell={}".format(design_name)]):
+            if klayout_gds_drc_check("klayout_feol_drc", drc_script_path, gds_input_file_path, output_directory, ["-rd", "feol=true", "-rd", "cell={}".format(design_name)]):
                 logging.info("Klayout GDS DRC Clean")
             else:
                 logging.info("Klayout GDS DRC Dirty")
