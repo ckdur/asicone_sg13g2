@@ -325,6 +325,11 @@ detailed_route\
     -verbose 1
 
 #################################################
+# Metal fill
+#################################################
+density_fill -rules $env(ROOT_DIR)/lib/$env(TECH)_fill.json
+
+#################################################
 ## Write out final files
 #################################################
 define_process_corner -ext_model_index 0 X
