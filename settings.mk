@@ -15,7 +15,7 @@ DISPH=100
 #######################################################
 # Rules to create the files. 
 # If there is no really rules, then can leave it blank
-TOP?=aes
+TOP?=SPI
 
 ifeq ($(TOP),aes)
 	AES_DIR=$(ROOT_DIR)/rtl/aes

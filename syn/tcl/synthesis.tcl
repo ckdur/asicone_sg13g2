@@ -23,8 +23,6 @@ if {![file exists $REPORTS]} {
 }
 
 yosys -import
-plugin -i sdc
-yosys -import
 
 ###############################################################
 ## Library setup
@@ -53,7 +51,7 @@ foreach src $SYN_SRC {
   read_verilog $src
 }
 
-hierarchy -check -top $::env(DESIGN_NAME)
+hierarchy -check -top $::env(TOP)
 
 ####################################################################
 ## Load Design
@@ -76,7 +74,7 @@ hierarchy -check
 ####################################################################
 ## Constraints Setup
 ####################################################################
-read_sdc $SYN_DIR/tcl/${TOP}.sdc.tcl
+# read_sdc $SYN_DIR/tcl/${TOP}.sdc.tcl
 
 ####################################################################################################
 ## Synthesizing to gates
@@ -86,7 +84,7 @@ dfflegalize
 set cmd "abc $LIBSLIB"
 eval $cmd
 
-splitnets -ports
+splitnets
 
 ###################################################
 ## TIES
