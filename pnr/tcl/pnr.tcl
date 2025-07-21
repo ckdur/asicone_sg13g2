@@ -306,6 +306,10 @@ global_route -congestion_iterations 50 -verbose -congestion_report_file $PNR_DIR
 ###############################################
 filler_placement "$FILLERCells"
 
+add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
+global_connect
+
 ###############################################
 # Detail routing
 ###############################################

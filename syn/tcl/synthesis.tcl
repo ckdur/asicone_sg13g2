@@ -98,5 +98,4 @@ hilomap
 clean -purge
 #write_sdc ${OUTPUTS}/${TOP}.sdc # TODO: This command fails
 write_verilog -renameprefix ins -noexpr -noattr -nohex ${OUTPUTS}/${TOP}_net.v
-write_verilog -renameprefix ins -noexpr -noattr -nohex ${TOP}_net.v
 
