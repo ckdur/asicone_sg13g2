@@ -16,6 +16,7 @@ DISPH=100
 # Rules to create the files. 
 # If there is no really rules, then can leave it blank
 TOP?=SPI
+CHIP_TOP?=asicone
 
 ifeq ($(TOP),aes)
 	AES_DIR=$(ROOT_DIR)/rtl/aes
