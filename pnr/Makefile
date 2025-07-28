@@ -14,6 +14,7 @@ export PR
 export X
 export Y
 export TECH
+export PDK_ROOT
 
 SYN_NET=$(SYN_DIR)/outputs/$(TOP)_net.v
 export SYN_NET

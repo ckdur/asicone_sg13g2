@@ -6,21 +6,28 @@ PNR_DIG_DIR=$(abspath ../pnr)
 RTL_DIR=$(abspath ../rtl)
 
 export PNR_DIR
-export SYN_SRC
 export TOP
 export ROOT_DIR
-export PX
-export PY
-export PR
-export X
-export Y
+export CHIPX
+export CHIPY
 export TECH
+export PDK_ROOT
+export RTL_DIR
+export PADRING_DIR
 
-CHIP_NET=$(RTL_DIR)/rtl/$(CHIP_TOP).v
+CHIP_NET=$(RTL_DIR)/$(CHIP_TOP).v
 export CHIP_NET
 
+CHIP_TOP?=asicone
+export CHIP_TOP
+
+OTHER_LEF=$(PNR_DIG_DIR)/outputs/SPI.lef
+export OTHER_LEF
+OTHER_GDS=$(PNR_DIG_DIR)/outputs/SPI.gds
+export OTHER_GDS
+
 DEF=$(PNR_DIR)/outputs/asicone.def
-DEF_PADRING=$(PNR_DIR)/outputs/asicone.def
+DEF_PADRING=$(PADRING_DIR)/outputs/asicone.def
 DEF_MACRO=$(RTL_DIR)/macro.def
 
 all: $(DEF)

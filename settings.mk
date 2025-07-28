@@ -12,6 +12,9 @@ DISPY=100
 DISPW=100
 DISPH=100
 
+CHIPX?=1000
+CHIPY?=1000
+
 #######################################################
 # Rules to create the files. 
 # If there is no really rules, then can leave it blank
@@ -43,3 +46,13 @@ ifeq ($(TOP),mand)
 	PY:=1
 	PR:=0.5
 endif
+
+#######################################################
+# Rules to create the files. 
+# If there is no really rules, then can leave it blank
+
+PDK_ROOT?=/opt/ext/OpenPDKs/IHP-Open-PDK
+PDK?=ihp-sg13g2
+TECH_PDK=$(PDK_ROOT)/$(PDK)
+PDK_FILE?=none
+PDK_KFILE ?= $(TECH_PDK)/libs.tech/klayout/tech/sg13g2.lyp
