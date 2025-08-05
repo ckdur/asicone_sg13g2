@@ -1,6 +1,6 @@
 #######################################################
 # Proportional dimmentions
-ROOT_DIR?=$(abspath ..)
+ROOT_DIR?=$(abspath .)
 TECH?=sg13g2
 
 PX?=4
@@ -18,20 +18,23 @@ CHIPY?=1000
 #######################################################
 # Rules to create the files. 
 # If there is no really rules, then can leave it blank
-TOP?=saradc
+TOP?=SARADC
 CHIP_TOP?=asicone
 
-SARADC_DIR=$(ROOT_DIR)/saradc_auto
-SYN_SRC?=$(ROOT_DIR)/saradc_auto/rtl/cap.v \
-$(ROOT_DIR)/saradc_auto/rtl/cdac_dummy.v \
-$(ROOT_DIR)/saradc_auto/rtl/cdac_unit.v \
-$(ROOT_DIR)/saradc_auto/rtl/cdac.v \
-$(ROOT_DIR)/saradc_auto/rtl/cell_def.v \
-$(ROOT_DIR)/saradc_auto/rtl/comp.v \
-$(ROOT_DIR)/saradc_auto/rtl/saradc_analog.v \
-$(ROOT_DIR)/saradc_auto/rtl/sw.v \
-$(ROOT_DIR)/saradc_auto/rtl/sar_logic_buf.v \
-$(ROOT_DIR)/saradc_auto/rtl/saradc.v
+SARADC_DIR=$(ROOT_DIR)
+SYN_SRC?=$(ROOT_DIR)/rtl/cap.v \
+$(ROOT_DIR)/rtl/cdac_dummy.v \
+$(ROOT_DIR)/rtl/cdac_unit.v \
+$(ROOT_DIR)/rtl/cdac.v \
+$(ROOT_DIR)/rtl/cell_def.v \
+$(ROOT_DIR)/rtl/comp.v \
+$(ROOT_DIR)/rtl/saradc_analog.v \
+$(ROOT_DIR)/rtl/sw.v \
+$(ROOT_DIR)/rtl/sar_logic_buf.v \
+$(ROOT_DIR)/rtl/saradc.v
+
+DIGTOP=sar_logic_wreset
+SYN_DIG_SRC?=$(ROOT_DIR)/rtl/sar_logic_wreset.v
 
 #######################################################
 # Rules to create the files. 

@@ -8,9 +8,9 @@ module SARADC_CAP (
 );
 
   SARADC_CELL_INVX16_ASCAP impl (
-    .VNW(VNW), .VPW(VPW),
-    .VDD(FL), .VSS(FL),
-    .I(VSH), .ZN(FL)
+    .vnw(VNW), .vpw(VPW),
+    .vdd(FL), .vss(FL),
+    .i(VSH), .zn(FL)
   );
 
 endmodule

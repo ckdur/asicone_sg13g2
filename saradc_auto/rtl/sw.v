@@ -12,25 +12,25 @@ module SARADC_SW (
   // TODO: Crimes against the logic (lol)
   
   SARADC_CELL_INVX0_ASSW pgp_lz1 (
-    .VNW(VDD), .VPW(VSS),
+    .vnw(VDD), .vpw(VSS),
   // | passg in p |  load Z1 |
-    .VDD(Z2), .ZN(Z1), .VSS(Z1), .I(SB)
+    .vdd(Z2), .zn(Z1), .vss(Z1), .i(SB)
   );
   SARADC_CELL_INVX0_ASSW pgn_lz1 (
-    .VNW(VDD), .VPW(VSS),
+    .vnw(VDD), .vpw(VSS),
   // | load Z1  | passg in n |
-    .VDD(Z1), .ZN(Z1), .VSS(Z2), .I(S)
+    .vdd(Z1), .zn(Z1), .vss(Z2), .i(S)
   );
   
   SARADC_CELL_INVX0_ASSW pgp_lz2 (
-    .VNW(VDD), .VPW(VSS),
+    .vnw(VDD), .vpw(VSS),
   // | passg in p |  load Z2 |
-    .VDD(Z1), .ZN(Z2), .VSS(Z2), .I(SB)
+    .vdd(Z1), .zn(Z2), .vss(Z2), .i(SB)
   );
   SARADC_CELL_INVX0_ASSW pgn_lz2 (
-    .VNW(VDD), .VPW(VSS),
+    .vnw(VDD), .vpw(VSS),
   // | load Z2  | passg in n |
-    .VDD(Z2), .ZN(Z2), .VSS(Z1), .I(S)
+    .vdd(Z2), .zn(Z2), .vss(Z1), .i(S)
   );
 
 endmodule

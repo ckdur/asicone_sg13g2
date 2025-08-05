@@ -5,17 +5,23 @@ SYN_DIR=$(abspath .)
 export SYN_DIR
 export SYN_SRC
 export TOP
+export DIGTOP
+export SYN_DIG_SRC
 export ROOT_DIR
 export TECH
 
-SYN_NET=$(SYN_DIR)/outputs/$(TOP)_net.v
+SYN_ANA_NET=$(SYN_DIR)/outputs/$(TOP)_net.v
+SYN_NET=$(SYN_DIR)/outputs/$(DIGTOP)_net.v
 
-all: $(SYN_NET)
+all: $(SYN_ANA_NET) $(SYN_NET)
 
-$(SYN_NET): $(SYN_DIR)/tcl/synthesis.tcl $(SYN_SRC) $(SYN_DIR)/tcl/$(TOP).sdc.tcl
+$(SYN_ANA_NET): $(SYN_DIR)/tcl/synthesis_analog.tcl $(SYN_SRC)
+	yosys -h tcl $(SYN_DIR)/tcl/synthesis_analog.tcl | tee -a yosys_analog.log
+
+$(SYN_NET): $(SYN_DIR)/tcl/synthesis.tcl $(SYN_DIG_SRC)
 	yosys -h tcl $(SYN_DIR)/tcl/synthesis.tcl | tee -a yosys.log
 
-manual: $(SYN_DIR)/tcl/synthesis.tcl $(SYN_SRC) $(SYN_DIR)/tcl/$(TOP).sdc.tcl
+manual: $(SYN_DIR)/tcl/synthesis.tcl $(SYN_SRC)
 	yosys -h tcl
 
 clean:

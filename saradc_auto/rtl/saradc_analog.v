@@ -23,11 +23,14 @@ module SARADC_ANALOG #(
   // Circle function number of 
   function integer ncircle;
     input [31:0] nelem;
-    integer ntotal = 2;
+    integer ntotal;
+  begin
+    ntotal = 2;
     for (ncircle=1; ntotal<nelem; ncircle=ncircle+1) begin
       ntotal = ncircle * ncircle * 2;
     end
     ncircle = ncircle - 1;
+  end
   endfunction
   
   // Calculate the number of dummies from NBITS

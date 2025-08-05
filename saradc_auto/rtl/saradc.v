@@ -1,6 +1,22 @@
 // Definition of the SARADC
 // Combining the analog and the digital
 
+(* blackbox *)
+module sar_logic_wreset #(
+  parameter NBITS = 8
+)
+(
+  input CLK,                        // clock input
+  input RST,                        // reset input
+  input GO,                         // GO=1 to perform conversion
+  output VALID,                     // VALID=1 when conversion finished
+  output reg [NBITS-1:0] RESULTP,   // 8 bit RESULT output
+  output reg [NBITS-1:0] RESULTN,
+  output SAMPLE,                    // to S&H circuit
+  input CMP                         // from comparitor
+);
+endmodule
+
 module SARADC #(
   parameter integer NBITS = 8,
   parameter integer NPW = 3, // Number of caps in X for each CDAC unit

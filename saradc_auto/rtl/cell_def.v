@@ -92,7 +92,7 @@ module SARADC_CELL_OAI211X16(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .A0(A0), .A1(A1), .B0(B0), .C0(C0), .zn(ZN)
+    .a1(A0), .a2(A1), .b(B0), .c(C0), .zn(ZN)
   );
   OAI211D4 impl_1(
 `ifdef WITH_POWER
@@ -101,7 +101,7 @@ module SARADC_CELL_OAI211X16(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .A0(A0), .A1(A1), .B0(B0), .C0(C0), .zn(ZN)
+    .a1(A0), .a2(A1), .b(B0), .c(C0), .zn(ZN)
   );
   OAI211D4 impl_2(
 `ifdef WITH_POWER
@@ -110,7 +110,7 @@ module SARADC_CELL_OAI211X16(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .A0(A0), .A1(A1), .B0(B0), .C0(C0), .zn(ZN)
+    .a1(A0), .a2(A1), .b(B0), .c(C0), .zn(ZN)
   );
   OAI211D4 impl_3(
 `ifdef WITH_POWER
@@ -119,7 +119,7 @@ module SARADC_CELL_OAI211X16(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .A0(A0), .A1(A1), .B0(B0), .C0(C0), .zn(ZN)
+    .a1(A0), .a2(A1), .b(B0), .c(C0), .zn(ZN)
   );
 
 endmodule
@@ -135,14 +135,14 @@ module SARADC_CELL_OAI211X4(
   output ZN
 );
   // OAI211X4 -> OAI211D4
-  OAI211_X4M_A9TL impl(
+  OAI211D4 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .A0(A0), .A1(A1), .B0(B0), .C0(C0), .zn(ZN)
+    .a1(A0), .a2(A1), .b(B0), .c(C0), .zn(ZN)
   );
 
 endmodule
@@ -165,7 +165,7 @@ module SARADC_CELL_NAND2X2(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .A(A0), .B(A1), .zn(ZN)
+    .a1(A0), .a2(A1), .zn(ZN)
   );
 
 endmodule
@@ -180,15 +180,15 @@ module SARADC_CELL_AND2X4(
   input A0, A1,
   output Z
 );
-  // AND2X4 -> AD2D4
-  AD2D4 impl(
+  // AND2X4 -> AN2D4
+  AN2D4 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .A(A0), .B(A1), .Y(Z)
+    .a1(A0), .a2(A1), .z(Z)
   );
 
 endmodule
@@ -211,7 +211,7 @@ module SARADC_CELL_NOR3X4(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .A(A0), .B(A1), .C(A2), .zn(ZN)
+    .a1(A0), .a2(A1), .a3(A2), .zn(ZN)
   );
 
 endmodule
@@ -226,15 +226,15 @@ module SARADC_CELL_AND2X16(
   input A0, A1,
   output Z
 );
-  // AND2X16 -> AD2D4
-  AD2D4 impl(
+  // AND2X16 -> AN2D4
+  AN2D4 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .A(A0), .B(A1), .Y(Z)
+    .a1(A0), .a2(A1), .z(Z)
   );
 
 endmodule
@@ -257,7 +257,7 @@ module SARADC_CELL_BUFFX0(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .i(I), .Y(Z)
+    .i(I), .z(Z)
   );
 
 endmodule
@@ -280,7 +280,7 @@ module SARADC_CELL_BUFFX2(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .i(I), .Y(Z)
+    .i(I), .z(Z)
   );
 
 endmodule
@@ -303,7 +303,7 @@ module SARADC_CELL_BUFFX4(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .i(I), .Y(Z)
+    .i(I), .z(Z)
   );
 
 endmodule
@@ -326,7 +326,7 @@ module SARADC_CELL_BUFFX8(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .i(I), .Y(Z)
+    .i(I), .z(Z)
   );
 
 endmodule
@@ -349,7 +349,7 @@ module SARADC_CELL_BUFFX16(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .i(I), .Y(Z)
+    .i(I), .z(Z)
   );
 
 endmodule
@@ -372,7 +372,7 @@ module SARADC_CELL_DEL4X4(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .i(I), .Y(Z)
+    .i(I), .z(Z)
   );
 
 endmodule
@@ -395,7 +395,7 @@ module SARADC_CELL_DEL4X2(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .i(I), .Y(Z)
+    .i(I), .z(Z)
   );
 
 endmodule
@@ -417,7 +417,7 @@ module SARADC_CELL_TIEH(
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .Y(Z)
+    .z(Z)
   );
 
 endmodule

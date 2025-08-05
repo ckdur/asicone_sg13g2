@@ -1,9 +1,9 @@
 ##############################################################################
 ## Preset global variables and attributes
 ##############################################################################
-set TOP $env(DIGTOP)
+set TOP $env(TOP)
 set SYN_DIR $env(SYN_DIR)
-set SYN_SRC $env(SYN_DIG_SRC)
+set SYN_SRC $env(SYN_SRC)
 set LOGS $env(SYN_DIR)/logs
 set REPORTS $env(SYN_DIR)/reports
 set OUTPUTS $env(SYN_DIR)/outputs
@@ -51,7 +51,9 @@ foreach src $SYN_SRC {
   read_verilog $src
 }
 
-hierarchy -check -top ${TOP}
+read_verilog $env(ROOT_DIR)/cells/sg13g2f_blackboxes.v
+
+hierarchy -check -top $::env(TOP)
 
 ####################################################################
 ## Load Design
