@@ -35,6 +35,8 @@ foreach LEFFILE $OTHERLEF {
 
 puts "Reading: $env(SYN_NET)"
 read_verilog $env(SYN_NET)
+puts "Reading: $env(SYN_DIG_NET)"
+read_verilog $env(SYN_DIG_NET)
 link_design ${TOP}
 
 puts "SDC reading: ${TOP}.sdc.tcl"
@@ -72,16 +74,27 @@ set track 0.34
 set pitch [expr 32*$row]
 set margin [expr 3*$row]
 
-if {[file exists $env(PNR_DIR)/$env(TOP).openlane.fp.tcl]} {
-  # FORMAT: initialize_floorplan [-utilization util] [-aspect_ratio ratio] [-core_space space | {bottom top left right}] [-die_area {lx ly ux uy}] [-core_area {lx ly ux uy}] [-sites site_name]
-  source $env(PNR_DIR)/$env(TOP).openlane.fp.tcl
-} else {
-  initialize_floorplan -site obssite -aspect_ratio [expr $PX/$PY] -utilization [expr $PR*100] -core_space "$margin $margin $margin $margin"
-}
+set dig_to_ana 0.8
+set corearea "[expr $margin] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
+set digcorearea "[expr $X*$dig_to_ana] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
+set anacorearea "[expr $margin] [expr $margin] [expr $X*$dig_to_ana] [expr $Y-$margin]"
+set corex [expr $margin]
+set corey [expr $margin]
 
-add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
-add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
-set_voltage_domain -name CORE -power VDD -ground VSS
+read_upf -file $PNR_DIR/tcl/${TOP}.upf.tcl
+
+set_domain_area CORE -area $digcorearea
+set_domain_area ANALOG -area $anacorearea
+
+initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $corearea
+
+# Only add the global connection to the digitals
+add_global_connection -net VDD -inst_pattern digital/.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern digital/.* -pin_pattern {^vss$} -ground
+
+#set_voltage_domain -region ANALOG -power AVDD -ground VSS
+set_voltage_domain -region ANALOG -power AVDD -ground VSS
+set_voltage_domain -power VDD -ground VSS
 
 insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
 insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
@@ -131,20 +144,176 @@ make_tracks TopMetal1 -x_offset 1.46 -x_pitch 2.28 -y_offset 1.46 -y_pitch 2.28
 make_tracks TopMetal2 -x_offset 2.0  -x_pitch 4.0  -y_offset 2.0 -y_pitch 4.0
 
 ####################################
+## Macro placement
+####################################
+#set_dont_touch [dbGet [dbGet -p top.insts.name "analog/*"].name]
+#set_dont_touch [dbGet [dbGet -p top.insts.name "analog/buflogic/*"].name]
+
+# Set some globals that are necessary for the SARADC pos utilities
+set saradc_fill_nopower SARADC_FILL1_NOPOWER
+set saradc_fill SARADC_FILL1
+set saradc_tap SARADC_FILLTIE2
+set metal1 Metal1
+set metal1_py [expr 1.0*[[$tech findLayer Metal1] getPitchY] / $dbu]
+set metal1_w [expr 1.0*[[$tech findLayer Metal1] getWidth] / $dbu]
+set metal1_s [expr 1.0*[[$tech findLayer Metal1] getSpacing] / $dbu]
+set metal2 Metal2
+set metal2_px [expr 1.0*[[$tech findLayer Metal2] getPitchX] / $dbu + 0.02]
+set metal2_w [expr 1.0*[[$tech findLayer Metal2] getWidth] / $dbu]
+set metal2_s [expr 1.0*[[$tech findLayer Metal2] getSpacing] / $dbu]
+set metal3 Metal3
+set metal3_py [expr 1.0*[[$tech findLayer Metal3] getPitchY] / $dbu]
+set metal3_w [expr 1.0*[[$tech findLayer Metal3] getWidth] / $dbu]
+set metal3_s [expr 1.0*[[$tech findLayer Metal3] getSpacing] / $dbu]
+set metal4 Metal4
+set metal4_px [expr 1.0*[[$tech findLayer Metal4] getPitchX] / $dbu]
+set metal4_w [expr 1.0*[[$tech findLayer Metal4] getWidth] / $dbu]
+set metal4_s [expr 1.0*[[$tech findLayer Metal4] getSpacing] / $dbu]
+set metal5 Metal5
+set metal5_py [expr 1.0*[[$tech findLayer Metal5] getPitchY] / $dbu]
+set metal5_w [expr 1.0*[[$tech findLayer Metal5] getWidth] / $dbu]
+set metal5_s [expr 1.0*[[$tech findLayer Metal5] getSpacing] / $dbu]
+
+# Configuration of the ADC
+# Capacitor WxH (3x2 in this case)
+set pw 3
+set ph 2
+# Number of bits of the ADC
+set nbits 5
+# Number of rows (in stdcells) for the distance between a CDAC and the switch
+set nrow_hl_sw 5
+# Number in tracks of the distance between the CAP and the SW in the CDAC unit
+set ntrack_capsw 3
+# sw number
+set nsw_vouthl 3
+
+# Get the abutment VDD size from the filler
+#set fill_obj [dbGet -p head.libCells.name SARADC_FILL1]
+#set fill_rail_obj [dbGet $fill_obj.pgTerms.pins.allShapes.shapes]
+#set abutsizey [dbGet [lindex $fill_rail_obj 0].rect_sizey]
+
+# Put the power domain for Analog before anything else
+set tie_lib [[::ord::get_db] findLib $saradc_tap]
+set tie_master [$tie_lib findMaster $saradc_tap]
+set sizetap [expr 1.0*[$tie_master getWidth] / $dbu]
+# setObjFPlanBox Group {Analog} [expr $corex-$sizetap] $corey $coreux $coreuy
+
+source tcl/saradc_pos.tcl
+#source tcl/saradc_conn.tcl
+
+# Positioning of MSB/LSB H in the lower bound
+set posx_cdach [expr $sizetap+$corex]
+set posy_cdach [expr $corey]
+set ret_h [pos_cdac_circle $posx_cdach $posy_cdach analog.lsb_cdac_h analog.msb_cdac_h analog.dummy_h $nbits $pw $ph $saradc_tap 1 1]
+
+set cdacx_h [lindex [lindex $ret_h 0] 0]
+set cdacy_h [lindex [lindex $ret_h 0] 1]
+set nx_h [lindex [lindex $ret_h 1] 0]
+set ny_h [lindex [lindex $ret_h 1] 1]
+set pos_h [lindex $ret_h 2]
+set lst_h [lindex $ret_h 4]
+set posd_h [lindex $ret_h 3]
+set lstd_h [lindex $ret_h 5]
+set posa_h [concat $pos_h $posd_h]
+set lsta_h [concat $lst_h $lstd_h]
+set nrow_h [expr ceil($cdacy_h*$ny_h / $row)]
+
+# Positioning of the additional switch that joins VOUTH and VOUTL
+# Just above the H CDAC by a distance
+set posx_sw $posx_cdach
+set posy_sw [expr $corey + $row*($nrow_h+$nrow_hl_sw)]
+set ret_sw [pos_sw_wtap $posx_sw $posy_sw analog.sw_vouth2voutl $cdacx_h $saradc_tap $nsw_vouthl]
+
+# Height of the sw is always 1. 
+set nrow_sw 1
+# The distance between h and l is always 1 + 2*spc (usually 7 if config is not changed)
+set nrow_asw [expr 2*$nrow_hl_sw+$nrow_sw]
+
+# Positioning of MSB/LSB H above the switch
+set posx_cdacl [expr $sizetap + $corex]
+set posy_cdacl [expr $corey + $row*($nrow_h+$nrow_asw)]
+set ret_l [pos_cdac_circle $posx_cdacl $posy_cdacl analog.lsb_cdac_l analog.msb_cdac_l analog.dummy_l $nbits $pw $ph $saradc_tap 1 0]
+
+set cdacx_l [lindex [lindex $ret_l 0] 0]
+set cdacy_l [lindex [lindex $ret_l 0] 1]
+set nx_l [lindex [lindex $ret_l 1] 0]
+set ny_l [lindex [lindex $ret_l 1] 1]
+set pos_l [lindex $ret_l 2]
+set lst_l [lindex $ret_l 4]
+set posd_l [lindex $ret_l 3]
+set lstd_l [lindex $ret_l 5]
+set posa_l [concat $pos_l $posd_l]
+set lsta_l [concat $lst_l $lstd_l]
+set nrow_l [expr ceil($cdacy_l*$ny_l / $row)]
+
+set nrow_all [expr $nrow_h + $nrow_l + $nrow_asw]
+
+catch
+# Positioning of the comparator
+source tcl/comp_pos.tcl
+set sw_w [lindex $ret_sw 0]
+set ret_poscmp [pos_stdcell_comp [expr $posx_sw + $sw_w + 20*$track] $posy_sw analog/cmp]
+set compx [lindex $ret_poscmp 0]
+set compy [lindex $ret_poscmp 1]
+
+
+
+####################################
 ## Tapcell insertion
 ####################################
 
 tapcell\
     -distance [expr $row*16]\
+    -endcap_master "$TAPCells"\
     -tapcell_master "$TAPCells"
+
+proc is_inside {or area} {
+    global dbu
+    set x [expr 1.0*[lindex $or 0] / $dbu]
+    set y [expr 1.0*[lindex $or 1] / $dbu]
+    set x0 [lindex $area 0]
+    set y0 [lindex $area 1]
+    set x1 [lindex $area 2]
+    set y1 [lindex $area 3]
+    set inside [expr ($x0 <= $x) && ($x <= $x1) && ($y0 <= $y) && ($y <= $y1)]
+    # puts "$dbu $x $y $area $inside"
+    return $inside
+}
+proc do_global_from_areas {} {
+    global digcorearea
+    set all_inst [$::block getInsts]
+    foreach inst $all_inst {
+        if {[$inst isPlaced] == 0} {
+            continue
+        }
+        set name [$inst getName]
+        set or [$inst getOrigin]
+        if {[is_inside $or $digcorearea] == 0} {
+            # Analog
+            # puts "analog for $name in $or"
+            add_global_connection -net AVDD -inst_pattern $name -pin_pattern {^vdd$} -power
+            add_global_connection -net VSS -inst_pattern $name -pin_pattern {^vss$} -ground
+        } else {
+            # Digital
+            # puts "digital for $name in $or"
+            add_global_connection -net VDD -inst_pattern $name -pin_pattern {^vdd$} -power
+            add_global_connection -net VSS -inst_pattern $name -pin_pattern {^vss$} -ground
+        }
+    }
+}
+#do_global_from_areas
+#global_connect
+
+catch
+
+
 
 ####################################
 ## Power planning & SRAMs placement
 ####################################
 
-add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
-add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
-global_connect
+
+
 
 define_pdn_grid \
     -name stdcell_grid \

@@ -1,15 +1,31 @@
 (* blackbox *)
-module SARADC_CELL_INVX0_ASSW(i, zn, vdd, vss, vnw, vpw);
+module SARADC_CELL_INVX0_ASSW(
+`ifdef WITH_BODY
+    vnw, vpw, 
+`endif
+    vdd, vss, i, zn);
     input i;
     output zn;
-    inout vdd, vss, vnw, vpw;
+    inout 
+`ifdef WITH_BODY
+        vnw, vpw, 
+`endif
+        vdd, vss;
 endmodule
 
 (* blackbox *)
-module SARADC_CELL_INVX16_ASCAP(i, zn, vdd, vss, vnw, vpw);
+module SARADC_CELL_INVX16_ASCAP(
+`ifdef WITH_BODY
+    vnw, vpw, 
+`endif
+    vdd, vss, i, zn);
     input i;
     output zn;
-    inout vdd, vss, vnw, vpw;
+    inout 
+`ifdef WITH_BODY
+        vnw, vpw, 
+`endif
+        vdd, vss;
 endmodule
 
 (* blackbox *)
@@ -120,14 +136,7 @@ module BUFFD16(i, z, vdd, vss);
 endmodule
 
 (* blackbox *)
-module DEL4D4(i, z, vdd, vss);
-    input i;
-    output z;
-    inout vdd, vss;
-endmodule
-
-(* blackbox *)
-module DEL4D2(i, z, vdd, vss);
+module DEL4(i, z, vdd, vss);
     input i;
     output z;
     inout vdd, vss;

@@ -3,17 +3,8 @@
 ROOT_DIR?=$(abspath .)
 TECH?=sg13g2
 
-PX?=4
-PY?=2
-PR?=0.75
-
-DISPX=100
-DISPY=100
-DISPW=100
-DISPH=100
-
-CHIPX?=1000
-CHIPY?=1000
+X=700
+Y=400
 
 #######################################################
 # Rules to create the files. 

@@ -17,13 +17,15 @@ export PDK_ROOT
 
 SYN_NET=$(SYN_DIR)/outputs/$(TOP)_net.v
 export SYN_NET
+SYN_DIG_NET=$(SYN_DIR)/outputs/$(DIGTOP)_net.v
+export SYN_DIG_NET
 
 all: $(PNR_DIR)/outputs/$(TOP).def
 
-$(PNR_DIR)/outputs/$(TOP).def: $(SYN_NET) $(PNR_DIR)/tcl/pnr.tcl
+$(PNR_DIR)/outputs/$(TOP).def: $(SYN_NET) $(SYN_DIG_NET) $(PNR_DIR)/tcl/pnr.tcl
 	openroad -exit $(PNR_DIR)/tcl/pnr.tcl | tee -a openroad.log
 
-manual: $(SYN_NET) $(PNR_DIR)/tcl/pnr.tcl
+manual: $(SYN_NET) $(SYN_DIG_NET) $(PNR_DIR)/tcl/pnr.tcl
 	openroad -gui $(PNR_DIR)/tcl/pnr.tcl
 
 clean:

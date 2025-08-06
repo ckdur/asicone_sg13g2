@@ -10,7 +10,7 @@ set ROOT_DIR $env(ROOT_DIR)
 set LIB_PATHS "$ROOT_DIR"
 set LIBS "${ROOT_DIR}/cells/sg13g2f.lib"
 
-#set LEFS "${ROOT_DIR}/lib/sg13g2.tech.lef ${ROOT_DIR}/lib/sg13g2.lef ${PDK_ROOT}/ihp-sg13g2/libs.ref/sg13g2_io/lef/sg13g2_io.lef"
+set LEFS "${ROOT_DIR}/cells/sg13g2f.tech.lef ${ROOT_DIR}/cells/sg13g2f.lef ${ROOT_DIR}/cells/SARADC_CELL_INVX0_ASSW.lef ${ROOT_DIR}/cells/SARADC_CELL_INVX16_ASCAP.lef ${ROOT_DIR}/cells/SARADC_FILLTIE2.lef ${ROOT_DIR}/cells/SARADC_FILL1.lef ${ROOT_DIR}/cells/SARADC_FILL1_NOPOWER.lef"
 #set GDSS "${ROOT_DIR}/lib/sg13g2.gds"
 #set CDLS "${ROOT_DIR}/lib/sg13g2.cdl"
 

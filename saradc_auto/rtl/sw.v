@@ -2,6 +2,7 @@
 // Uses the smallest inverter to create two pass-gates
 // The passgates created between VDD-ZN of one INV, and the ZN-VSS of other INV
 
+(* keep_hierarchy = "yes" *)
 module SARADC_SW (
   inout VDD, VSS,
   input SB, S, // Negated and non-negated
@@ -12,23 +13,31 @@ module SARADC_SW (
   // TODO: Crimes against the logic (lol)
   
   SARADC_CELL_INVX0_ASSW pgp_lz1 (
+`ifdef WITH_BODY
     .vnw(VDD), .vpw(VSS),
+`endif
   // | passg in p |  load Z1 |
     .vdd(Z2), .zn(Z1), .vss(Z1), .i(SB)
   );
   SARADC_CELL_INVX0_ASSW pgn_lz1 (
+`ifdef WITH_BODY
     .vnw(VDD), .vpw(VSS),
+`endif
   // | load Z1  | passg in n |
     .vdd(Z1), .zn(Z1), .vss(Z2), .i(S)
   );
   
   SARADC_CELL_INVX0_ASSW pgp_lz2 (
+`ifdef WITH_BODY
     .vnw(VDD), .vpw(VSS),
+`endif
   // | passg in p |  load Z2 |
     .vdd(Z1), .zn(Z2), .vss(Z2), .i(SB)
   );
   SARADC_CELL_INVX0_ASSW pgn_lz2 (
+`ifdef WITH_BODY
     .vnw(VDD), .vpw(VSS),
+`endif
   // | load Z2  | passg in n |
     .vdd(Z2), .zn(Z2), .vss(Z1), .i(S)
   );

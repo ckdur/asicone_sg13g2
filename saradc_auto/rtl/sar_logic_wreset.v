@@ -2,8 +2,12 @@
 // Inspired from the SAR_LOGIC_1102
 // Credit to: Li Shouwei,  Ckristian Duran
 
+`ifndef NBITS
+`define NBITS 5
+`endif
+
 module sar_logic_wreset #(
-  parameter NBITS = 8
+  parameter NBITS = `NBITS
 )
 (
   input CLK,                        // clock input

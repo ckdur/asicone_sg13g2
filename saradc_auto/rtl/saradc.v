@@ -1,24 +1,27 @@
 // Definition of the SARADC
 // Combining the analog and the digital
 
+`ifndef NBITS
+`define NBITS 5
+`endif
+
 (* blackbox *)
-module sar_logic_wreset #(
-  parameter NBITS = 8
-)
+module sar_logic_wreset 
 (
   input CLK,                        // clock input
   input RST,                        // reset input
   input GO,                         // GO=1 to perform conversion
   output VALID,                     // VALID=1 when conversion finished
-  output reg [NBITS-1:0] RESULTP,   // 8 bit RESULT output
-  output reg [NBITS-1:0] RESULTN,
+  output reg [`NBITS-1:0] RESULTP,   // 8 bit RESULT output
+  output reg [`NBITS-1:0] RESULTN,
   output SAMPLE,                    // to S&H circuit
   input CMP                         // from comparitor
 );
 endmodule
 
+(* keep_hierarchy = "yes" *)
 module SARADC #(
-  parameter integer NBITS = 8,
+  parameter integer NBITS = `NBITS,
   parameter integer NPW = 3, // Number of caps in X for each CDAC unit
   parameter integer NPH = 2 // Number of caps in Y for each CDAC unit
 ) (
@@ -52,9 +55,7 @@ module SARADC #(
 `ifndef DIGTOP
 `define DIGTOP sar_logic_wreset
 `endif
-  `DIGTOP #(
-    .NBITS(NBITS)
-  ) digital ( 
+  `DIGTOP digital ( 
     .CLK(CLKBUF), .RST(RST),
     .GO(GO),
     .VALID(VALID), .SAMPLE(SAMPLE),

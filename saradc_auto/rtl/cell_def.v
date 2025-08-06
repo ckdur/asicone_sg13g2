@@ -364,15 +364,26 @@ module SARADC_CELL_DEL4X4(
   input I,
   output Z
 );
-  // DEL4X4 -> DEL4D4
-  DEL4D4 impl(
+
+  // DEL4X4 -> DEL4 + BUFFD4
+  wire Z1;
+  DEL4 impl1(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .i(I), .z(Z)
+    .i(I), .z(Z1)
+  );
+  BUFFD4 impl2(
+`ifdef WITH_POWER
+    .vdd(VDD), .vss(VSS), 
+`endif
+`ifdef WITH_BODY
+    .vnw(VNW), .vpw(VPW),
+`endif
+    .i(Z1), .z(Z)
   );
 
 endmodule
@@ -387,15 +398,25 @@ module SARADC_CELL_DEL4X2(
   input I,
   output Z
 );
-  // DEL4X2 -> DEL4D2
-  DEL4D2 impl(
+  // DEL4X2 -> DEL4 + BUFFD2
+  wire Z1;
+  DEL4 impl1(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
 `ifdef WITH_BODY
     .vnw(VNW), .vpw(VPW),
 `endif
-    .i(I), .z(Z)
+    .i(I), .z(Z1)
+  );
+  BUFFD2 impl2(
+`ifdef WITH_POWER
+    .vdd(VDD), .vss(VSS), 
+`endif
+`ifdef WITH_BODY
+    .vnw(VNW), .vpw(VPW),
+`endif
+    .i(Z1), .z(Z)
   );
 
 endmodule
