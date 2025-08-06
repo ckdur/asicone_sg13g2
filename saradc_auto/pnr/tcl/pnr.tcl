@@ -80,6 +80,7 @@ set digcorearea "[expr $X*$dig_to_ana] [expr $margin] [expr $X-$margin] [expr $Y
 set anacorearea "[expr $margin] [expr $margin] [expr $X*$dig_to_ana] [expr $Y-$margin]"
 set corex [expr $margin]
 set corey [expr $margin]
+set coreuy [expr $Y-$margin]
 
 read_upf -file $PNR_DIR/tcl/${TOP}.upf.tcl
 
@@ -248,13 +249,27 @@ set nrow_l [expr ceil($cdacy_l*$ny_l / $row)]
 
 set nrow_all [expr $nrow_h + $nrow_l + $nrow_asw]
 
-catch
 # Positioning of the comparator
 source tcl/comp_pos.tcl
 set sw_w [lindex $ret_sw 0]
-set ret_poscmp [pos_stdcell_comp [expr $posx_sw + $sw_w + 20*$track] $posy_sw analog/cmp]
+set ret_poscmp [pos_stdcell_comp [expr $posx_sw + $sw_w + 20*$track] $posy_sw analog.cmp]
 set compx [lindex $ret_poscmp 0]
 set compy [lindex $ret_poscmp 1]
+
+# Put a blockage to avoid joining
+# TODO: Maybe this can be achieved using ENDCAP?
+set x1 [expr $corex + $cdacx_h * $nx_h - 2*$row]
+set x2 [expr $corex + $cdacx_h * $nx_h + 2*$row]
+set y1 [expr $corey]
+set y2 [expr $coreuy]
+set area "$x1 $y1 $x2 $y2"
+create_blockage -region $area
+
+# Stripe connection for the VDDs and VSSs, mainly for taps
+# This is done from bottom to top, even to cover the rings
+#create_stripes_vdd_vss $posx_cdach 0 $cdacx_h $nx_h $fPlan_height $saradc_tap AVDD VSS [expr 2*$metal2_w]
+
+catch
 
 
 

@@ -51,7 +51,7 @@ proc pos_cdac_circle {x y pathlsb pathmsb pathdummy nbits pw ph tapcap spctap in
   # The total number starts with the first two bits
   set lst {}
   lappend lst [list "${pathlsb}.cdac_bit\\\[0\\\].cdac_unit" 0]
-  puts $lst
+  # puts $lst
   lappend lst [list "${pathlsb}.cdac_unit" 0]
   set last [expr $nbits-1]
   for {set k 1} {$k < $nbits} {incr k} {
@@ -101,7 +101,7 @@ proc pos_cdac_circle {x y pathlsb pathmsb pathdummy nbits pw ph tapcap spctap in
   set path_ind [lindex $lst 0]
   set path [lindex $path_ind 0]
   set ind [lindex $path_ind 1]
-  puts "\[pos_cdac_circle\] Doing $path ($path_ind)"
+  # puts "\[pos_cdac_circle\] Doing $path ($path_ind)"
   set cdacuxy [pos_cdac_unit_wtap $x $y $path $ind $pw $ph $tapcap $spctap 0]
   set cdacw [expr [lindex $cdacuxy 0] - $x]
   set cdach [expr [lindex $cdacuxy 1] - $y + $metal1_py*$ntrack_capsw]
@@ -127,7 +127,7 @@ proc pos_cdac_circle {x y pathlsb pathmsb pathdummy nbits pw ph tapcap spctap in
     if {$i == [expr 2*$ncircle+1]} {
       set lrc 2
     }
-    puts "\[pos_cdac_circle\]($i $j) $path $ind into ($px $py)"
+    # puts "\[pos_cdac_circle\]($i $j) $path $ind into ($px $py)"
     pos_cdac_unit_wtap $px $py $path $ind $pw $ph $tapcap $spctap $lrc
   }
   
@@ -398,7 +398,7 @@ proc inst_exist {inst} {
   # Specific for openroad
   
   set test [$::block findInst $inst]
-  puts "Searching for $inst is $test"
+  # puts "Searching for $inst is $test"
   if {$test != "NULL"} {
     return 1
   }
@@ -456,7 +456,7 @@ proc pos_sw {x y path spc spcb spca infill} {
       lappend all_inst $inst
     }
   }
-  puts "\[pos_sw\] $path inst:$all_inst"
+  # puts "\[pos_sw\] $path inst:$all_inst"
   # Spacings before
   set mir R0
   if {$infill} { insert_fill $x $y $mir $spcb 1 $saradc_fill_nopower ${inst}_FILLB }
@@ -521,7 +521,7 @@ proc pos_caps {x y path ind pw ph} {
       set py [expr $y + $cap_sizey*$j]
       set mir [expr { $j % 2 ? "MX" : "R0" }]
       
-      puts "\[pos_caps\] place_inst -name \"$cap_inst\" -location \"$px $py\" -orientation $mir -status LOCKED"
+      # puts "\[pos_caps\] place_inst -name \"$cap_inst\" -location \"$px $py\" -orientation $mir -status LOCKED"
 
       if {[[$::block findInst $cap_inst] isPlaced] == 1} {
         [$::block findInst $cap_inst] setPlacementStatus UNPLACED
