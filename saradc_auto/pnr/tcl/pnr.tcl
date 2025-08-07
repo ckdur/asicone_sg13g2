@@ -92,10 +92,12 @@ initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $corearea
 # Only add the global connection to the digitals
 add_global_connection -net VDD -inst_pattern digital/.* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern digital/.* -pin_pattern {^vss$} -ground
+# Just to declare AVDD as a power net
+add_global_connection -net AVDD -pin_pattern {nothinghere} -power
 
 #set_voltage_domain -region ANALOG -power AVDD -ground VSS
 set_voltage_domain -region ANALOG -power AVDD -ground VSS
-set_voltage_domain -power VDD -ground VSS
+set_voltage_domain -power AVDD -ground VSS -secondary_power {AVDD}
 
 insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
 insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
@@ -111,6 +113,7 @@ set die_area [list [$die_area xMin] [$die_area yMin] [$die_area xMax] [$die_area
 set core_area [list [$core_area xMin] [$core_area yMin] [$core_area xMax] [$core_area yMax]]
 
 set dbu [$tech getDbUnitsPerMicron]
+set mgrid [$tech getManufacturingGrid]
 
 set die_coords {}
 set core_coords {}
@@ -188,10 +191,11 @@ set ntrack_capsw 3
 # sw number
 set nsw_vouthl 3
 
-# Get the abutment VDD size from the filler
-#set fill_obj [dbGet -p head.libCells.name SARADC_FILL1]
-#set fill_rail_obj [dbGet $fill_obj.pgTerms.pins.allShapes.shapes]
-#set abutsizey [dbGet [lindex $fill_rail_obj 0].rect_sizey]
+# Get the abutment VDD (or VSS) size from the filler
+set fill_lib [[::ord::get_db] findLib SARADC_FILL1]
+set fill_obj [$fill_lib findMaster SARADC_FILL1]
+set fill_rail_obj [lindex [$fill_obj getMTerms] 0]
+set abutsizey [expr 1.0*[[$fill_rail_obj getBBox] dy] / $dbu]
 
 # Put the power domain for Analog before anything else
 set tie_lib [[::ord::get_db] findLib $saradc_tap]
@@ -200,7 +204,9 @@ set sizetap [expr 1.0*[$tie_master getWidth] / $dbu]
 # setObjFPlanBox Group {Analog} [expr $corex-$sizetap] $corey $coreux $coreuy
 
 source tcl/saradc_pos.tcl
-#source tcl/saradc_conn.tcl
+source tcl/saradc_conn.tcl
+source tcl/comp_pos.tcl
+source tcl/filler_utils.tcl
 
 # Positioning of MSB/LSB H in the lower bound
 set posx_cdach [expr $sizetap+$corex]
@@ -250,7 +256,6 @@ set nrow_l [expr ceil($cdacy_l*$ny_l / $row)]
 set nrow_all [expr $nrow_h + $nrow_l + $nrow_asw]
 
 # Positioning of the comparator
-source tcl/comp_pos.tcl
 set sw_w [lindex $ret_sw 0]
 set ret_poscmp [pos_stdcell_comp [expr $posx_sw + $sw_w + 20*$track] $posy_sw analog.cmp]
 set compx [lindex $ret_poscmp 0]
@@ -265,13 +270,176 @@ set y2 [expr $coreuy]
 set area "$x1 $y1 $x2 $y2"
 create_blockage -region $area
 
-# Stripe connection for the VDDs and VSSs, mainly for taps
-# This is done from bottom to top, even to cover the rings
-#create_stripes_vdd_vss $posx_cdach 0 $cdacx_h $nx_h $fPlan_height $saradc_tap AVDD VSS [expr 2*$metal2_w]
+do_global_from_areas
+
+puts "\[Routing\] Creating vdd and vss for ties"
+create_stripes_vdd_vss $posx_cdach $corey $cdacx_h $nx_h $core_height $saradc_tap AVDD VSS [expr 2*$metal2_w]
+
+# Trace horizontal stripes for connecting VREFH, VIN, VIP for down, and VREFL, VIN, VIP for up
+puts "\[Routing\] Trace horizontal stripes for connecting VREFH, VIN, VIP for down, and VREFL, VIN, VIP for up"
+set midoff [expr $metal3_s+$metal3_py]
+set midspc [expr 2*$midoff]
+set midwidth [expr $row - $midspc]
+set x1 [expr 0]
+set x2 [expr $die_width]
+set y1 [expr $corey+$row*$nrow_h]
+set y2 [expr $y1 + $row*$nrow_hl_sw]
+set area "$x1 $y1 $x2 $y2"
+#setAddStripeMode -ignore_nondefault_domains true
+#setAddStripeMode -orthogonal_only true
+puts 1
+add_stripe_over_area {analog.VOUTH analog.VOUTL VREFH VIN VIP} $metal3 horizontal \
+  $midwidth $midspc 100 \
+  $midoff $area
+
+set y1 [expr $corey+$row*($nrow_h+$nrow_hl_sw+$nrow_sw)]
+set y2 [expr $corey+$row*($nrow_h+$nrow_asw)]
+set area "$x1 $y1 $x2 $y2"
+puts 2
+add_stripe_over_area {VIP VIN VREFL analog.VOUTL analog.VOUTH} $metal3 horizontal \
+  $midwidth $midspc 100 \
+  $midoff $area
+
+set strip_h {analog.VOUTH analog.VOUTL VREFH VIP VIN}
+set strip_l {analog.VOUTH analog.VOUTL VREFL VIP VIN}
+
+# This creates all the internal connections (Takes a LOT of time)
+puts "\[Routing\] This creates all the internal connections (Takes a LOT of time)"
+set wthird [expr 4*$metal4_w]
+set sthird [expr 2*$metal4_s]
+create_sw_conn $posx_sw $posy_sw analog.sw_vouth2voutl $cdacx_h $wthird $sthird $nsw_vouthl
+create_sw_cap_conn $posx_cdach $posy_cdach $posa_h $lsta_h $pw $ph $cdacx_h $cdacy_h $strip_h
+create_sw_cap_conn $posx_cdacl $posy_cdacl $posa_l $lsta_l $pw $ph $cdacx_h $cdacy_h $strip_l
+
+
+# Stripes for global connections
+# The first one should span from the bottom, up to the first three rows that overshoots
+#set y_hstripe [expr $posy_cdach + $cdacy_h*$ny_h]
+set y_hstripe [expr $posy_cdach]
+set uy_hstripe [expr $posy_cdach + ($nrow_h+$nrow_hl_sw)*$row - $midoff]
+create_stripes $posx_cdach $y_hstripe $cdacx_h $nx_h $uy_hstripe $strip_h $wthird $sthird
+# The second one should span from L origin minus three rows, up to the top
+set y_lstripe [expr $posy_cdacl - $row*$nrow_hl_sw + $midoff]
+#set uy_lstripe [expr $posy_cdacl]
+set uy_lstripe [expr $corey + $row*$nrow_all]
+create_stripes $posx_cdacl $y_lstripe $cdacx_l $nx_l $uy_lstripe $strip_l $wthird $sthird
+
+# Create the rings for fixing bits 1 and 3 of the ring DACs
+set wforth [expr 6*$metal5_w]
+set sforth [expr 6*$metal5_s]
+#setAddStripeMode -ignore_nondefault_domains true -stacked_via_top_layer M6 -stacked_via_bottom_layer M4
+
+set nx_l_2 [expr int($nx_l / 2)]
+set offset [expr $cdacy_l/2 - (2*$wforth+$sforth)/2]
+set x1 [expr $posx_cdacl + ($nx_l_2-2)*$cdacx_l]
+set x2 [expr $posx_cdacl + ($nx_l_2+2)*$cdacx_l]
+set y1 [expr $posy_cdacl + (1)*$cdacy_l]
+set y2 [expr $posy_cdacl + (2)*$cdacy_l]
+set area "$x1 $y1 $x2 $y2"
+add_stripe_over_area {analog.LSB_L_VSH[2] analog.LSB_L_FL[2]} $metal5 horizontal \
+    $wforth $sforth $cdacy_l \
+    $offset $area
+set x1 [expr $posx_cdacl + ($nx_l_2-3)*$cdacx_l]
+set x2 [expr $posx_cdacl + ($nx_l_2+3)*$cdacx_l]
+set y1 [expr $posy_cdacl + (2)*$cdacy_l]
+set y2 [expr $posy_cdacl + (4)*$cdacy_l]
+set area "$x1 $y1 $x2 $y2"
+add_stripe_over_area {analog.LSB_L_VSH[4] analog.LSB_L_FL[4]} $metal5 horizontal \
+    $wforth $sforth $cdacy_l \
+    $offset -area $area
+set x1 [expr $posx_cdacl + ($nx_l_2-1)*$cdacx_l]
+set x2 [expr $posx_cdacl + ($nx_l_2+1)*$cdacx_l]
+set offset [expr $cdacx_l/2 - (2*$wforth+$sforth)/2]
+set area "$x1 $y1 $x2 $y2"
+add_stripe_over_area {analog.LSB_L_VSH[4] analog.LSB_L_FL[4]} TopMetal1 vertical \
+    $wforth $sforth $cdacx_l \
+    $offset $area
+
+set nx_h_2 [expr int($nx_h / 2)]
+set offset [expr $cdacy_h/2 - (2*$wforth+$sforth)/2]
+set x1 [expr $posx_cdach + ($nx_h_2-2)*$cdacx_h]
+set x2 [expr $posx_cdach + ($nx_h_2+2)*$cdacx_h]
+set y1 [expr $posy_cdach + ($ny_h-2)*$cdacy_h]
+set y2 [expr $posy_cdach + ($ny_h-1)*$cdacy_h]
+set area "$x1 $y1 $x2 $y2"
+add_stripe_over_area {analog.LSB_H_VSH[2] analog.LSB_H_FL[2]} $metal5 horizontal \
+    $wforth $sforth $cdacy_h \
+    $offset -area $area
+set x1 [expr $posx_cdach + ($nx_h_2-3)*$cdacx_h]
+set x2 [expr $posx_cdach + ($nx_h_2+3)*$cdacx_h]
+set y1 [expr $posy_cdach + ($ny_h-4)*$cdacy_h]
+set y2 [expr $posy_cdach + ($ny_h-2)*$cdacy_h]
+set area "$x1 $y1 $x2 $y2"
+add_stripe_over_area {analog.LSB_H_VSH[4] analog.LSB_H_FL[4]} $metal5 horizontal \
+    $wforth $sforth $cdacy_h \
+    $offset -area $area
+set x1 [expr $posx_cdach + ($nx_h_2-1)*$cdacx_h]
+set x2 [expr $posx_cdach + ($nx_h_2+1)*$cdacx_h]
+set offset [expr $cdacx_h/2 - (2*$wforth+$sforth)/2]
+set area "$x1 $y1 $x2 $y2"
+add_stripe_over_area {analog.LSB_H_VSH[4] analog.LSB_H_FL[4]} TopMetal1 vertical \
+    $wforth $sforth $cdacx_h \
+    $offset $area
+
+# setAddStripeMode -reset 
+
+# A third one just for the switch. Only VOUTH and VOUTL
+set y_swstripe [expr $corey + $row*$nrow_h + $midoff]
+set uy_swstripe [expr $corey + $row*($nrow_h+$nrow_asw) - $midoff]
+set x1 [expr $corex + $track*4]
+set x2 [expr $x1 + 2*$wthird + 1*$sthird]
+set y1 [expr $y_swstripe]
+set y2 [expr $uy_swstripe]
+set area "$x1 $y1 $x2 $y2"
+# setAddStripeMode -orthogonal_only true
+add_stripe_over_area {analog.VOUTH analog.VOUTL} $metal4 vertical \
+  $wthird $sthird 100 \
+  0 $area
+
+# Put a blockage around all of $row width
+# addHaloToBlock -allBlock $row $row $row $row
+
+# Source if exists the pin file
+if {[file exists $PNR_DIR/tcl/$TOP.pins.tcl]} {
+  source $PNR_DIR/tcl/$TOP.pins.tcl
+}
+
+write_def $PNR_DIR/outputs/${TOP}.pre.def
+catch
+
+# Yeah this doesn't work. Is just a way to connect some pin to the outer ring
+# We still are a LOONG way until we have sroute compat
+add_sroute_connect -net "AVDD" -outerNet "AVDD" -layers "Metal1 Metal2" -cut_pitch {0 0} -insts [list {analog.dummy_h.dummy\[4\].dummy.cdac_unit_0_CAP_TAPB_0_0}] -metalwidths {100} -metalspaces {50} -ongrid {Metal1 Metal2}
+
+add_sroute_connect -net "AVDD" -outerNet "AVDD" -layers "Metal1 Metal2" -cut_pitch {0 0} -insts [list {analog.dummy_h.dummy\[4\].dummy.cdac_unit_0_CAP_TAPBB_0_0}] -metalwidths {1000 1000} -metalspaces {800 800} -ongrid {Metal1 Metal2}
 
 catch
 
+define_pdn_grid \
+    -existing \
+    -name analog_macro
 
+add_pdn_connect \
+    -grid analog_macro \
+    -layers "Metal1 Metal2"
+
+pdngen
+
+# Stripe connection for the VDDs and VSSs, mainly for taps
+# This is done from bottom to top, even to cover the rings
+define_pdn_grid \
+    -name analog_grid \
+    -starts_with POWER \
+    -voltage_domain ANALOG \
+    -pins "TopMetal1 Metal5"
+
+define_pdn_grid \
+    -macro \
+    -default \
+    -name analog_macro \
+    -starts_with POWER
+
+pdngen
 
 ####################################
 ## Tapcell insertion
@@ -282,40 +450,7 @@ tapcell\
     -endcap_master "$TAPCells"\
     -tapcell_master "$TAPCells"
 
-proc is_inside {or area} {
-    global dbu
-    set x [expr 1.0*[lindex $or 0] / $dbu]
-    set y [expr 1.0*[lindex $or 1] / $dbu]
-    set x0 [lindex $area 0]
-    set y0 [lindex $area 1]
-    set x1 [lindex $area 2]
-    set y1 [lindex $area 3]
-    set inside [expr ($x0 <= $x) && ($x <= $x1) && ($y0 <= $y) && ($y <= $y1)]
-    # puts "$dbu $x $y $area $inside"
-    return $inside
-}
-proc do_global_from_areas {} {
-    global digcorearea
-    set all_inst [$::block getInsts]
-    foreach inst $all_inst {
-        if {[$inst isPlaced] == 0} {
-            continue
-        }
-        set name [$inst getName]
-        set or [$inst getOrigin]
-        if {[is_inside $or $digcorearea] == 0} {
-            # Analog
-            # puts "analog for $name in $or"
-            add_global_connection -net AVDD -inst_pattern $name -pin_pattern {^vdd$} -power
-            add_global_connection -net VSS -inst_pattern $name -pin_pattern {^vss$} -ground
-        } else {
-            # Digital
-            # puts "digital for $name in $or"
-            add_global_connection -net VDD -inst_pattern $name -pin_pattern {^vdd$} -power
-            add_global_connection -net VSS -inst_pattern $name -pin_pattern {^vss$} -ground
-        }
-    }
-}
+
 #do_global_from_areas
 #global_connect
 

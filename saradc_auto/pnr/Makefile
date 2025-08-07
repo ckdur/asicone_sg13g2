@@ -28,6 +28,9 @@ $(PNR_DIR)/outputs/$(TOP).def: $(SYN_NET) $(SYN_DIG_NET) $(PNR_DIR)/tcl/pnr.tcl
 manual: $(SYN_NET) $(SYN_DIG_NET) $(PNR_DIR)/tcl/pnr.tcl
 	openroad -gui $(PNR_DIR)/tcl/pnr.tcl
 
+debug: $(SYN_NET) $(SYN_DIG_NET) $(PNR_DIR)/tcl/pnr.tcl
+	gdb --args openroad -gui $(PNR_DIR)/tcl/pnr.tcl
+
 clean:
 	rm -vrf fv/ outputs reports *.size *.log DesignLib
 
