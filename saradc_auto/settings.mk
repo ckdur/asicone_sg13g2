@@ -1,7 +1,7 @@
 #######################################################
 # Proportional dimmentions
 ROOT_DIR?=$(abspath .)
-TECH?=sg13g2
+TECH?=sg13g2f
 
 X=700
 Y=400

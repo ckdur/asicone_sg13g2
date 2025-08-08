@@ -117,7 +117,7 @@ proc pos_cdac_circle {x y pathlsb pathmsb pathdummy nbits pw ph tapcap spctap in
       # IF needed to be inverted, then just invert positions
       set j [expr $ncircle+1 - $j]
     }
-    lappend realpos "$i $j"
+    lappend realpos [list $i $j]
     set px [expr $x+$i*$cdacw]
     set py [lindex $y+$j*$cdach]
     set lrc 0
@@ -149,9 +149,9 @@ proc pos_cdac_circle {x y pathlsb pathmsb pathdummy nbits pw ph tapcap spctap in
       set j [expr $ncircle+1 - $j]
     }
     lappend realposdmy "$i $j"
-    set path ${pathdummy}.dummy\\\[${ind}\\\].dummy.cdac_unit
+    set path "${pathdummy}.dummy\\\[${ind}\\\].dummy.cdac_unit"
     set pind 0
-    lappend lstdmy "$path $pind"
+    lappend lstdmy [list $path $pind]
     set px [expr $x+$i*$cdacw]
     set py [lindex $y+$j*$cdach]
     set lrc 0

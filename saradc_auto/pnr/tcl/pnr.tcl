@@ -68,9 +68,15 @@ set DIODECells [list ]
 ####################################
 ## Floor Plan
 ####################################
+set ::chip [[::ord::get_db] getChip]
+set ::tech [[::ord::get_db] getTech]
+set ::block [$::chip getBlock]
+set dbu [$tech getDbUnitsPerMicron]
+
 # TODO: Is there a way to extract from a command?
-set row   6.12
-set track 0.34
+set siteobj [[[::ord::get_db] findLib sg13g2f] findSite obssite]
+set row   [expr 1.0*[$siteobj getHeight] / $dbu]
+set track [expr 1.0*[$siteobj getWidth] / $dbu]
 set pitch [expr 32*$row]
 set margin [expr 3*$row]
 
@@ -102,17 +108,12 @@ set_voltage_domain -power AVDD -ground VSS -secondary_power {AVDD}
 insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
 insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
 
-set ::chip [[::ord::get_db] getChip]
-set ::tech [[::ord::get_db] getTech]
-set ::block [$::chip getBlock]
-
 set die_area [$::block getDieArea]
 set core_area [$::block getCoreArea]
 
 set die_area [list [$die_area xMin] [$die_area yMin] [$die_area xMax] [$die_area yMax]]
 set core_area [list [$core_area xMin] [$core_area yMin] [$core_area xMax] [$core_area yMax]]
 
-set dbu [$tech getDbUnitsPerMicron]
 set mgrid [$tech getManufacturingGrid]
 
 set die_coords {}
@@ -261,19 +262,45 @@ set ret_poscmp [pos_stdcell_comp [expr $posx_sw + $sw_w + 20*$track] $posy_sw an
 set compx [lindex $ret_poscmp 0]
 set compy [lindex $ret_poscmp 1]
 
+# The blockages for avoiding std cells
+set x1 $corex
+set y1 $posy_cdach
+set x2 [expr $X*$dig_to_ana]
+set y2 [expr $posy_cdach + $row*($nrow_h+1)]
+set area "$x1 $y1 $x2 $y2"
+create_blockage -region $area
+
+set y1 [expr $posy_cdacl - $row]
+set y2 [expr $posy_cdacl + $row*$nrow_h]
+set area "$x1 $y1 $x2 $y2"
+create_blockage -region $area
+
 # Put a blockage to avoid joining
 # TODO: Maybe this can be achieved using ENDCAP?
 set x1 [expr $corex + $cdacx_h * $nx_h - 2*$row]
 set x2 [expr $corex + $cdacx_h * $nx_h + 2*$row]
 set y1 [expr $corey]
-set y2 [expr $coreuy]
 set area "$x1 $y1 $x2 $y2"
 create_blockage -region $area
 
+# Re-initialize the floorplan with the new y2
+set Y [expr $y2+$margin]
+set corearea "[expr $margin] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
+set digcorearea "[expr $X*$dig_to_ana] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
+set anacorearea "[expr $margin] [expr $margin] [expr $X*$dig_to_ana] [expr $Y-$margin]"
+set coreuy [expr $Y-$margin]
+set fPlan_height [expr $Y-2*$margin]
+
+set_domain_area CORE -area $digcorearea
+set_domain_area ANALOG -area $anacorearea
+initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $corearea
+
+# connect the fillers
 do_global_from_areas
 
+# Go for routing
 puts "\[Routing\] Creating vdd and vss for ties"
-create_stripes_vdd_vss $posx_cdach $corey $cdacx_h $nx_h $core_height $saradc_tap AVDD VSS [expr 2*$metal2_w]
+create_stripes_vdd_vss $posx_cdach $corey $cdacx_h $nx_h $fPlan_height $saradc_tap AVDD VSS [expr 2*$metal2_w]
 
 # Trace horizontal stripes for connecting VREFH, VIN, VIP for down, and VREFL, VIN, VIP for up
 puts "\[Routing\] Trace horizontal stripes for connecting VREFH, VIN, VIP for down, and VREFL, VIN, VIP for up"
@@ -287,7 +314,6 @@ set y2 [expr $y1 + $row*$nrow_hl_sw]
 set area "$x1 $y1 $x2 $y2"
 #setAddStripeMode -ignore_nondefault_domains true
 #setAddStripeMode -orthogonal_only true
-puts 1
 add_stripe_over_area {analog.VOUTH analog.VOUTL VREFH VIN VIP} $metal3 horizontal \
   $midwidth $midspc 100 \
   $midoff $area
@@ -295,7 +321,6 @@ add_stripe_over_area {analog.VOUTH analog.VOUTL VREFH VIN VIP} $metal3 horizonta
 set y1 [expr $corey+$row*($nrow_h+$nrow_hl_sw+$nrow_sw)]
 set y2 [expr $corey+$row*($nrow_h+$nrow_asw)]
 set area "$x1 $y1 $x2 $y2"
-puts 2
 add_stripe_over_area {VIP VIN VREFL analog.VOUTL analog.VOUTH} $metal3 horizontal \
   $midwidth $midspc 100 \
   $midoff $area
@@ -311,7 +336,7 @@ create_sw_conn $posx_sw $posy_sw analog.sw_vouth2voutl $cdacx_h $wthird $sthird 
 create_sw_cap_conn $posx_cdach $posy_cdach $posa_h $lsta_h $pw $ph $cdacx_h $cdacy_h $strip_h
 create_sw_cap_conn $posx_cdacl $posy_cdacl $posa_l $lsta_l $pw $ph $cdacx_h $cdacy_h $strip_l
 
-
+puts "\[Routing\] Stripes for global connections"
 # Stripes for global connections
 # The first one should span from the bottom, up to the first three rows that overshoots
 #set y_hstripe [expr $posy_cdach + $cdacy_h*$ny_h]
@@ -324,11 +349,13 @@ set y_lstripe [expr $posy_cdacl - $row*$nrow_hl_sw + $midoff]
 set uy_lstripe [expr $corey + $row*$nrow_all]
 create_stripes $posx_cdacl $y_lstripe $cdacx_l $nx_l $uy_lstripe $strip_l $wthird $sthird
 
+puts "\[Routing\] Create the rings for fixing bits 1 and 3 of the ring DACs"
 # Create the rings for fixing bits 1 and 3 of the ring DACs
 set wforth [expr 6*$metal5_w]
 set sforth [expr 6*$metal5_s]
 #setAddStripeMode -ignore_nondefault_domains true -stacked_via_top_layer M6 -stacked_via_bottom_layer M4
 
+puts "\[Routing\]    Phase 1"
 set nx_l_2 [expr int($nx_l / 2)]
 set offset [expr $cdacy_l/2 - (2*$wforth+$sforth)/2]
 set x1 [expr $posx_cdacl + ($nx_l_2-2)*$cdacx_l]
@@ -336,25 +363,28 @@ set x2 [expr $posx_cdacl + ($nx_l_2+2)*$cdacx_l]
 set y1 [expr $posy_cdacl + (1)*$cdacy_l]
 set y2 [expr $posy_cdacl + (2)*$cdacy_l]
 set area "$x1 $y1 $x2 $y2"
-add_stripe_over_area {analog.LSB_L_VSH[2] analog.LSB_L_FL[2]} $metal5 horizontal \
+add_stripe_over_area {analog.LSB_L_VSH\\\[2\\\] analog.LSB_L_FL\\\[2\\\]} $metal5 horizontal \
     $wforth $sforth $cdacy_l \
     $offset $area
-set x1 [expr $posx_cdacl + ($nx_l_2-3)*$cdacx_l]
-set x2 [expr $posx_cdacl + ($nx_l_2+3)*$cdacx_l]
-set y1 [expr $posy_cdacl + (2)*$cdacy_l]
-set y2 [expr $posy_cdacl + (4)*$cdacy_l]
-set area "$x1 $y1 $x2 $y2"
-add_stripe_over_area {analog.LSB_L_VSH[4] analog.LSB_L_FL[4]} $metal5 horizontal \
-    $wforth $sforth $cdacy_l \
-    $offset -area $area
-set x1 [expr $posx_cdacl + ($nx_l_2-1)*$cdacx_l]
-set x2 [expr $posx_cdacl + ($nx_l_2+1)*$cdacx_l]
-set offset [expr $cdacx_l/2 - (2*$wforth+$sforth)/2]
-set area "$x1 $y1 $x2 $y2"
-add_stripe_over_area {analog.LSB_L_VSH[4] analog.LSB_L_FL[4]} TopMetal1 vertical \
-    $wforth $sforth $cdacx_l \
-    $offset $area
+if {$nbits >= 5} {
+    set x1 [expr $posx_cdacl + ($nx_l_2-3)*$cdacx_l]
+    set x2 [expr $posx_cdacl + ($nx_l_2+3)*$cdacx_l]
+    set y1 [expr $posy_cdacl + (2)*$cdacy_l]
+    set y2 [expr $posy_cdacl + (4)*$cdacy_l]
+    set area "$x1 $y1 $x2 $y2"
+    add_stripe_over_area {analog.LSB_L_VSH\\\[4\\\] analog.LSB_L_FL\\\[4\\\]} $metal5 horizontal \
+        $wforth $sforth $cdacy_l \
+        $offset $area
+    set x1 [expr $posx_cdacl + ($nx_l_2-1)*$cdacx_l]
+    set x2 [expr $posx_cdacl + ($nx_l_2+1)*$cdacx_l]
+    set offset [expr $cdacx_l/2 - (2*$wforth+$sforth)/2]
+    set area "$x1 $y1 $x2 $y2"
+    add_stripe_over_area {analog.LSB_L_VSH\\\[4\\\] analog.LSB_L_FL\\\[4\\\]} TopMetal1 vertical \
+        $wforth $sforth $cdacx_l \
+        $offset $area
+}
 
+puts "\[Routing\]    Phase 2"
 set nx_h_2 [expr int($nx_h / 2)]
 set offset [expr $cdacy_h/2 - (2*$wforth+$sforth)/2]
 set x1 [expr $posx_cdach + ($nx_h_2-2)*$cdacx_h]
@@ -362,27 +392,30 @@ set x2 [expr $posx_cdach + ($nx_h_2+2)*$cdacx_h]
 set y1 [expr $posy_cdach + ($ny_h-2)*$cdacy_h]
 set y2 [expr $posy_cdach + ($ny_h-1)*$cdacy_h]
 set area "$x1 $y1 $x2 $y2"
-add_stripe_over_area {analog.LSB_H_VSH[2] analog.LSB_H_FL[2]} $metal5 horizontal \
+add_stripe_over_area {analog.LSB_H_VSH\\\[2\\\] analog.LSB_H_FL\\\[2\\\]} $metal5 horizontal \
     $wforth $sforth $cdacy_h \
-    $offset -area $area
-set x1 [expr $posx_cdach + ($nx_h_2-3)*$cdacx_h]
-set x2 [expr $posx_cdach + ($nx_h_2+3)*$cdacx_h]
-set y1 [expr $posy_cdach + ($ny_h-4)*$cdacy_h]
-set y2 [expr $posy_cdach + ($ny_h-2)*$cdacy_h]
-set area "$x1 $y1 $x2 $y2"
-add_stripe_over_area {analog.LSB_H_VSH[4] analog.LSB_H_FL[4]} $metal5 horizontal \
-    $wforth $sforth $cdacy_h \
-    $offset -area $area
-set x1 [expr $posx_cdach + ($nx_h_2-1)*$cdacx_h]
-set x2 [expr $posx_cdach + ($nx_h_2+1)*$cdacx_h]
-set offset [expr $cdacx_h/2 - (2*$wforth+$sforth)/2]
-set area "$x1 $y1 $x2 $y2"
-add_stripe_over_area {analog.LSB_H_VSH[4] analog.LSB_H_FL[4]} TopMetal1 vertical \
-    $wforth $sforth $cdacx_h \
     $offset $area
+if {$nbits >= 5} {
+    set x1 [expr $posx_cdach + ($nx_h_2-3)*$cdacx_h]
+    set x2 [expr $posx_cdach + ($nx_h_2+3)*$cdacx_h]
+    set y1 [expr $posy_cdach + ($ny_h-4)*$cdacy_h]
+    set y2 [expr $posy_cdach + ($ny_h-2)*$cdacy_h]
+    set area "$x1 $y1 $x2 $y2"
+    add_stripe_over_area {analog.LSB_H_VSH\\\[4\\\] analog.LSB_H_FL\\\[4\\\]} $metal5 horizontal \
+        $wforth $sforth $cdacy_h \
+        $offset $area
+    set x1 [expr $posx_cdach + ($nx_h_2-1)*$cdacx_h]
+    set x2 [expr $posx_cdach + ($nx_h_2+1)*$cdacx_h]
+    set offset [expr $cdacx_h/2 - (2*$wforth+$sforth)/2]
+    set area "$x1 $y1 $x2 $y2"
+    add_stripe_over_area {analog.LSB_H_VSH\\\[4\\\] analog.LSB_H_FL\\\[4\\\]} TopMetal1 vertical \
+        $wforth $sforth $cdacx_h \
+        $offset $area
+}
 
 # setAddStripeMode -reset 
 
+puts "\[Routing\]    Phase 3"
 # A third one just for the switch. Only VOUTH and VOUTL
 set y_swstripe [expr $corey + $row*$nrow_h + $midoff]
 set uy_swstripe [expr $corey + $row*($nrow_h+$nrow_asw) - $midoff]
