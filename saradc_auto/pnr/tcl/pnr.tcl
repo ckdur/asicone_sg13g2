@@ -204,6 +204,7 @@ set tie_master [$tie_lib findMaster $saradc_tap]
 set sizetap [expr 1.0*[$tie_master getWidth] / $dbu]
 # setObjFPlanBox Group {Analog} [expr $corex-$sizetap] $corey $coreux $coreuy
 
+source tcl/stripe.tcl
 source tcl/saradc_pos.tcl
 source tcl/saradc_conn.tcl
 source tcl/comp_pos.tcl

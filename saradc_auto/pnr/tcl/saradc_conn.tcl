@@ -1,139 +1,5 @@
-proc addStripe { args } {
-  sta::parse_key_args "addStripe" args \
-    keys {-nets -layer -direction -width -spacing -set_to_set_distance -start_from -start_offset -area} \
-    flags {}
-
-  if { ![info exists keys(-layer)] } {
-    utl::error PDN 1007 "The -layer argument is required."
-  }
-  if { ![info exists keys(-nets)] } {
-    utl::error PDN 1007 "The -nets argument is required."
-  }
-  
-  set nets $keys(-nets)
-  if {[llength $nets] == 1} {
-    set nets [list $nets]
-  }
-  set layer $keys(-layer)
-
-  set direction "horizontal"
-  if { [info exists keys(-direction)] } {
-    set direction $keys(-direction)
-  }
-
-  set width 0
-  if { [info exists keys(-width)] } {
-    set width $keys(-width)
-  }
-
-  set spacing 0
-  if { [info exists keys(-spacing)] } {
-    set spacing $keys(-spacing)
-  }
-
-  set ssdistance 0
-  if { [info exists keys(-set_to_set_distance)] } {
-    set ssdistance $keys(-set_to_set_distance)
-  }
-
-  set offset 0
-  if { [info exists keys(-start_offset)] } {
-    set offset $keys(-start_offset)
-  }
-
-  set area 0
-  if { [info exists keys(-area)] } {
-    set area $keys(-area)
-  }
-
-  puts "add_stripe_over_area $nets $layer $direction $width $spacing $ssdistance $offset $area"
-  add_stripe_over_area $nets $layer $direction $width $spacing $ssdistance $offset $area
-}
-
-proc add_stripe_over_area {nets layer direction width spacing ssdistance offset area} {
-  # Ahh yes. Is coming all together
-  global ::block
-  global tech
-  global dbu
-  set core_area [$::block getCoreArea]
-  set metal_obj [$tech findLayer $layer]
-  #set x0 [expr [lindex $area 0] + 1.0*[$core_area xMin] / $dbu]
-  #set y0 [expr [lindex $area 1] + 1.0*[$core_area yMin] / $dbu]
-  #set x1 [expr [lindex $area 2] + 1.0*[$core_area xMin] / $dbu]
-  #set y1 [expr [lindex $area 3] + 1.0*[$core_area yMin] / $dbu]
-  set x0 [lindex $area 0]
-  set y0 [lindex $area 1]
-  set x1 [lindex $area 2]
-  set y1 [lindex $area 3]
-  if {$direction == "horizontal"} {
-    set send [expr abs($y1-$y0)]
-  } else {
-    set send [expr abs($x1-$x0)]
-  }
-  set soffset $offset
-  set s $offset
-  set nnets [llength $nets]
-  set inet 0
-  if {$direction == "horizontal"} {
-    set isver 0
-  } else {
-    set isver 1
-  }
-  while {1} {
-    set s0 [expr $s]
-    set s1 [expr $s+$width]
-
-    # See if we need to break
-    if {$s0 > $send || $s1 > $send} {
-      break
-    }
-
-    # What is the actual box for drawing?
-    if {$direction == "horizontal"} {
-      set xl0 [expr int(round($x0*$dbu))]
-      set xl1 [expr int(round($x1*$dbu))]
-      set yl0 [expr int(round(($s0+$y0)*$dbu))]
-      set yl1 [expr int(round(($s1+$y0)*$dbu))]
-    } else {
-      set xl0 [expr int(round(($s0+$x0)*$dbu))]
-      set xl1 [expr int(round(($s1+$x0)*$dbu))]
-      set yl0 [expr int(round($y0*$dbu))]
-      set yl1 [expr int(round($y1*$dbu))]
-    }
-
-    # Just to be sure, we will use the fake connection of the net here
-    set netobj [$::block findNet [lindex $nets $inet]]
-    #puts "[lindex $nets $inet] $netobj"
-    set sigTyp [$netobj getSigType]
-    if {!($sigTyp == "GROUND" || $sigTyp == "POWER")} {
-      $netobj setSigType "POWER"
-    }
-    # Put it special also
-    if { [$netobj isSpecial] == 0 } {
-      $netobj setSpecial
-    }
-
-    # draw the stripe like a box (extracted from PdnGen.i:368)
-    set new_swire [odb::dbSWire_create $netobj ROUTED]
-    #puts "odb::dbSBox_create $new_swire $metal_obj $xl0 $yl0 $xl1 $yl1 STRIPE $isver"
-    odb::dbSBox_create $new_swire $metal_obj $xl0 $yl0 $xl1 $yl1 STRIPE $isver
-
-    # TODO: Search for the existing SRoutes, and other ITerms and see if they can
-    # connect (Very difficult huh)
-
-    # go for the next stripe
-    set inet [expr ($inet+1) % $nnets]
-    if {$inet == 0} {
-      set s [expr $soffset + $ssdistance]
-      set soffset [expr $soffset + $ssdistance] 
-    } else {
-      set s [expr $s1 + $spacing]
-    }
-  }
-}
-
 proc create_sw_conn {x y path sizex w s nsw} {
-  # setAddStripeMode -ignore_nondefault_domains true
+  setAddStripeMode -ignore_nondefault_domains true
   global metal2
   global metal2_px
   global metal2_w
@@ -154,7 +20,7 @@ proc create_sw_conn {x y path sizex w s nsw} {
       }
     }
   }
-  # setAddStripeMode -orthogonal_only false
+  setAddStripeMode -orthogonal_only false
   set all_zsnnets {}
   foreach inst $all_inst {
     # Extract the ZN, VDD, and VSS pins
@@ -262,7 +128,7 @@ proc create_sw_conn {x y path sizex w s nsw} {
       -width [expr $y2 - $y1] -spacing 0.0 -set_to_set_distance 100.0 \
       -start_from bottom -start_offset 0 -area $area
   }
-  # setAddStripeMode -reset
+  setAddStripeMode -reset
 }
 
 # Procedure for creating the following connections
@@ -274,7 +140,7 @@ proc create_sw_conn {x y path sizex w s nsw} {
 # 5. Connections of the global vertical stripes
 # It takes the result of positiong from the last call of "pos_cdac_circle" or similar
 proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
-  # setAddStripeMode -ignore_nondefault_domains true
+  setAddStripeMode -ignore_nondefault_domains true
   global metal2
   global metal2_px
   global metal2_w
@@ -293,7 +159,7 @@ proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
   # Iterate all CDACs
   set npos [llength $pos]
   for {set k 0} {$k < $npos} {incr k} {
-    # setAddStripeMode -orthogonal_only false
+    setAddStripeMode -orthogonal_only false
     set p [lindex $pos $k]
     set pi [lindex $p 0]
     set pj [lindex $p 1]
@@ -539,7 +405,7 @@ proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
       -start_from left -start_offset 0 -area $area
     # NOTE: As for the middle cap... we hope the switch connect it. Crossing fingers xoxo
     
-    # setAddStripeMode -orthogonal_only true
+    setAddStripeMode -orthogonal_only true
     
     # Search for the left and right neighboors
     # The criteria for now is comparing the vsh_name with the neighboor
@@ -619,10 +485,10 @@ proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
         -start_from bottom -start_offset 0 -area $area
     }
   }
-  # setAddStripeMode -reset
+  setAddStripeMode -reset
 
-  # setAddStripeMode -ignore_nondefault_domains true
-  # setAddStripeMode -orthogonal_only true -stacked_via_top_layer M4 -stacked_via_bottom_layer M3
+  setAddStripeMode -ignore_nondefault_domains true
+  setAddStripeMode -orthogonal_only true -stacked_via_top_layer $metal4 -stacked_via_bottom_layer $metal3
   set npos [llength $pos]
   for {set k 0} {$k < $npos} {incr k} {
     set p [lindex $pos $k]
@@ -697,17 +563,19 @@ proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
     set y1 [expr $y + ($pj)*$sizey + $margind]
     set y2 [expr $y + ($pj+1)*$sizey - $marginu]
     set area "$x1 $y1 $x2 $y2"
-    # setAddStripeMode -ignore_nondefault_domains true
-    # setAddStripeMode -orthogonal_only true -stacked_via_top_layer M4 -stacked_via_bottom_layer M3
+    setAddStripeMode -ignore_nondefault_domains true
+    setAddStripeMode -orthogonal_only true -stacked_via_top_layer $metal4 -stacked_via_bottom_layer $metal3
     addStripe -nets $nets -layer $metal4 -direction vertical \
       -width $wthird -spacing $sthird -set_to_set_distance $sizex \
       -start_from left -start_offset $offset -area $area
   }
-  # setAddStripeMode -reset
+  setAddStripeMode -reset
 }
 
 proc create_stripes_vdd_vss {x y sizex nx abssizey tapcap netvdd netvss w} {
   global metal2
+  global metal4
+  global metal1
   global abutsizey
   global dbu
   set tap_lib [[::ord::get_db] findLib $tapcap]
@@ -721,8 +589,8 @@ proc create_stripes_vdd_vss {x y sizex nx abssizey tapcap netvdd netvss w} {
   set area "$x1 $y1 $x2 $y2"
   
   set offset [expr $sizetap/2.0 - $w/2.0 + $sizetap]
-  #setAddStripeMode -ignore_nondefault_domains true
-  #setAddStripeMode -orthogonal_only true -stacked_via_top_layer M4 -stacked_via_bottom_layer M1
+  setAddStripeMode -ignore_nondefault_domains true
+  setAddStripeMode -orthogonal_only true -stacked_via_top_layer $metal4 -stacked_via_bottom_layer $metal1
   add_stripe_over_area [list $netvdd] $metal2 vertical $w 0.0 $sizex $offset $area
   #addStripe -nets $netvdd -layer $metal2 -direction vertical \
   #  -width $w -spacing 0.0 -set_to_set_distance $sizex \
@@ -732,11 +600,12 @@ proc create_stripes_vdd_vss {x y sizex nx abssizey tapcap netvdd netvss w} {
   #  -width $w -spacing 0.0 -set_to_set_distance $sizex \
   #  -start_from left -start_offset $offset -area $area
   add_stripe_over_area [list $netvss] $metal2 vertical $w 0.0 $sizex $offset $area
-  #setAddStripeMode -reset
+  setAddStripeMode -reset
 }
 
 proc create_stripes {x y sizex nx uy nets w s} {
   global metal4
+  global metal1
   global abutsizey
   set nnets [llength $nets]
   set netspan [expr ($nnets-1) * ($s+$w) + $w] 
@@ -747,11 +616,11 @@ proc create_stripes {x y sizex nx uy nets w s} {
   set y1 [expr $y - $abutsizey/2]
   set y2 [expr $uy]
   set area "$x1 $y1 $x2 $y2"
-  # setAddStripeMode -ignore_nondefault_domains true
-  # setAddStripeMode -orthogonal_only true -stacked_via_top_layer M4 -stacked_via_bottom_layer M3
+  setAddStripeMode -ignore_nondefault_domains true
+  setAddStripeMode -orthogonal_only true -stacked_via_top_layer $metal4 -stacked_via_bottom_layer $metal3
   addStripe -nets $nets -layer $metal4 -direction vertical \
     -width $w -spacing $s -set_to_set_distance $sizex \
     -start_from left -start_offset $offset -area $area
-  # setAddStripeMode -reset
+  setAddStripeMode -reset
 }
 
