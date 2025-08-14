@@ -605,6 +605,7 @@ proc create_stripes_vdd_vss {x y sizex nx abssizey tapcap netvdd netvss w} {
 
 proc create_stripes {x y sizex nx uy nets w s} {
   global metal4
+  global metal3
   global metal1
   global abutsizey
   set nnets [llength $nets]

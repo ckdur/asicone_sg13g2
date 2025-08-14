@@ -184,7 +184,7 @@ proc get_or_generate_via {blayer tlayer dx dy} {
     set dy2 [expr $vr_via_y*$rows + $vr_via_sy*($rows-1) + 2*$vr_enc2_y]
 
     while {[expr $dx1+$vr_via_px] < $dx && [expr $dx2+$vr_via_px] < $dx} {
-      incr rows
+      incr cols
       set dx1 [expr $vr_via_x*$cols + $vr_via_sx*($cols-1) + 2*$vr_enc1_x]
       set dx2 [expr $vr_via_x*$cols + $vr_via_sx*($cols-1) + 2*$vr_enc2_x]
     }
