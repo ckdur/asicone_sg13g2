@@ -112,8 +112,12 @@ proc get_or_generate_via {blayer tlayer dx dy} {
   global intermediate_routing_layers_
   global tech
   global ::block
+  global stacked_via_bottom_layer
+  global stacked_via_top_layer
   set nblayer [[$tech findLayer $blayer] getRoutingLevel]
   set ntlayer [[$tech findLayer $tlayer] getRoutingLevel]
+  set min_stack_level [[$tech findLayer $stacked_via_bottom_layer] getRoutingLevel]
+  set max_stack_level [[$tech findLayer $stacked_via_top_layer] getRoutingLevel]
   if {$nblayer == 0 || $ntlayer == 0} {
     return NULL
   }
@@ -123,10 +127,13 @@ proc get_or_generate_via {blayer tlayer dx dy} {
     set nblayer $ntlayer
     set ntlayer $tmp
   }
-  set vias {}
+  # Also, only do the selected global stack
+  set nblayer [expr max($nblayer, $min_stack_level)]
+  set ntlayer [expr min($ntlayer, $max_stack_level)]
   # Explore all the stack
   set nblayer [expr $nblayer-1]
   set ntlayer [expr $ntlayer-1]
+  set vias {}
   set ntblayer [expr $ntlayer-1]
   for {set i $nblayer} {$i <= $ntblayer} {incr i} {
     # Get this via generate
@@ -245,58 +252,89 @@ proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1} {
 
   # puts "Ortho, bottom, top: $stripe_ortho, $stacked_via_bottom_layer, $stacked_via_top_layer"
 
+  # Get all geoms
+  set geoms {}
   foreach iterm $iterms {
-    set geoms [$iterm getGeometries]
-    foreach geom $geoms {
-      set dbTechLayer [lindex $geom 0]
-      set dbRect [lindex $geom 1]
-      if {[$dbTechLayer getName] == $layer} {
-        # We skip geometries on the same layer. 
-        # If intersected, already connected.
+    set geoms [list {*}$geoms {*}[$iterm getGeometries]]
+  }
+  foreach swire [$netobj getSWires] {
+    foreach sbox [$swire getWires] {
+      if {[$sbox isVia] != 0} {
         continue
       }
-      set x0 [$dbRect xMin]
-      set y0 [$dbRect yMin]
-      set x1 [$dbRect xMax]
-      set y1 [$dbRect yMax]
-
-      # get the intersect, if exist
-      if {$x0 > $xl1 || $xl0 > $x1 || $y0 > $yl1 || $yl0 > $y1} {
-        continue
-      }
-      set xi0 [expr max($x0, $xl0)]
-      set yi0 [expr max($y0, $yl0)]
-      set xi1 [expr min($x1, $xl1)]
-      set yi1 [expr min($y1, $yl1)]
-      if {$xi0 > $xi1 || $yi0 > $yi1} {
-        continue
-      }
-      set isHorizontal 0
-      if {($xi1-$xi0) >= ($yi1-$yi0)} {
-        set isHorizontal 1
-      }
-      set isSHorizontal 0
-      if {$direction == "horizontal"} {
-        set isSHorizontal 1
-      }
-      if {$isHorizontal == $isSHorizontal && $stripe_ortho} {
-        # Only orthogonals
-        continue
-      }
-
-      # Check if the global stacking is ok?
-      set level_layer_1 [$dbTechLayer getRoutingLevel]
-      set level_layer_2 [$dbTechLayer getRoutingLevel]
-      set min_layer_layer [expr min($level_layer_1, $level_layer_2)]
-      set max_layer_layer [expr max($level_layer_1, $level_layer_2)]
-      # puts "$min_stack_level <= $min_layer_layer && $min_layer_layer <= $max_stack_level && $min_stack_level <= $max_layer_layer && $max_layer_layer <= $max_stack_level"
-      if {!($min_stack_level <= $min_layer_layer && $min_layer_layer <= $max_stack_level && $min_stack_level <= $max_layer_layer && $max_layer_layer <= $max_stack_level)} {
-        continue
-      }
-
-      # TODO: We need to merge with other existing shapes. That or, just remove some lef shinanigans
-      lappend commits [list $dbTechLayer [list $xi0 $yi0 $xi1 $yi1]]
+      lappend geoms [list [$sbox getTechLayer] $sbox]
     }
+  }
+
+  # Get all geoms that are not in the net
+  set other_geoms {}
+  set other_net_objs [$::block getNets]
+  foreach other_netobj $other_net_objs {
+    if {[$other_netobj getName] == $net} {
+      continue
+    }
+    set other_iterms [$other_netobj getITerms]
+    foreach iterm $other_iterms {
+      set other_geoms [list {*}$other_geoms {*}[$iterm getGeometries]]
+    }
+    foreach swire [$other_netobj getSWires] {
+      foreach sbox [$swire getWires] {
+        if {[$sbox isVia] != 0} {
+          continue
+        }
+        lappend other_geoms [list [$sbox getTechLayer] $sbox]
+      }
+    }
+  }
+
+  foreach geom $geoms {
+    lassign $geom dbTechLayer dbRect
+    if {[$dbTechLayer getName] == $layer} {
+      # We skip geometries on the same layer. 
+      # If intersected, already connected.
+      continue
+    }
+    set x0 [$dbRect xMin]
+    set y0 [$dbRect yMin]
+    set x1 [$dbRect xMax]
+    set y1 [$dbRect yMax]
+
+    # get the intersect, if exist
+    if {$x0 > $xl1 || $xl0 > $x1 || $y0 > $yl1 || $yl0 > $y1} {
+      continue
+    }
+    set xi0 [expr max($x0, $xl0)]
+    set yi0 [expr max($y0, $yl0)]
+    set xi1 [expr min($x1, $xl1)]
+    set yi1 [expr min($y1, $yl1)]
+    if {$xi0 > $xi1 || $yi0 > $yi1} {
+      continue
+    }
+    set isHorizontal 0
+    if {($xi1-$xi0) >= ($yi1-$yi0)} {
+      set isHorizontal 1
+    }
+    set isSHorizontal 0
+    if {$direction == "horizontal"} {
+      set isSHorizontal 1
+    }
+    if {$isHorizontal == $isSHorizontal && $stripe_ortho} {
+      # Only orthogonals
+      continue
+    }
+
+    # Check if the global stacking is ok?
+    set level_layer_1 [$dbTechLayer getRoutingLevel]
+    set level_layer_2 [$dbTechLayer getRoutingLevel]
+    set min_layer_layer [expr min($level_layer_1, $level_layer_2)]
+    set max_layer_layer [expr max($level_layer_1, $level_layer_2)]
+    # puts "$min_stack_level <= $min_layer_layer && $min_layer_layer <= $max_stack_level && $min_stack_level <= $max_layer_layer && $max_layer_layer <= $max_stack_level"
+    if {!($min_stack_level <= $min_layer_layer && $min_layer_layer <= $max_stack_level && $min_stack_level <= $max_layer_layer && $max_layer_layer <= $max_stack_level)} {
+      continue
+    }
+
+    # TODO: We need to merge with other existing shapes. That or, just remove some lef shinanigans
+    lappend commits [list $dbTechLayer [list $xi0 $yi0 $xi1 $yi1]]
   }
 
   foreach commit $commits {
