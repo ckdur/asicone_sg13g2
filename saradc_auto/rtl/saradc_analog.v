@@ -1,5 +1,6 @@
 // Definition of the SARADC from the analog perspective
 
+(* keep_hierarchy = "yes" *)
 module SARADC_ANALOG #(
   parameter integer NBITS = 8,
   parameter integer NPW = 3, // Number of caps in X for each CDAC unit

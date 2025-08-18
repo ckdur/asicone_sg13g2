@@ -51,3 +51,30 @@ proc pos_stdcell_comp {x y path} {
   set compy [expr 2*$row]
   return "$compx $compy"
 }
+
+proc pos_stdcell_box {x y width path} {
+  global dbu
+  global row
+  # A very simple and dummy stdcell placement
+  set stdcell_objs [filter_by_regex [list ${path}\..*] [$::block getInsts]]
+  set curx 0.0
+  set cury 0.0
+  set currot "R0"
+  foreach obj $stdcell_objs {
+    set inst [$obj getName]
+    set sizex [expr 1.0*[[$obj getMaster] getWidth] / $dbu]
+    set nextx [expr $curx+$sizex]
+    if {$nextx > $width} {
+      if {$currot == "R0"} {
+        set currot "MX"
+      } else {
+        set currot "R0"
+      }
+      set curx 0
+      set cury [expr $cury+$row]
+      set nextx [expr $sizex]
+    }
+    place_inst -name [list $inst] -location "[expr $x+$curx] [expr $y+$cury]" -orientation $currot -status PLACED
+    set curx $nextx
+  }
+}

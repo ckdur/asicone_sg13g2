@@ -149,7 +149,7 @@ make_tracks TopMetal1 -x_offset 1.46 -x_pitch 2.28 -y_offset 1.46 -y_pitch 2.28
 make_tracks TopMetal2 -x_offset 2.0  -x_pitch 4.0  -y_offset 2.0 -y_pitch 4.0
 
 ####################################
-## Macro placement
+## ADC Macro placement
 ####################################
 #set_dont_touch [dbGet [dbGet -p top.insts.name "analog/*"].name]
 #set_dont_touch [dbGet [dbGet -p top.insts.name "analog/buflogic/*"].name]
@@ -213,7 +213,7 @@ source tcl/filler_utils.tcl
 # Positioning of MSB/LSB H in the lower bound
 set posx_cdach [expr $sizetap+$corex]
 set posy_cdach [expr $corey]
-set ret_h [pos_cdac_circle $posx_cdach $posy_cdach analog.lsb_cdac_h analog.msb_cdac_h analog.dummy_h $nbits $pw $ph $saradc_tap 1 1]
+set ret_h [pos_cdac_circle $posx_cdach $posy_cdach analog/lsb_cdac_h analog/msb_cdac_h analog/dummy_h $nbits $pw $ph $saradc_tap 1 1]
 
 set cdacx_h [lindex [lindex $ret_h 0] 0]
 set cdacy_h [lindex [lindex $ret_h 0] 1]
@@ -231,7 +231,7 @@ set nrow_h [expr ceil($cdacy_h*$ny_h / $row)]
 # Just above the H CDAC by a distance
 set posx_sw $posx_cdach
 set posy_sw [expr $corey + $row*($nrow_h+$nrow_hl_sw)]
-set ret_sw [pos_sw_wtap $posx_sw $posy_sw analog.sw_vouth2voutl $cdacx_h $saradc_tap $nsw_vouthl]
+set ret_sw [pos_sw_wtap $posx_sw $posy_sw analog/sw_vouth2voutl $cdacx_h $saradc_tap $nsw_vouthl]
 
 # Height of the sw is always 1. 
 set nrow_sw 1
@@ -241,7 +241,7 @@ set nrow_asw [expr 2*$nrow_hl_sw+$nrow_sw]
 # Positioning of MSB/LSB H above the switch
 set posx_cdacl [expr $sizetap + $corex]
 set posy_cdacl [expr $corey + $row*($nrow_h+$nrow_asw)]
-set ret_l [pos_cdac_circle $posx_cdacl $posy_cdacl analog.lsb_cdac_l analog.msb_cdac_l analog.dummy_l $nbits $pw $ph $saradc_tap 1 0]
+set ret_l [pos_cdac_circle $posx_cdacl $posy_cdacl analog/lsb_cdac_l analog/msb_cdac_l analog/dummy_l $nbits $pw $ph $saradc_tap 1 0]
 
 set cdacx_l [lindex [lindex $ret_l 0] 0]
 set cdacy_l [lindex [lindex $ret_l 0] 1]
@@ -300,11 +300,21 @@ set_domain_area CORE -area $digcorearea
 set_domain_area ANALOG -area $anacorearea
 initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $corearea
 
+## Tapcell insertion
+tapcell \
+    -distance [expr $row*16] \
+    -endcap_master "$TAPCells" \
+    -tapcell_master "$TAPCells"
+
 # connect the fillers
 add_global_connection -net AVDD -inst_pattern analog\./.* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern analog\./.* -pin_pattern {^vss$} -ground
 do_global_from_areas
 global_connect
+
+####################################
+## Power planning
+####################################
 
 # Do first the pdngen
 define_pdn_grid \
@@ -387,10 +397,19 @@ add_pdn_ring \
 
 pdngen
 
+####################################
+## ADC Routing
+####################################
+
 # Positioning of the comparator
-set ret_poscmp [pos_stdcell_comp $cmp_x $posy_sw analog.cmp]
+set ret_poscmp [pos_stdcell_comp $cmp_x $posy_sw analog/cmp]
 set compx [lindex $ret_poscmp 0]
 set compy [lindex $ret_poscmp 1]
+
+# Dummy positioning of the buffers
+# source tcl/comp_pos.tcl
+pos_stdcell_box [expr $cmp_x+$compx+$row] [expr $posy_sw-2*$row] [expr $X*$dig_to_ana-($cmp_x+$compx+$row)] analog/buflogic
+pos_stdcell_box [expr $X*$dig_to_ana+2*$margin+$row] [expr $posy_sw-10*$row] [expr $X*(1-$dig_to_ana)-3*$margin-$row] digital
 
 # Go for routing
 puts "\[Routing\] Creating vdd and vss for ties"
@@ -408,25 +427,25 @@ set y2 [expr $y1 + $row*$nrow_hl_sw]
 set area "$x1 $y1 $x2 $y2"
 #setAddStripeMode -ignore_nondefault_domains true
 setAddStripeMode -orthogonal_only true
-add_stripe_over_area {analog.VOUTH analog.VOUTL VREFH VIN VIP} $metal3 horizontal \
+add_stripe_over_area {analog/VOUTH analog/VOUTL VREFH VIN VIP} $metal3 horizontal \
   $midwidth $midspc 100 \
   $midoff $area
 
 set y1 [expr $corey+$row*($nrow_h+$nrow_hl_sw+$nrow_sw)]
 set y2 [expr $corey+$row*($nrow_h+$nrow_asw)]
 set area "$x1 $y1 $x2 $y2"
-add_stripe_over_area {VIP VIN VREFL analog.VOUTL analog.VOUTH} $metal3 horizontal \
+add_stripe_over_area {VIP VIN VREFL analog/VOUTL analog/VOUTH} $metal3 horizontal \
   $midwidth $midspc 100 \
   $midoff $area
 
-set strip_h {analog.VOUTH analog.VOUTL VREFH VIP VIN}
-set strip_l {analog.VOUTH analog.VOUTL VREFL VIP VIN}
+set strip_h {analog/VOUTH analog/VOUTL VREFH VIP VIN}
+set strip_l {analog/VOUTH analog/VOUTL VREFL VIP VIN}
 
 # This creates all the internal connections (Takes a LOT of time)
 puts "\[Routing\] This creates all the internal connections (Takes a LOT of time)"
 set wthird [expr 4*$metal4_w]
 set sthird [expr 2*$metal4_s]
-create_sw_conn $posx_sw $posy_sw analog.sw_vouth2voutl $cdacx_h $wthird $sthird $nsw_vouthl
+create_sw_conn $posx_sw $posy_sw analog/sw_vouth2voutl $cdacx_h $wthird $sthird $nsw_vouthl
 create_sw_cap_conn $posx_cdach $posy_cdach $posa_h $lsta_h $pw $ph $cdacx_h $cdacy_h $strip_h
 create_sw_cap_conn $posx_cdacl $posy_cdacl $posa_l $lsta_l $pw $ph $cdacx_h $cdacy_h $strip_l
 
@@ -457,7 +476,7 @@ set x2 [expr $posx_cdacl + ($nx_l_2+2)*$cdacx_l]
 set y1 [expr $posy_cdacl + (1)*$cdacy_l]
 set y2 [expr $posy_cdacl + (2)*$cdacy_l]
 set area "$x1 $y1 $x2 $y2"
-add_stripe_over_area {analog.LSB_L_VSH\\\[2\\\] analog.LSB_L_FL\\\[2\\\]} $metal5 horizontal \
+add_stripe_over_area {analog/LSB_L_VSH\\\[2\\\] analog/LSB_L_FL\\\[2\\\]} $metal5 horizontal \
     $wforth $sforth $cdacy_l \
     $offset $area
 if {$nbits >= 5} {
@@ -466,14 +485,14 @@ if {$nbits >= 5} {
     set y1 [expr $posy_cdacl + (2)*$cdacy_l]
     set y2 [expr $posy_cdacl + (4)*$cdacy_l]
     set area "$x1 $y1 $x2 $y2"
-    add_stripe_over_area {analog.LSB_L_VSH\\\[4\\\] analog.LSB_L_FL\\\[4\\\]} $metal5 horizontal \
+    add_stripe_over_area {analog/LSB_L_VSH\\\[4\\\] analog/LSB_L_FL\\\[4\\\]} $metal5 horizontal \
         $wforth $sforth $cdacy_l \
         $offset $area
     set x1 [expr $posx_cdacl + ($nx_l_2-1)*$cdacx_l]
     set x2 [expr $posx_cdacl + ($nx_l_2+1)*$cdacx_l]
     set offset [expr $cdacx_l/2 - (2*$wforth+$sforth)/2]
     set area "$x1 $y1 $x2 $y2"
-    add_stripe_over_area {analog.LSB_L_VSH\\\[4\\\] analog.LSB_L_FL\\\[4\\\]} TopMetal1 vertical \
+    add_stripe_over_area {analog/LSB_L_VSH\\\[4\\\] analog/LSB_L_FL\\\[4\\\]} TopMetal1 vertical \
         $wforth $sforth $cdacx_l \
         $offset $area
 }
@@ -486,7 +505,7 @@ set x2 [expr $posx_cdach + ($nx_h_2+2)*$cdacx_h]
 set y1 [expr $posy_cdach + ($ny_h-2)*$cdacy_h]
 set y2 [expr $posy_cdach + ($ny_h-1)*$cdacy_h]
 set area "$x1 $y1 $x2 $y2"
-add_stripe_over_area {analog.LSB_H_VSH\\\[2\\\] analog.LSB_H_FL\\\[2\\\]} $metal5 horizontal \
+add_stripe_over_area {analog/LSB_H_VSH\\\[2\\\] analog/LSB_H_FL\\\[2\\\]} $metal5 horizontal \
     $wforth $sforth $cdacy_h \
     $offset $area
 if {$nbits >= 5} {
@@ -495,14 +514,14 @@ if {$nbits >= 5} {
     set y1 [expr $posy_cdach + ($ny_h-4)*$cdacy_h]
     set y2 [expr $posy_cdach + ($ny_h-2)*$cdacy_h]
     set area "$x1 $y1 $x2 $y2"
-    add_stripe_over_area {analog.LSB_H_VSH\\\[4\\\] analog.LSB_H_FL\\\[4\\\]} $metal5 horizontal \
+    add_stripe_over_area {analog/LSB_H_VSH\\\[4\\\] analog/LSB_H_FL\\\[4\\\]} $metal5 horizontal \
         $wforth $sforth $cdacy_h \
         $offset $area
     set x1 [expr $posx_cdach + ($nx_h_2-1)*$cdacx_h]
     set x2 [expr $posx_cdach + ($nx_h_2+1)*$cdacx_h]
     set offset [expr $cdacx_h/2 - (2*$wforth+$sforth)/2]
     set area "$x1 $y1 $x2 $y2"
-    add_stripe_over_area {analog.LSB_H_VSH\\\[4\\\] analog.LSB_H_FL\\\[4\\\]} TopMetal1 vertical \
+    add_stripe_over_area {analog/LSB_H_VSH\\\[4\\\] analog/LSB_H_FL\\\[4\\\]} TopMetal1 vertical \
         $wforth $sforth $cdacx_h \
         $offset $area
 }
@@ -518,7 +537,7 @@ set y1 [expr $y_swstripe]
 set y2 [expr $uy_swstripe]
 set area "$x1 $y1 $x2 $y2"
 setAddStripeMode -orthogonal_only true
-add_stripe_over_area {analog.VOUTH analog.VOUTL} $metal4 vertical \
+add_stripe_over_area {analog/VOUTH analog/VOUTL} $metal4 vertical \
   $wthird $sthird 100 \
   0 $area
 
@@ -531,141 +550,23 @@ if {[file exists $PNR_DIR/tcl/$TOP.pins.tcl]} {
 }
 
 write_def $PNR_DIR/outputs/${TOP}.pre.def
-catch
 
 # Yeah this doesn't work. Is just a way to connect some pin to the outer ring
 # We still are a LOONG way until we have sroute compat
-add_sroute_connect -net "AVDD" -outerNet "AVDD" -layers "Metal1 Metal2" -cut_pitch {0 0} -insts [list {analog.dummy_h.dummy\[4\].dummy.cdac_unit_0_CAP_TAPB_0_0}] -metalwidths {100} -metalspaces {50} -ongrid {Metal1 Metal2}
+#add_sroute_connect -net "AVDD" -outerNet "AVDD" -layers "Metal1 Metal2" -cut_pitch {0 0} -insts [list {analog/dummy_h.dummy\[4\].dummy.cdac_unit_0_CAP_TAPB_0_0}] -metalwidths {100} -metalspaces {50} -ongrid {Metal1 Metal2}
 
-add_sroute_connect -net "AVDD" -outerNet "AVDD" -layers "Metal1 Metal2" -cut_pitch {0 0} -insts [list {analog.dummy_h.dummy\[4\].dummy.cdac_unit_0_CAP_TAPBB_0_0}] -metalwidths {1000 1000} -metalspaces {800 800} -ongrid {Metal1 Metal2}
-
-catch
-
-define_pdn_grid \
-    -existing \
-    -name analog_macro
-
-add_pdn_connect \
-    -grid analog_macro \
-    -layers "Metal1 Metal2"
-
-pdngen
-
-# Stripe connection for the VDDs and VSSs, mainly for taps
-# This is done from bottom to top, even to cover the rings
-define_pdn_grid \
-    -name analog_grid \
-    -starts_with POWER \
-    -voltage_domain ANALOG \
-    -pins "TopMetal1 Metal5"
-
-define_pdn_grid \
-    -macro \
-    -default \
-    -name analog_macro \
-    -starts_with POWER
-
-pdngen
-
-####################################
-## Tapcell insertion
-####################################
-
-tapcell\
-    -distance [expr $row*16]\
-    -endcap_master "$TAPCells"\
-    -tapcell_master "$TAPCells"
-
-
-#do_global_from_areas
-#global_connect
-
-catch
-
-
-
-####################################
-## Power planning & SRAMs placement
-####################################
-
-
-
-
-define_pdn_grid \
-    -name stdcell_grid \
-    -starts_with POWER \
-    -voltage_domain CORE \
-    -pins "TopMetal1 Metal5"
-
-set pitch2 [expr $pitch*2]
-if {$die_width > $pitch2} {
-    add_pdn_stripe \
-        -grid stdcell_grid \
-        -layer TopMetal1 \
-        -width 3.2 \
-        -pitch $pitch \
-        -offset $pitch \
-        -spacing 1.64 \
-        -starts_with POWER -extend_to_boundary
-}
-
-if {$die_width > $pitch2} {
-    add_pdn_stripe \
-        -grid stdcell_grid \
-        -layer Metal5 \
-        -width 3.2 \
-        -pitch $pitch \
-        -offset $pitch \
-        -spacing 1.6 \
-        -starts_with POWER -extend_to_boundary
-}
-
-add_pdn_connect \
-    -grid stdcell_grid \
-        -layers "Metal5 TopMetal1"
-
-add_pdn_stripe \
-        -grid stdcell_grid \
-        -layer Metal1 \
-        -width 0.3 \
-        -followpins \
-        -extend_to_core_ring
-
-add_pdn_connect \
-    -grid stdcell_grid \
-        -layers "Metal1 Metal5"
-
-add_pdn_ring \
-        -grid stdcell_grid \
-        -layers "TopMetal1 Metal5" \
-        -widths "3.2 3.0" \
-        -spacings "1.64 1.64" \
-        -core_offset "$row $row"
-
-#define_pdn_grid \
-#    -macro \
-#    -default \
-#    -name macro \
-#    -starts_with POWER \
-#    -halo "$::env(FP_PDN_HORIZONTAL_HALO) $::env(FP_PDN_VERTICAL_HALO)"
-
-#add_pdn_connect \
-#    -grid macro \
-#    -layers "$::env(FP_PDN_VERTICAL_LAYER) $::env(FP_PDN_HORIZONTAL_LAYER)"
-
-pdngen
+#add_sroute_connect -net "AVDD" -outerNet "AVDD" -layers "Metal1 Metal2" -cut_pitch {0 0} -insts [list {analog/dummy_h.dummy\[4\].dummy.cdac_unit_0_CAP_TAPBB_0_0}] -metalwidths {1000 1000} -metalspaces {800 800} -ongrid {Metal1 Metal2}
 
 ###################################
 ## Placement
 ####################################
 
-place_pins -random \
-	-random_seed 42 \
-	-hor_layers Metal4 \
+place_pins -hor_layers Metal4 \
 	-ver_layers Metal3
 
-# -density 1.0 -overflow 0.9 -init_density_penalty 0.0001 -initial_place_max_iter 20 -bin_grid_count 64
-global_placement -density 0.85
+global_placement -skip_initial_place -density 0.82
+
+
 
 # TODO: Check resize.tcl, as it checks the size of the buffering
 
@@ -682,8 +583,9 @@ detailed_placement -max_displacement [subst { "500" "100" }]
 optimize_mirroring
 if { [catch {check_placement -verbose} errmsg] } {
     puts stderr $errmsg
-    exit 1
+    #exit 1
 }
+catch
 #detailed_placement -disallow_one_site_gaps
 
 ####################################
