@@ -109,6 +109,7 @@ proc get_via_name {layer1 layer2 dx dy rows cols pitchx pitchy} {
 }
 
 proc get_or_generate_via {blayer tlayer dx dy} {
+  # puts "\[get_or_generate_via\] $blayer $tlayer $dx $dy"
   global intermediate_routing_layers_
   global tech
   global ::block
@@ -236,14 +237,13 @@ proc get_or_generate_via {blayer tlayer dx dy} {
   return $vias
 }
 
-proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1} {
+proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1 geoms other_geoms} {
   global stripe_ortho
   global stacked_via_bottom_layer
   global stacked_via_top_layer
   global tech
   global ::block
   set netobj [$::block findNet $net]
-  set iterms [$netobj getITerms]
   set commits {}
   set new_swire [odb::dbSWire_create $netobj ROUTED]
   set layerobj [$tech findLayer $layer]
@@ -252,44 +252,10 @@ proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1} {
 
   # puts "Ortho, bottom, top: $stripe_ortho, $stacked_via_bottom_layer, $stacked_via_top_layer"
 
-  # Get all geoms
-  set geoms {}
-  foreach iterm $iterms {
-    set geoms [list {*}$geoms {*}[$iterm getGeometries]]
-  }
-  foreach swire [$netobj getSWires] {
-    foreach sbox [$swire getWires] {
-      if {[$sbox isVia] != 0} {
-        continue
-      }
-      lappend geoms [list [$sbox getTechLayer] $sbox]
-    }
-  }
-
-  # Get all geoms that are not in the net
-  set other_geoms {}
-  set other_net_objs [$::block getNets]
-  foreach other_netobj $other_net_objs {
-    if {[$other_netobj getName] == $net} {
-      continue
-    }
-    set other_iterms [$other_netobj getITerms]
-    foreach iterm $other_iterms {
-      set other_geoms [list {*}$other_geoms {*}[$iterm getGeometries]]
-    }
-    foreach swire [$other_netobj getSWires] {
-      foreach sbox [$swire getWires] {
-        if {[$sbox isVia] != 0} {
-          continue
-        }
-        lappend other_geoms [list [$sbox getTechLayer] $sbox]
-      }
-    }
-  }
-
   foreach geom $geoms {
     lassign $geom dbTechLayer dbRect
-    if {[$dbTechLayer getName] == $layer} {
+    set ilayer [$dbTechLayer getName]
+    if {$ilayer == $layer} {
       # We skip geometries on the same layer. 
       # If intersected, already connected.
       continue
@@ -310,8 +276,10 @@ proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1} {
     if {$xi0 > $xi1 || $yi0 > $yi1} {
       continue
     }
+
+    # Check for orthogonals
     set isHorizontal 0
-    if {($xi1-$xi0) >= ($yi1-$yi0)} {
+    if {($x1-$x0) >= ($y1-$y0)} {
       set isHorizontal 1
     }
     set isSHorizontal 0
@@ -325,11 +293,61 @@ proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1} {
 
     # Check if the global stacking is ok?
     set level_layer_1 [$dbTechLayer getRoutingLevel]
-    set level_layer_2 [$dbTechLayer getRoutingLevel]
-    set min_layer_layer [expr min($level_layer_1, $level_layer_2)]
-    set max_layer_layer [expr max($level_layer_1, $level_layer_2)]
-    # puts "$min_stack_level <= $min_layer_layer && $min_layer_layer <= $max_stack_level && $min_stack_level <= $max_layer_layer && $max_layer_layer <= $max_stack_level"
-    if {!($min_stack_level <= $min_layer_layer && $min_layer_layer <= $max_stack_level && $min_stack_level <= $max_layer_layer && $max_layer_layer <= $max_stack_level)} {
+    set level_layer_2 [$layerobj getRoutingLevel]
+    set min_layer_level [expr min($level_layer_1, $level_layer_2)]
+    set max_layer_level [expr max($level_layer_1, $level_layer_2)]
+    # puts "$min_stack_level <= $min_layer_level && $min_layer_level <= $max_stack_level && $min_stack_level <= $max_layer_level && $max_layer_level <= $max_stack_level"
+    if {!($min_stack_level <= $min_layer_level && $min_layer_level <= $max_stack_level && $min_stack_level <= $max_layer_level && $max_layer_level <= $max_stack_level)} {
+      continue
+    }
+
+    # Explore the previous ones and see if there is an adjacent geom
+    set dx [expr abs($xi1-$xi0)]
+    set dy [expr abs($yi1-$yi0)]
+    set larea [expr $dx*$dy]
+
+    set icommit 0
+    set adj_skip 0
+    foreach commit $commits {
+      lassign $commit dbaTechLayer aarea
+      set alayer [$dbaTechLayer getName]
+      set alevel [$dbaTechLayer getRoutingLevel]
+      lassign $aarea xia0 yia0 xia1 yia1
+      # Check if intersects in an attempted layer range
+      if {!($xi0 > $xia1 || $xia0 > $xi1 || $yi0 > $yia1 || $yia0 > $yi1) && $alayer != $ilayer} {
+        set min_alayer_level [expr min($alevel, $level_layer_2)]
+        set max_alayer_level [expr max($alevel, $level_layer_2)]
+        if {$min_layer_level <= $alevel && $alevel <= $max_layer_level} {
+          # The current one is interferring with other commit. Skip
+          set adj_skip 1
+          break
+        } elseif {$min_alayer_level <= $level_layer_1 && $level_layer_1 <= $max_alayer_level} {
+          # The current one is interferring. Delete the explored one. Do not pass "go"
+          set commits [lreplace $commits $icommit $icommit]
+          continue
+        } else {
+          # NOTE: This is legal.
+        }
+      }
+      # Check adjacent for the same layer
+      if {($xi0 == $xia1 || $xi1 == $xia0 || $yi0 == $yia1 || $yi1 == $yia0) && $alayer == $ilayer} {
+        set dax [expr abs($xia1-$xia0)]
+        set day [expr abs($yia1-$yia0)]
+        set laarea [expr $dax*$day]
+        # Is adjacent to a previously commited one. Lets see which one is bigger
+        if {$larea > $laarea} {
+          # The current one is bigger. Delete the explored one. Do not pass "go"
+          set commits [lreplace $commits $icommit $icommit]
+          continue
+        } else {
+          # The explored one is bigger. We just skip this one
+          set adj_skip 1
+          break
+        }
+      }
+      incr icommit
+    }
+    if {$adj_skip} {
       continue
     }
 
@@ -386,6 +404,53 @@ proc add_stripe_over_area {nets layer direction width spacing ssdistance offset 
   } else {
     set isver 1
   }
+
+  # Preload all the geoms and other geoms
+  set list_geoms {}
+  set list_other_geoms {}
+
+  foreach net $nets { 
+    set netobj [$::block findNet $net]
+    set iterms [$netobj getITerms]
+    # Get all geoms
+    set geoms {}
+    foreach iterm $iterms {
+      set geoms [list {*}$geoms {*}[$iterm getGeometries]]
+    }
+    foreach swire [$netobj getSWires] {
+      foreach sbox [$swire getWires] {
+        if {[$sbox isVia] != 0} {
+          continue
+        }
+        lappend geoms [list [$sbox getTechLayer] $sbox]
+      }
+    }
+    lappend list_geoms $geoms
+
+    # Get all geoms that are not in the net
+    set other_geoms {}
+    #set other_net_objs [$::block getNets]  # TODO: Re-enable this
+    set other_net_objs {}
+    foreach other_netobj $other_net_objs {
+      if {[$other_netobj getName] == $net} {
+        continue
+      }
+      set other_iterms [$other_netobj getITerms]
+      foreach iterm $other_iterms {
+        set other_geoms [list {*}$other_geoms {*}[$iterm getGeometries]]
+      }
+      foreach swire [$other_netobj getSWires] {
+        foreach sbox [$swire getWires] {
+          if {[$sbox isVia] != 0} {
+            continue
+          }
+          lappend other_geoms [list [$sbox getTechLayer] $sbox]
+        }
+      }
+    }
+    lappend list_other_geoms $other_geoms
+  }
+
   while {1} {
     set s0 [expr $s]
     set s1 [expr $s+$width]
@@ -410,6 +475,8 @@ proc add_stripe_over_area {nets layer direction width spacing ssdistance offset 
 
     # Just to be sure, we will use the fake connection of the net here
     set net [lindex $nets $inet]
+    set geoms [lindex $list_geoms $inet]
+    set other_geoms [lindex $list_other_geoms $inet]
     set netobj [$::block findNet $net]
     #puts "[lindex $nets $inet] $netobj"
     set sigTyp [$netobj getSigType]
@@ -426,7 +493,7 @@ proc add_stripe_over_area {nets layer direction width spacing ssdistance offset 
     #puts "odb::dbSBox_create $new_swire $metal_obj $xl0 $yl0 $xl1 $yl1 STRIPE $isver"
     odb::dbSBox_create $new_swire $metal_obj $xl0 $yl0 $xl1 $yl1 STRIPE $isver
     # puts "add_vias_over_area $net $layer $direction $xl0 $yl0 $xl1 $yl1"
-    add_vias_over_area $net $layer $direction $xl0 $yl0 $xl1 $yl1
+    add_vias_over_area $net $layer $direction $xl0 $yl0 $xl1 $yl1 $geoms $other_geoms
 
     # TODO: Search for the existing SRoutes, and other ITerms and see if they can
     # connect (Very difficult huh)

@@ -349,6 +349,7 @@ set y_lstripe [expr $posy_cdacl - $row*$nrow_hl_sw + $midoff]
 #set uy_lstripe [expr $posy_cdacl]
 set uy_lstripe [expr $corey + $row*$nrow_all]
 create_stripes $posx_cdacl $y_lstripe $cdacx_l $nx_l $uy_lstripe $strip_l $wthird $sthird
+catch
 
 puts "\[Routing\] Create the rings for fixing bits 1 and 3 of the ring DACs"
 # Create the rings for fixing bits 1 and 3 of the ring DACs
