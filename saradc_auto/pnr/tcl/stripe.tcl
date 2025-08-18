@@ -276,6 +276,10 @@ proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1 geoms other_geoms} 
     if {$xi0 > $xi1 || $yi0 > $yi1} {
       continue
     }
+    #if {$yi0 == 0 && $yi1 == 150} {
+    #  puts "I fucked up $xi0 $yi0 $xi1 $yi1"
+    #  puts "The geom is $geom"
+    #}
 
     # Check for orthogonals
     set isHorizontal 0
@@ -415,6 +419,10 @@ proc add_stripe_over_area {nets layer direction width spacing ssdistance offset 
     # Get all geoms
     set geoms {}
     foreach iterm $iterms {
+      # Skip non-placed iterm's instance
+      if {![[$iterm getInst] isPlaced]} {
+        continue
+      }
       set geoms [list {*}$geoms {*}[$iterm getGeometries]]
     }
     foreach swire [$netobj getSWires] {

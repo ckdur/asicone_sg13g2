@@ -102,8 +102,8 @@ add_global_connection -net VSS -inst_pattern digital/.* -pin_pattern {^vss$} -gr
 add_global_connection -net AVDD -pin_pattern {nothinghere} -power
 
 #set_voltage_domain -region ANALOG -power AVDD -ground VSS
-set_voltage_domain -region ANALOG -power AVDD -ground VSS
-set_voltage_domain -power AVDD -ground VSS -secondary_power {AVDD}
+set_voltage_domain -region ANALOG -power AVDD -ground VSS -secondary_power VDD
+set_voltage_domain -power VDD -ground VSS -secondary_power AVDD
 
 insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
 insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
@@ -257,11 +257,15 @@ set nrow_l [expr ceil($cdacy_l*$ny_l / $row)]
 
 set nrow_all [expr $nrow_h + $nrow_l + $nrow_asw]
 
-# Positioning of the comparator
+# Blockage of the middle switch
 set sw_w [lindex $ret_sw 0]
-set ret_poscmp [pos_stdcell_comp [expr $posx_sw + $sw_w + 20*$track] $posy_sw analog.cmp]
-set compx [lindex $ret_poscmp 0]
-set compy [lindex $ret_poscmp 1]
+set cmp_x [expr $posx_sw + $sw_w + 20*$track]
+set x1 [expr $posx_sw-$sizetap]
+set y1 [expr $posy_sw-4*$row]
+set x2 [expr $cmp_x]
+set y2 [expr $posy_sw+5*$row]
+set area "$x1 $y1 $x2 $y2"
+create_blockage -region $area
 
 # The blockages for avoiding std cells
 set x1 $corex
@@ -282,10 +286,10 @@ set x1 [expr $corex + $cdacx_h * $nx_h - 2*$row]
 set x2 [expr $corex + $cdacx_h * $nx_h + 2*$row]
 set y1 [expr $corey]
 set area "$x1 $y1 $x2 $y2"
-create_blockage -region $area
+#create_blockage -region $area
 
-# Re-initialize the floorplan with the new y2
-set Y [expr $y2+$margin]
+# Re-initialize the floorplan with the new height
+set Y [expr $posy_cdacl + $row*$nrow_h + $margin]
 set corearea "[expr $margin] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
 set digcorearea "[expr $X*$dig_to_ana] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
 set anacorearea "[expr $margin] [expr $margin] [expr $X*$dig_to_ana] [expr $Y-$margin]"
@@ -297,7 +301,96 @@ set_domain_area ANALOG -area $anacorearea
 initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $corearea
 
 # connect the fillers
+add_global_connection -net AVDD -inst_pattern analog\./.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern analog\./.* -pin_pattern {^vss$} -ground
 do_global_from_areas
+global_connect
+
+# Do first the pdngen
+define_pdn_grid \
+    -name stdcell_core_grid \
+    -starts_with POWER \
+    -voltage_domain CORE \
+    -pins "TopMetal1 Metal5"
+
+define_pdn_grid \
+    -name stdcell_analog_grid \
+    -starts_with POWER \
+    -voltage_domain ANALOG \
+    -pins "TopMetal1 Metal5"
+
+add_pdn_stripe \
+    -grid stdcell_core_grid \
+    -layer Metal5 \
+    -width 3.2 \
+    -pitch $pitch \
+    -offset [expr $X*$dig_to_ana-2*$margin+$row] \
+    -spacing 1.6 \
+    -starts_with POWER -extend_to_boundary
+
+add_pdn_connect \
+    -grid stdcell_core_grid \
+        -layers "Metal5 TopMetal1"
+
+#add_pdn_stripe \
+#    -grid stdcell_analog_grid \
+#    -layer Metal5 \
+#    -width 3.2 \
+#    -pitch $pitch \
+#    -offset $pitch \
+#    -spacing 1.6 \
+#    -starts_with POWER -extend_to_boundary
+
+add_pdn_connect \
+    -grid stdcell_analog_grid \
+        -layers "Metal5 TopMetal1"
+
+add_pdn_stripe \
+        -grid stdcell_core_grid \
+        -layer Metal1 \
+        -width 0.3 \
+        -followpins \
+        -extend_to_core_ring
+
+add_pdn_stripe \
+        -grid stdcell_analog_grid \
+        -layer Metal1 \
+        -width 0.3 \
+        -followpins \
+        -extend_to_core_ring
+
+add_pdn_connect \
+    -grid stdcell_core_grid \
+        -layers "Metal1 Metal5"
+
+add_pdn_connect \
+    -grid stdcell_analog_grid \
+        -layers "Metal1 Metal5"
+
+add_pdn_ring \
+        -grid stdcell_core_grid \
+        -layers "TopMetal1 Metal5" \
+        -widths "3.2 3.0" \
+        -spacings "1.64 1.64" \
+        -core_offset "$metal5_py $metal5_py" \
+        -starts_with GROUND \
+        -allow_out_of_die
+
+add_pdn_ring \
+        -grid stdcell_analog_grid \
+        -layers "TopMetal1 Metal5" \
+        -widths "3.2 3.0" \
+        -spacings "1.64 1.64" \
+        -core_offset "$metal5_py $metal5_py" \
+        -starts_with GROUND \
+        -allow_out_of_die
+
+pdngen
+
+# Positioning of the comparator
+set ret_poscmp [pos_stdcell_comp $cmp_x $posy_sw analog.cmp]
+set compx [lindex $ret_poscmp 0]
+set compy [lindex $ret_poscmp 1]
 
 # Go for routing
 puts "\[Routing\] Creating vdd and vss for ties"
@@ -314,7 +407,7 @@ set y1 [expr $corey+$row*$nrow_h]
 set y2 [expr $y1 + $row*$nrow_hl_sw]
 set area "$x1 $y1 $x2 $y2"
 #setAddStripeMode -ignore_nondefault_domains true
-#setAddStripeMode -orthogonal_only true
+setAddStripeMode -orthogonal_only true
 add_stripe_over_area {analog.VOUTH analog.VOUTL VREFH VIN VIP} $metal3 horizontal \
   $midwidth $midspc 100 \
   $midoff $area
@@ -349,13 +442,12 @@ set y_lstripe [expr $posy_cdacl - $row*$nrow_hl_sw + $midoff]
 #set uy_lstripe [expr $posy_cdacl]
 set uy_lstripe [expr $corey + $row*$nrow_all]
 create_stripes $posx_cdacl $y_lstripe $cdacx_l $nx_l $uy_lstripe $strip_l $wthird $sthird
-catch
 
 puts "\[Routing\] Create the rings for fixing bits 1 and 3 of the ring DACs"
 # Create the rings for fixing bits 1 and 3 of the ring DACs
 set wforth [expr 6*$metal5_w]
 set sforth [expr 6*$metal5_s]
-#setAddStripeMode -ignore_nondefault_domains true -stacked_via_top_layer M6 -stacked_via_bottom_layer M4
+setAddStripeMode -stacked_via_top_layer TopMetal1 -stacked_via_bottom_layer $metal5
 
 puts "\[Routing\]    Phase 1"
 set nx_l_2 [expr int($nx_l / 2)]
@@ -414,19 +506,18 @@ if {$nbits >= 5} {
         $wforth $sforth $cdacx_h \
         $offset $area
 }
-
-# setAddStripeMode -reset 
+setAddStripeMode -reset
 
 puts "\[Routing\]    Phase 3"
 # A third one just for the switch. Only VOUTH and VOUTL
 set y_swstripe [expr $corey + $row*$nrow_h + $midoff]
 set uy_swstripe [expr $corey + $row*($nrow_h+$nrow_asw) - $midoff]
-set x1 [expr $corex + $track*4]
+set x1 [expr $posx_sw]
 set x2 [expr $x1 + 2*$wthird + 1*$sthird]
 set y1 [expr $y_swstripe]
 set y2 [expr $uy_swstripe]
 set area "$x1 $y1 $x2 $y2"
-# setAddStripeMode -orthogonal_only true
+setAddStripeMode -orthogonal_only true
 add_stripe_over_area {analog.VOUTH analog.VOUTL} $metal4 vertical \
   $wthird $sthird 100 \
   0 $area

@@ -1,5 +1,9 @@
 proc create_sw_conn {x y path sizex w s nsw} {
   setAddStripeMode -ignore_nondefault_domains true
+  global metal1
+  global metal1_py
+  global metal1_w
+  global metal1_s
   global metal2
   global metal2_px
   global metal2_w
@@ -21,6 +25,7 @@ proc create_sw_conn {x y path sizex w s nsw} {
     }
   }
   setAddStripeMode -orthogonal_only false
+  setAddStripeMode -stacked_via_top_layer $metal2 -stacked_via_bottom_layer $metal1
   set all_zsnnets {}
   foreach inst $all_inst {
     # Extract the ZN, VDD, and VSS pins
@@ -114,6 +119,7 @@ proc create_sw_conn {x y path sizex w s nsw} {
       -width [expr $x2 - $x1] -spacing 0.0 -set_to_set_distance 100.0 \
       -start_from left -start_offset 0 -area $area
   }
+  setAddStripeMode -stacked_via_top_layer $metal3 -stacked_via_bottom_layer $metal2
   set nall_zsnnets [llength $all_zsnnets]
   set zsnspan [expr ($nall_zsnnets-1) * ($w+$s) + $w]
   set zsnst [expr $inst_lly+($row - $zsnspan)/2.0]
@@ -141,6 +147,10 @@ proc create_sw_conn {x y path sizex w s nsw} {
 # It takes the result of positiong from the last call of "pos_cdac_circle" or similar
 proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
   setAddStripeMode -ignore_nondefault_domains true
+  global metal1
+  global metal1_py
+  global metal1_w
+  global metal1_s
   global metal2
   global metal2_px
   global metal2_w
@@ -160,6 +170,7 @@ proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
   set npos [llength $pos]
   for {set k 0} {$k < $npos} {incr k} {
     setAddStripeMode -orthogonal_only false
+    setAddStripeMode -stacked_via_top_layer $metal2 -stacked_via_bottom_layer $metal1
     set p [lindex $pos $k]
     set pi [lindex $p 0]
     set pj [lindex $p 1]
@@ -406,6 +417,7 @@ proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
     # NOTE: As for the middle cap... we hope the switch connect it. Crossing fingers xoxo
     
     setAddStripeMode -orthogonal_only true
+    setAddStripeMode -stacked_via_top_layer $metal3 -stacked_via_bottom_layer $metal2
     
     # Search for the left and right neighboors
     # The criteria for now is comparing the vsh_name with the neighboor
@@ -471,14 +483,14 @@ proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
     # Connect the nets from the capacitor
     set all_capnets [list $vsh_name $fl_name]
     set nall_capnets [llength $all_capnets]
-    set capspan [expr ($nall_capnets-1) * $metal3_py + $metal3_w]
+    set capspan [expr ($nall_capnets-1) * $metal3_py*2 + $metal3_w]
     set capst [expr $cap_lly+($row*$ph - $capspan)/2.0]
     for {set i 0} {$i < $nall_capnets} {incr i} {
       set net [lindex $all_capnets $i]
       set x1 [expr $x + ($pi)*$sizex + $marginl]
       set x2 [expr $x + ($pi+1)*$sizex - $marginr]
-      set y1 [expr $capst + $i*$metal3_py]
-      set y2 [expr $capst + $i*$metal3_py + $metal3_w]
+      set y1 [expr $capst + $i*$metal3_py*2]
+      set y2 [expr $capst + $i*$metal3_py*2 + $metal3_w]
       set area "$x1 $y1 $x2 $y2"
       addStripe -nets $net -layer $metal3 -direction horizontal \
         -width [expr $y2 - $y1] -spacing 0.0 -set_to_set_distance 1.0 \
@@ -578,19 +590,23 @@ proc create_stripes_vdd_vss {x y sizex nx abssizey tapcap netvdd netvss w} {
   global metal1
   global abutsizey
   global dbu
+  global Y
   set tap_lib [[::ord::get_db] findLib $tapcap]
   set tap_master [$tap_lib findMaster $tapcap]
   set sizetap [expr 1.0*[$tap_master getWidth] / $dbu]
   
   set x1 [expr $x - $sizetap]
   set x2 [expr $x + $sizex*$nx + $sizetap]
-  set y1 [expr $y - $abutsizey/2]
-  set y2 [expr $y + $abssizey]
+  #set y1 [expr $y - $abutsizey/2]
+  #set y2 [expr $y + $abssizey]
+  set y1 0
+  set y2 $Y
   set area "$x1 $y1 $x2 $y2"
+  # puts "thearea: $area"
   
   set offset [expr $sizetap/2.0 - $w/2.0 + $sizetap]
   setAddStripeMode -ignore_nondefault_domains true
-  setAddStripeMode -orthogonal_only true -stacked_via_top_layer $metal4 -stacked_via_bottom_layer $metal1
+  setAddStripeMode -orthogonal_only true -stacked_via_top_layer TopMetal1 -stacked_via_bottom_layer $metal1
   add_stripe_over_area [list $netvdd] $metal2 vertical $w 0.0 $sizex $offset $area
   #addStripe -nets $netvdd -layer $metal2 -direction vertical \
   #  -width $w -spacing 0.0 -set_to_set_distance $sizex \

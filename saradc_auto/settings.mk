@@ -4,7 +4,8 @@ ROOT_DIR?=$(abspath .)
 TECH?=sg13g2f
 
 X=700
-Y=400
+Y=361.08
+# NOTE: Change Y at the moment of having a completed floorplan
 
 #######################################################
 # Rules to create the files. 
