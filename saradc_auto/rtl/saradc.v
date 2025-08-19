@@ -56,7 +56,7 @@ module SARADC #(
 `define DIGTOP sar_logic_wreset
 `endif
   `DIGTOP digital ( 
-    .CLK(CLKBUF), .RST(RST),
+    .CLK(CLK), .RST(RST),
     .GO(GO),
     .VALID(VALID), .SAMPLE(SAMPLE),
     .RESULTP(RESULT), .RESULTN(RESULTN),

@@ -40,6 +40,7 @@ module SARADC_ANALOG #(
   localparam nall = nc * nc * 2 + nc * 6 + 4; // Area + perimeter (w being nc*2, h being nc)
   localparam ndummy = nall - nu;
 
+  (* dont_touch = "yes" *)
   wire VOUTH, VOUTL;
 
   // CDAC dummy phase
@@ -47,6 +48,7 @@ module SARADC_ANALOG #(
   SARADC_CDAC_DUMMY #(.N(ndummy), .NPW(NPW), .NPH(NPH)) dummy_l (.VDD(VDD), .VSS(VSS));
   
   // CDAC MSB phase
+  (* dont_touch = "yes" *)
   wire MSB_H_VSH, MSB_H_FL, MSB_L_VSH, MSB_L_FL;
   SARADC_MSB_CDAC #(
     .NBITS(NBITS-1), .NPW(NPW), .NPH(NPH)
@@ -66,6 +68,7 @@ module SARADC_ANALOG #(
   );
   
   // CDAC LSB phase
+  (* dont_touch = "yes" *)
   wire [NBITS-1:0] LSB_H_VSH, LSB_H_FL, LSB_L_VSH, LSB_L_FL;
   SARADC_LSB_CDAC #(
     .NBITS(NBITS-1), .NPW(NPW), .NPH(NPH)
