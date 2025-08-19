@@ -79,8 +79,8 @@ proc create_sw_conn {x y path sizex w s nsw} {
     set zncx1 [expr 1.0*[$znshape xMin] / $dbu]
     # set zncx2 [lindex $znshape 2] Possibly wrong. This has a M1 width, and we need to connect M2
     set zncx2 [expr $zncx1 + $metal2_w]
-    set znnx1 [expr $zncx1 - $metal2_px]
-    set znnx2 [expr $zncx2 - $metal2_px]
+    set znnx1 [expr $zncx1 - 2*$metal2_px - $metal2_w]
+    set znnx2 [expr $zncx2 - 2*$metal2_px - $metal2_w]
     
     # Get the pin that is not connected to zn
     set zsnnet [expr {$znnet == $vddnet? $vssnet : $vddnet}]
@@ -312,8 +312,8 @@ proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
       set zncx1 [expr 1.0*[$znshape xMin] / $dbu]
       # set zncx2 [lindex $znshape 2] Possibly wrong. This has a M1 width, and we need to connect M2
       set zncx2 [expr $zncx1 + $metal2_w]
-      set znnx1 [expr $zncx1 - $metal2_px]
-      set znnx2 [expr $zncx2 - $metal2_px]
+      set znnx1 [expr $zncx1 - 2*$metal2_px - $metal2_w]
+      set znnx2 [expr $zncx2 - 2*$metal2_px - $metal2_w]
       
       # Get the pin that is not connected to zn
       set zsnnet [expr {$znnet == $vddnet? $vssnet : $vddnet}]

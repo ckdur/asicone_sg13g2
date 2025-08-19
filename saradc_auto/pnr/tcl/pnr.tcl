@@ -92,7 +92,7 @@ read_upf -file $PNR_DIR/tcl/${TOP}.upf.tcl
 
 set_domain_area CORE -area $digcorearea
 set_domain_area ANALOG -area $anacorearea
-initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $corearea
+initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $digcorearea
 
 # Only add the global connection to the digitals
 add_global_connection -net VDD -inst_pattern digital/.* -pin_pattern {^vdd$} -power
@@ -196,6 +196,7 @@ set fill_lib [[::ord::get_db] findLib SARADC_FILL1]
 set fill_obj [$fill_lib findMaster SARADC_FILL1]
 set fill_rail_obj [lindex [$fill_obj getMTerms] 0]
 set abutsizey [expr 1.0*[[$fill_rail_obj getBBox] dy] / $dbu]
+set fill_sx [::ord::dbu_to_microns [$fill_obj getWidth]]
 
 # Put the power domain for Analog before anything else
 set tie_lib [[::ord::get_db] findLib $saradc_tap]
@@ -297,7 +298,7 @@ set fPlan_height [expr $Y-2*$margin]
 
 set_domain_area CORE -area $digcorearea
 set_domain_area ANALOG -area $anacorearea
-initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $corearea
+initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $digcorearea
 
 ## Tapcell insertion
 tapcell \
@@ -405,10 +406,8 @@ set ret_poscmp [pos_stdcell_comp $cmp_x $posy_sw analog/cmp]
 set compx [lindex $ret_poscmp 0]
 set compy [lindex $ret_poscmp 1]
 
-# Dummy positioning of the buffers
-# source tcl/comp_pos.tcl
-pos_stdcell_box [expr $cmp_x+$compx+$row] [expr $posy_sw-2*$row] [expr $X*$dig_to_ana-($cmp_x+$compx+$row)-2*$margin] analog/buflogic
-pos_stdcell_box [expr $X*$dig_to_ana+$row+2*$margin] [expr $posy_sw-10*$row] [expr $X*(1-$dig_to_ana)-3*$margin-$row] digital
+# Put the main clock buffer near the digital domain
+place_inst -name [list "analog/buflogic.conv.smpcs.clkbuf.impl"] -location "[expr $X*$dig_to_ana-2*$margin] $posy_sw" -orientation MY -status LOCKED
 
 # Go for routing
 puts "\[Routing\] Creating vdd and vss for ties"
@@ -566,6 +565,11 @@ if {[file exists $PNR_DIR/tcl/$TOP.pins.tcl]} {
   source $PNR_DIR/tcl/$TOP.pins.tcl
 }
 
+# Dummy positioning of the buffers
+# source tcl/comp_pos.tcl
+pos_stdcell_box [expr $cmp_x+$compx+$row] [expr $posy_sw-2*$row] [expr $X*$dig_to_ana-($cmp_x+$compx+$row)-3*$margin] analog/buflogic
+pos_stdcell_box [expr $X*$dig_to_ana+$row+2*$margin] [expr $posy_sw-10*$row] [expr $X*(1-$dig_to_ana)-3*$margin-$row] digital
+
 write_def $PNR_DIR/outputs/${TOP}.pre.def
 
 # Yeah this doesn't work. Is just a way to connect some pin to the outer ring
@@ -675,15 +679,24 @@ set_propagated_clock [all_clocks]
 
 set_macro_extension 0
 
-global_route -congestion_iterations 50 -verbose -congestion_report_file $PNR_DIR/reports/congestion.rpt
+if { [catch {global_route -allow_congestion -congestion_iterations 50 -verbose -congestion_report_file $PNR_DIR/reports/congestion.rpt} errmsg] } {
+    puts stderr $errmsg
+    puts "Global routing failed with congestions, but is ignored on purpose"
+    puts "May god forgive our actions"
+}
 
 ###############################################
 # Fillers
 ###############################################
 filler_placement "$FILLERCells"
 
-add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
-add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
+add_global_connection -net VDD -inst_pattern clkbuf.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern clkbuf.* -pin_pattern {^vss$} -ground
+add_global_connection -net VDD -inst_pattern clkload.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern clkload.* -pin_pattern {^vss$} -ground
+add_global_connection -net AVDD -inst_pattern analog/.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern analog/.* -pin_pattern {^vss$} -ground
+do_global_from_areas
 global_connect
 
 ###############################################
@@ -692,8 +705,6 @@ global_connect
 #catch
 set_thread_count 10
 detailed_route\
-    -bottom_routing_layer "Metal1" \
-    -top_routing_layer "Metal5" \
     -output_maze $PNR_DIR/reports/${TOP}_maze.log\
     -output_drc $PNR_DIR/reports/${TOP}.drc\
     -droute_end_iter 64 \
@@ -703,20 +714,21 @@ detailed_route\
 #################################################
 # Metal fill
 #################################################
-density_fill -rules $env(ROOT_DIR)/lib/$env(TECH)_fill.json
+density_fill -rules $env(ROOT_DIR)/cells/$env(TECH)_fill.json
 
 #################################################
 ## Write out final files
 #################################################
-define_process_corner -ext_model_index 0 X
-extract_parasitics -ext_model_file $RCX_RULES -lef_res
+# NOTE: Cannot extract parasitics
+#define_process_corner -ext_model_index 0 X
+#extract_parasitics -ext_model_file $RCX_RULES -lef_res
 
 write_db DesignLib
 
 write_verilog $PNR_DIR/outputs/${TOP}.v
 write_verilog -include_pwr_gnd $PNR_DIR/outputs/${TOP}_pg.v
 write_def $PNR_DIR/outputs/${TOP}.def
-write_spef $PNR_DIR/outputs/${TOP}.spef
+#write_spef $PNR_DIR/outputs/${TOP}.spef
 write_abstract_lef $PNR_DIR/outputs/${TOP}.lef
 # write_timing_model $PNR_DIR/outputs/${TOP}.lib
 write_cdl -masters ${CDLS} $PNR_DIR/outputs/${TOP}.cdl

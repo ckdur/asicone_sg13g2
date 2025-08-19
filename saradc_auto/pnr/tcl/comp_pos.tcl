@@ -39,10 +39,14 @@ proc pos_stdcell_comp {x y path} {
     set up_sizex [expr 1.0*[[$up_obj getMaster] getWidth] / $dbu]
     set dw_sizex [expr 1.0*[[$dw_obj getMaster] getWidth] / $dbu]
 
-    # puts "place_inst -name \[list $up_inst\] -location \"$upx $upy\" -orientation R0 -status LOCKED"
-    # puts "place_inst -name \[list $dw_inst\] -location \"$dwx $dwy\" -orientation MX -status LOCKED"
-    place_inst -name [list $up_inst] -location "$upx $upy" -orientation R0 -status LOCKED
-    place_inst -name [list $dw_inst] -location "$dwx $dwy" -orientation MX -status LOCKED
+    if {[[$::block findInst $up_inst] isPlaced] == 0} {
+      # puts "place_inst -name \[list $up_inst\] -location \"$upx $upy\" -orientation R0 -status LOCKED"
+      place_inst -name [list $up_inst] -location "$upx $upy" -orientation R0 -status LOCKED
+    }
+    if {[[$::block findInst $dw_inst] isPlaced] == 0} {
+      # puts "place_inst -name \[list $dw_inst\] -location \"$dwx $dwy\" -orientation MX -status LOCKED"
+      place_inst -name [list $dw_inst] -location "$dwx $dwy" -orientation MX -status LOCKED
+    }
     set upx [expr $upx + $up_sizex]
     set dwx [expr $dwx + $dw_sizex]
   }
@@ -74,7 +78,9 @@ proc pos_stdcell_box {x y width path} {
       set cury [expr $cury+$row]
       set nextx [expr $sizex]
     }
-    place_inst -name [list $inst] -location "[expr $x+$curx] [expr $y+$cury]" -orientation $currot -status PLACED
+    if {[[$::block findInst $inst] isPlaced] == 0} {
+      place_inst -name [list $inst] -location "[expr $x+$curx] [expr $y+$cury]" -orientation $currot -status PLACED
+    }
     set curx $nextx
   }
 }
