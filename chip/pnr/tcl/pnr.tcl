@@ -166,6 +166,8 @@ place_io_terminals */PAD -allow_non_top_layer
 
 add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
+add_global_connection -net VDD -inst_pattern .* -pin_pattern {^VDD$} -power
+add_global_connection -net VSS -inst_pattern .* -pin_pattern {^VSS$} -ground
 global_connect
 
 define_pdn_grid \
@@ -210,7 +212,7 @@ add_pdn_ring \
         -core_offset "$row $row" \
         -connect_to_pads
 
-if {0} {
+if {1} {
 
 define_pdn_grid \
     -macro \
@@ -221,14 +223,14 @@ define_pdn_grid \
 
 add_pdn_ring \
     -grid macro \
-    -layers "TopMetal1 TopMetal2" \
+    -layers "TopMetal1 Metal5" \
     -widths "3.2 3.0" \
     -spacings "1.64 1.64" \
     -core_offset "$row $row"
 
 add_pdn_stripe \
     -grid macro \
-    -layer TopMetal2 \
+    -layer Metal5 \
     -width 3.2 \
     -pitch 10 \
     -offset 10 \
@@ -236,7 +238,7 @@ add_pdn_stripe \
 
 add_pdn_connect \
     -grid macro \
-    -layers "Metal5 TopMetal2"
+    -layers "Metal5 TopMetal1"
 }
 
 pdngen
