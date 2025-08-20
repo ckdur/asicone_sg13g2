@@ -1,6 +1,6 @@
-[submodule "rtl/aes"]
-	path = rtl/aes
+[submodule "digital/rtl/aes"]
+	path = digital/rtl/aes
 	url = https://github.com/secworks/aes.git
-[submodule "rtl/spix"]
-	path = rtl/spix
+[submodule "digital/rtl/spix"]
+	path = digital/rtl/spix
 	url = https://github.com/ckdur/spix.git

@@ -1,5 +1,6 @@
-ROOT_DIR=$(abspath ../)
-include $(ROOT_DIR)/settings.mk
+ROOT_DIR=$(abspath ../../)
+PRJ_DIR=$(abspath ../)
+include $(PRJ_DIR)/settings.mk
 PNR_DIR=$(abspath ../pnr)
 SYN_DIR=$(abspath ../syn)
 SIGN_DIR=$(abspath .)

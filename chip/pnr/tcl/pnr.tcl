@@ -2,12 +2,9 @@
 ## Preset global variables and attributes
 ##############################################################################
 set TOP $env(TOP)
-set SYN_DIR $env(SYN_DIR)
-set SYN_SRC $env(SYN_SRC)
 set PNR_DIR $env(PNR_DIR)
-set PX $env(PX)
-set PY $env(PY)
-set PR $env(PR)
+set RTL_DIR $env(RTL_DIR)
+set PADRING_DIR $env(PADRING_DIR)
 set X $env(X)
 set Y $env(Y)
 
@@ -15,6 +12,7 @@ set Y $env(Y)
 ## Library setup
 ###############################################################
 source $env(ROOT_DIR)/lib/$env(TECH)_settings.tcl
+source $env(RTL_DIR)/${TOP}.settings.tcl
 
 # We assume the first LIB is the standard cell lib
 set LIBMAIN [lindex $LIBS 0]
@@ -26,6 +24,11 @@ define_corners typ
 read_liberty -corner typ "$LIBMAIN"
 read_liberty -min -corner typ "$LIBBCMAIN"
 read_liberty -max -corner typ "$LIBWCMAIN"
+
+set OTHERLIBS [lrange $LIBS 1 end]
+foreach LIBFILE $OTHERLIBS {
+  read_liberty -corner typ "$LIBFILE"
+}
 
 # We assume the first LEF is the tech lef
 set TECHLEF [lindex $LEFS 0]
@@ -41,7 +44,7 @@ read_verilog $env(SYN_NET)
 link_design ${TOP}
 
 puts "SDC reading: ${TOP}.sdc.tcl"
-read_sdc $SYN_DIR/tcl/${TOP}.sdc.tcl
+read_sdc $RTL_DIR/${TOP}.sdc.tcl
 
 unset_propagated_clock [all_clocks]
 
@@ -58,36 +61,45 @@ if {![file exists reports]} {
 ## Cells declaration
 ####################################
 
-set BUFCells [list BUFFD1]
-set INVCells [list INVD1]
+set BUFCells [list sg13g2_buf_1]
+set INVCells [list sg13g2_inv_1]
 # TODO
-set FILLERCells [list FILL1 FILL2 FILL4 FILL8]
-set TAPCells [list TAPCELL]
+set FILLERCells [list sg13g2_fill_1 sg13g2_fill_2 sg13g2_fill_4 sg13g2_fill_8]
+set TAPCells [list ]
 set DCAPCells [list ]
 set DIODECells [list ]
 
 ####################################
 ## Floor Plan
 ####################################
-# TODO: Is there a way to extract from a command?
-set row   6.12
-set track 0.34
-set pitch [expr 32*$row]
-set margin [expr 3*$row]
+set ::chip [[::ord::get_db] getChip]
+set ::tech [[::ord::get_db] getTech]
+set ::block [$::chip getBlock]
+set dbu [$tech getDbUnitsPerMicron]
 
-if {[file exists $env(PNR_DIR)/$env(TOP).openlane.fp.tcl]} {
-  # FORMAT: initialize_floorplan [-utilization util] [-aspect_ratio ratio] [-core_space space | {bottom top left right}] [-die_area {lx ly ux uy}] [-core_area {lx ly ux uy}] [-sites site_name]
-  source $env(PNR_DIR)/$env(TOP).openlane.fp.tcl
-} else {
-  initialize_floorplan -site obssite -aspect_ratio [expr $PX/$PY] -utilization [expr $PR*100] -core_space "$margin $margin $margin $margin"
-}
+# TODO: Is there a way to extract from a command?
+set siteobj [[[::ord::get_db] findLib $techname] findSite $techsite]
+set row   [::ord::dbu_to_microns [$siteobj getHeight]]
+set track [::ord::dbu_to_microns [$siteobj getWidth]]
+set pitch [expr 32*$row]
+set margin [expr 5*$row]
+
+set padsize 180.000
+set corearea "[expr $padsize+$margin] [expr $padsize+$margin] [expr $X-$padsize-$margin] [expr $Y-$padsize-$margin]"
+
+initialize_floorplan -site $techsite -die_area "0 0 $X $Y" -core_area $corearea
+
+read_def -floorplan_initialize $PADRING_DIR/outputs/padring.def
+read_def -floorplan_initialize $RTL_DIR/${TOP}.block.def
 
 add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
+add_global_connection -net IOVDD -inst_pattern .* -pin_pattern {^iovdd$} -power
+add_global_connection -net IOVSS -inst_pattern .* -pin_pattern {^iovss$} -ground
 set_voltage_domain -name CORE -power VDD -ground VSS
 
-insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
-insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
+#insert_tiecells "sg13g2_tielo/L_LO" -prefix "TIE_ZERO_"
+#insert_tiecells "sg13g2_tiehi/L_HI" -prefix "TIE_ONE_"
 
 set ::chip [[::ord::get_db] getChip]
 set ::tech [[::ord::get_db] getTech]
@@ -137,9 +149,16 @@ make_tracks TopMetal2 -x_offset 2.0  -x_pitch 4.0  -y_offset 2.0 -y_pitch 4.0
 ## Tapcell insertion
 ####################################
 
-tapcell\
-    -distance [expr $row*16]\
-    -tapcell_master "$TAPCells"
+#tapcell\
+#    -distance [expr $row*16]\
+#    -tapcell_master "$TAPCells"
+
+tapcell -halo_width_x 10 -halo_width_y 10
+
+#source ${ROOT_DIR}/lib/library.sg13g2.tcl
+set_macro_extension 10
+connect_by_abutment
+place_io_terminals */PAD -allow_non_top_layer
 
 ####################################
 ## Power planning & SRAMs placement
@@ -150,33 +169,24 @@ add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
 global_connect
 
 define_pdn_grid \
-    -name stdcell_grid \
-    -starts_with POWER \
-    -voltage_domain CORE \
-    -pins "TopMetal1 Metal5"
+    -name stdcell_grid
 
-set pitch2 [expr $pitch*2]
-if {$die_width > $pitch2} {
-    add_pdn_stripe \
-        -grid stdcell_grid \
-        -layer TopMetal1 \
-        -width 3.2 \
-        -pitch $pitch \
-        -offset $pitch \
-        -spacing 1.64 \
-        -starts_with POWER -extend_to_boundary
-}
+add_pdn_stripe \
+    -grid stdcell_grid \
+    -layer TopMetal1 \
+    -width 3.2 \
+    -pitch $pitch \
+    -offset $pitch \
+    -spacing 1.64 -extend_to_core_ring
 
-if {$die_width > $pitch2} {
-    add_pdn_stripe \
-        -grid stdcell_grid \
-        -layer Metal5 \
-        -width 3.2 \
-        -pitch $pitch \
-        -offset $pitch \
-        -spacing 1.6 \
-        -starts_with POWER -extend_to_boundary
-}
+add_pdn_stripe \
+    -grid stdcell_grid \
+    -layer Metal5 \
+    -width 3.2 \
+    -pitch $pitch \
+    -offset $pitch \
+    -spacing 1.6 \
+    -starts_with POWER -extend_to_core_ring
 
 add_pdn_connect \
     -grid stdcell_grid \
@@ -186,8 +196,7 @@ add_pdn_stripe \
         -grid stdcell_grid \
         -layer Metal1 \
         -width 0.3 \
-        -followpins \
-        -extend_to_core_ring
+        -followpins
 
 add_pdn_connect \
     -grid stdcell_grid \
@@ -198,27 +207,47 @@ add_pdn_ring \
         -layers "TopMetal1 Metal5" \
         -widths "3.2 3.0" \
         -spacings "1.64 1.64" \
-        -core_offset "$row $row"
+        -core_offset "$row $row" \
+        -connect_to_pads
 
-#define_pdn_grid \
-#    -macro \
-#    -default \
-#    -name macro \
-#    -starts_with POWER \
-#    -halo "$::env(FP_PDN_HORIZONTAL_HALO) $::env(FP_PDN_VERTICAL_HALO)"
+if {0} {
 
-#add_pdn_connect \
-#    -grid macro \
-#    -layers "$::env(FP_PDN_VERTICAL_LAYER) $::env(FP_PDN_HORIZONTAL_LAYER)"
+define_pdn_grid \
+    -macro \
+    -default \
+    -name macro \
+    -grid_over_pg_pins \
+    -halo "5 5"
+
+add_pdn_ring \
+    -grid macro \
+    -layers "TopMetal1 TopMetal2" \
+    -widths "3.2 3.0" \
+    -spacings "1.64 1.64" \
+    -core_offset "$row $row"
+
+add_pdn_stripe \
+    -grid macro \
+    -layer TopMetal2 \
+    -width 3.2 \
+    -pitch 10 \
+    -offset 10 \
+    -spacing 1.6
+
+add_pdn_connect \
+    -grid macro \
+    -layers "Metal5 TopMetal2"
+}
 
 pdngen
+
+catch
 
 ###################################
 ## Placement
 ####################################
 
-place_pins -random \
-	-random_seed 42 \
+place_pins \
 	-hor_layers Metal4 \
 	-ver_layers Metal3
 

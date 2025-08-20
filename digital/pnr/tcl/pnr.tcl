@@ -1,13 +1,15 @@
 ##############################################################################
 ## Preset global variables and attributes
 ##############################################################################
-set CHIP_TOP $env(CHIP_TOP)
+set TOP $env(TOP)
+set SYN_DIR $env(SYN_DIR)
+set SYN_SRC $env(SYN_SRC)
 set PNR_DIR $env(PNR_DIR)
-set RTL_DIR $env(RTL_DIR)
-set PADRING_DIR $env(PADRING_DIR)
-set X $env(CHIPX)
-set Y $env(CHIPY)
-set OTHER_LEF $env(OTHER_LEF)
+set PX $env(PX)
+set PY $env(PY)
+set PR $env(PR)
+set X $env(X)
+set Y $env(Y)
 
 ###############################################################
 ## Library setup
@@ -33,16 +35,13 @@ read_lef $TECHLEF
 foreach LEFFILE $OTHERLEF {
   read_lef "$LEFFILE"
 }
-foreach LEFFILE $OTHER_LEF {
-  read_lef "$LEFFILE"
-}
 
-puts "Reading: $env(CHIP_NET)"
-read_verilog $env(CHIP_NET)
-link_design ${CHIP_TOP}
+puts "Reading: $env(SYN_NET)"
+read_verilog $env(SYN_NET)
+link_design ${TOP}
 
-puts "SDC reading: ${CHIP_TOP}.sdc.tcl"
-read_sdc $RTL_DIR/${CHIP_TOP}.sdc.tcl
+puts "SDC reading: ${TOP}.sdc.tcl"
+read_sdc $SYN_DIR/tcl/${TOP}.sdc.tcl
 
 unset_propagated_clock [all_clocks]
 
@@ -70,34 +69,31 @@ set DIODECells [list ]
 ####################################
 ## Floor Plan
 ####################################
-# TODO: Is there a way to extract from a command?
-set row   6.12
-set track 0.34
-set pitch [expr 32*$row]
-set margin [expr 3*$row]
-
-set padsize 180.000
-set corearea "[expr $padsize+$margin] [expr $padsize+$margin] [expr $X-$padsize-$margin] [expr $Y-$padsize-$margin]"
-
-initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $corearea
-
-read_def -floorplan_initialize $PADRING_DIR/outputs/asicone.def
-read_def -floorplan_initialize $RTL_DIR/macro.def
-
-add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
-add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
-add_global_connection -net IOVDD -inst_pattern .* -pin_pattern {^iovdd$} -power
-add_global_connection -net IOVSS -inst_pattern .* -pin_pattern {^iovss$} -ground
-set_voltage_domain -name CORE -power VDD -ground VSS
-
-catch
-
-insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
-insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
-
 set ::chip [[::ord::get_db] getChip]
 set ::tech [[::ord::get_db] getTech]
 set ::block [$::chip getBlock]
+set dbu [$tech getDbUnitsPerMicron]
+
+# TODO: Is there a way to extract from a command?
+set siteobj [[[::ord::get_db] findLib sg13g2f] findSite obssite]
+set row   [::ord::dbu_to_microns [$siteobj getHeight]]
+set track [::ord::dbu_to_microns [$siteobj getWidth]]
+set pitch [expr 32*$row]
+set margin [expr 3*$row]
+
+if {[file exists $env(PNR_DIR)/$env(TOP).openlane.fp.tcl]} {
+  # FORMAT: initialize_floorplan [-utilization util] [-aspect_ratio ratio] [-core_space space | {bottom top left right}] [-die_area {lx ly ux uy}] [-core_area {lx ly ux uy}] [-sites site_name]
+  source $env(PNR_DIR)/$env(TOP).openlane.fp.tcl
+} else {
+  initialize_floorplan -site obssite -aspect_ratio [expr $PX/$PY] -utilization [expr $PR*100] -core_space "$margin $margin $margin $margin"
+}
+
+add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
+set_voltage_domain -name CORE -power VDD -ground VSS
+
+insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
+insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
 
 set die_area [$::block getDieArea]
 set core_area [$::block getCoreArea]
@@ -223,8 +219,7 @@ pdngen
 ## Placement
 ####################################
 
-place_pins -random \
-	-random_seed 42 \
+place_pins \
 	-hor_layers Metal4 \
 	-ver_layers Metal3
 
@@ -280,7 +275,7 @@ set_wire_rc -clock  -layer Metal5
 
 estimate_parasitics -placement
 repair_clock_inverters
-clock_tree_synthesis -buf_list $BUFCells -root_buf BUFFD1 -sink_clustering_size 25 -sink_clustering_max_diameter 50 -sink_clustering_enable
+clock_tree_synthesis -buf_list $BUFCells -root_buf [lindex $BUFCells 0] -sink_clustering_size 25 -sink_clustering_max_diameter 50 -sink_clustering_enable
 set_propagated_clock [all_clocks]
 
 estimate_parasitics -placement
@@ -319,7 +314,6 @@ global_connect
 ###############################################
 # Detail routing
 ###############################################
-#catch
 set_thread_count 10
 detailed_route\
     -bottom_routing_layer "Metal1" \

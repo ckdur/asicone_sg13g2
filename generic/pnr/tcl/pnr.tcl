@@ -36,10 +36,12 @@ foreach LEFFILE $OTHERLEF {
   read_lef "$LEFFILE"
 }
 
+puts "Reading: $env(SYN_NET)"
 read_verilog $env(SYN_NET)
 link_design ${TOP}
 
-read_sdc $SYN_DIR/tcl/rtl.sdc.tcl
+puts "SDC reading: ${TOP}.sdc.tcl"
+read_sdc $SYN_DIR/tcl/${TOP}.sdc.tcl
 
 unset_propagated_clock [all_clocks]
 
@@ -63,15 +65,19 @@ set FILLERCells [list sg13g2_fill_1 sg13g2_fill_2 sg13g2_fill_4 sg13g2_fill_8]
 set TAPCells [list ]
 set DCAPCells [list ]
 set DIODECells [list ]
-set TIEHCell_pin sg13g2_tiehi/L_HI
-set TIELCell_pin sg13g2_tielo/L_LO
 
 ####################################
 ## Floor Plan
 ####################################
+set ::chip [[::ord::get_db] getChip]
+set ::tech [[::ord::get_db] getTech]
+set ::block [$::chip getBlock]
+set dbu [$tech getDbUnitsPerMicron]
+
 # TODO: Is there a way to extract from a command?
-set row   3.78
-set track 0.48
+set siteobj [[[::ord::get_db] findLib sg13g2_stdcell] findSite CoreSite]
+set row   [::ord::dbu_to_microns [$siteobj getHeight]]
+set track [::ord::dbu_to_microns [$siteobj getWidth]]
 set pitch [expr 32*$row]
 set margin [expr 5*$row]
 
@@ -86,12 +92,8 @@ add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
 set_voltage_domain -name CORE -power VDD -ground VSS
 
-insert_tiecells "${TIELCell_pin}" -prefix "TIE_ZERO_"
-insert_tiecells "${TIEHCell_pin}" -prefix "TIE_ONE_"
-
-set ::chip [[::ord::get_db] getChip]
-set ::tech [[::ord::get_db] getTech]
-set ::block [$::chip getBlock]
+insert_tiecells "sg13g2_tielo/L_LO" -prefix "TIE_ZERO_"
+insert_tiecells "sg13g2_tiehi/L_HI" -prefix "TIE_ONE_"
 
 set die_area [$::block getDieArea]
 set core_area [$::block getCoreArea]
@@ -155,23 +157,28 @@ define_pdn_grid \
     -voltage_domain CORE \
     -pins "TopMetal1 Metal5"
 
-add_pdn_stripe \
-    -grid stdcell_grid \
-    -layer TopMetal1 \
-    -width 3.2 \
-    -pitch $pitch \
-    -offset $pitch \
-    -spacing 1.64 \
-    -starts_with POWER -extend_to_boundary
+set pitch2 [expr $pitch*2]
+if {$die_width > $pitch2} {
+    add_pdn_stripe \
+        -grid stdcell_grid \
+        -layer TopMetal1 \
+        -width 3.2 \
+        -pitch $pitch \
+        -offset $pitch \
+        -spacing 1.64 \
+        -starts_with POWER -extend_to_boundary
+}
 
-add_pdn_stripe \
-    -grid stdcell_grid \
-    -layer Metal5 \
-    -width 3.2 \
-    -pitch $pitch \
-    -offset $pitch \
-    -spacing 1.6 \
-    -starts_with POWER -extend_to_boundary
+if {$die_width > $pitch2} {
+    add_pdn_stripe \
+        -grid stdcell_grid \
+        -layer Metal5 \
+        -width 3.2 \
+        -pitch $pitch \
+        -offset $pitch \
+        -spacing 1.6 \
+        -starts_with POWER -extend_to_boundary
+}
 
 add_pdn_connect \
     -grid stdcell_grid \
@@ -212,10 +219,9 @@ pdngen
 ## Placement
 ####################################
 
-place_pins -random \
-	-random_seed 42 \
-	-hor_layers Metal4 \
-	-ver_layers Metal3
+place_pins \
+	-ver_layers Metal4 \
+	-hor_layers Metal3
 
 # -density 1.0 -overflow 0.9 -init_density_penalty 0.0001 -initial_place_max_iter 20 -bin_grid_count 64
 global_placement -density 0.85
@@ -301,10 +307,13 @@ global_route -congestion_iterations 50 -verbose -congestion_report_file $PNR_DIR
 ###############################################
 filler_placement "$FILLERCells"
 
+add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
+global_connect
+
 ###############################################
 # Detail routing
 ###############################################
-catch
 set_thread_count 10
 detailed_route\
     -bottom_routing_layer "Metal2" \
@@ -315,7 +324,10 @@ detailed_route\
     -or_seed 42\
     -verbose 1
 
-catch
+#################################################
+# Metal fill
+#################################################
+density_fill -rules $env(ROOT_DIR)/lib/$env(TECH)_fill.json
 
 #################################################
 ## Write out final files
@@ -331,6 +343,4 @@ write_def $PNR_DIR/outputs/${TOP}.def
 write_spef $PNR_DIR/outputs/${TOP}.spef
 write_abstract_lef $PNR_DIR/outputs/${TOP}.lef
 # write_timing_model $PNR_DIR/outputs/${TOP}.lib
-
- 
-
+write_cdl -masters ${CDLS} $PNR_DIR/outputs/${TOP}.cdl

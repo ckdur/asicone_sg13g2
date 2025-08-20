@@ -23,8 +23,6 @@ if {![file exists $REPORTS]} {
 }
 
 yosys -import
-plugin -i sdc
-yosys -import
 
 ###############################################################
 ## Library setup
@@ -53,6 +51,8 @@ foreach src $SYN_SRC {
   read_verilog $src
 }
 
+hierarchy -check -top $::env(TOP)
+
 ####################################################################
 ## Load Design
 ####################################################################
@@ -74,7 +74,7 @@ hierarchy -check
 ####################################################################
 ## Constraints Setup
 ####################################################################
-read_sdc $SYN_DIR/tcl/rtl.sdc.tcl
+# read_sdc $SYN_DIR/tcl/${TOP}.sdc.tcl
 
 ####################################################################################################
 ## Synthesizing to gates
@@ -84,7 +84,7 @@ dfflegalize
 set cmd "abc $LIBSLIB"
 eval $cmd
 
-splitnets -ports
+splitnets
 
 ###################################################
 ## TIES
@@ -97,6 +97,5 @@ hilomap
 ######################################################################################################
 clean -purge
 #write_sdc ${OUTPUTS}/${TOP}.sdc # TODO: This command fails
-write_verilog -renameprefix ins -noexpr ${OUTPUTS}/${TOP}_net.v
-write_verilog -renameprefix ins -noexpr ${TOP}_net.v
+write_verilog -renameprefix ins -noexpr -noattr -nohex ${OUTPUTS}/${TOP}_net.v
 
