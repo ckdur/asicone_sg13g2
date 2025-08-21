@@ -641,3 +641,20 @@ proc create_stripes {x y sizex nx uy nets w s} {
   setAddStripeMode -reset
 }
 
+proc remove_adc_collateral_supplies {} {
+  # This function helps to remove the collateral supplies created
+  # by the stripe functions. This helps to prevent accidental
+  # creation of power pins in the LEF file
+
+  set net_objs [$::block getNets]
+  foreach netobj $net_objs {
+    if {![string match "analog*" [$netobj getName]]} {
+      continue
+    }
+    set sigTyp [$netobj getSigType]
+    if {$sigTyp == "GROUND" || $sigTyp == "POWER"} {
+      $netobj setSigType "SIGNAL"
+    }
+  }
+}
+

@@ -452,6 +452,7 @@ set sthird [expr 2*$metal4_s]
 create_sw_conn $posx_sw $posy_sw analog/sw_vouth2voutl $cdacx_h $wthird $sthird $nsw_vouthl
 create_sw_cap_conn $posx_cdach $posy_cdach $posa_h $lsta_h $pw $ph $cdacx_h $cdacy_h $strip_h
 create_sw_cap_conn $posx_cdacl $posy_cdacl $posa_l $lsta_l $pw $ph $cdacx_h $cdacy_h $strip_l
+route_vouts_comp [expr $posy_sw-5*$row] [expr $posy_sw+6*$row] analog/cmp
 
 puts "\[Routing\] Stripes for global connections"
 # Stripes for global connections
@@ -729,6 +730,7 @@ write_verilog $PNR_DIR/outputs/${TOP}.v
 write_verilog -include_pwr_gnd $PNR_DIR/outputs/${TOP}_pg.v
 write_def $PNR_DIR/outputs/${TOP}.def
 #write_spef $PNR_DIR/outputs/${TOP}.spef
+remove_adc_collateral_supplies
 write_abstract_lef $PNR_DIR/outputs/${TOP}.lef
 # write_timing_model $PNR_DIR/outputs/${TOP}.lib
 write_cdl -masters ${CDLS} $PNR_DIR/outputs/${TOP}.cdl

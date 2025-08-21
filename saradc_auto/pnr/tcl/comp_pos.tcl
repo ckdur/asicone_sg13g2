@@ -14,7 +14,6 @@ proc pos_stdcell_comp {x y path} {
   global metal1_py
   global saradc_fill_nopower
   global ::block
-  global dbu
   
   set vp_cmp_objs [filter_by_regex [list ${path}.vp_cmp\..*] [$::block getInsts]]
   set vn_cmp_objs [filter_by_regex [list ${path}.vn_cmp\..*] [$::block getInsts]]
@@ -29,15 +28,15 @@ proc pos_stdcell_comp {x y path} {
   set n [llength $vp_cmp_objs]
   set upx $x
   set dwx $x
-  set upy $y
-  set dwy [expr $y+$row]
+  set upy [expr $y+$row]
+  set dwy [expr $y]
   for {set i 0} {$i < $n} {incr i} {
     set up_obj [lindex $vp_cmp_objs $i]
     set dw_obj [lindex $vn_cmp_objs $i]
     set up_inst [$up_obj getName]
     set dw_inst [$dw_obj getName]
-    set up_sizex [expr 1.0*[[$up_obj getMaster] getWidth] / $dbu]
-    set dw_sizex [expr 1.0*[[$dw_obj getMaster] getWidth] / $dbu]
+    set up_sizex [::ord::dbu_to_microns [[$up_obj getMaster] getWidth]]
+    set dw_sizex [::ord::dbu_to_microns [[$dw_obj getMaster] getWidth]]
 
     if {[[$::block findInst $up_inst] isPlaced] == 0} {
       # puts "place_inst -name \[list $up_inst\] -location \"$upx $upy\" -orientation R0 -status LOCKED"
@@ -57,7 +56,6 @@ proc pos_stdcell_comp {x y path} {
 }
 
 proc pos_stdcell_box {x y width path} {
-  global dbu
   global row
   # A very simple and dummy stdcell placement
   set stdcell_objs [filter_by_regex [list ${path}\..*] [$::block getInsts]]
@@ -66,7 +64,7 @@ proc pos_stdcell_box {x y width path} {
   set currot "R0"
   foreach obj $stdcell_objs {
     set inst [$obj getName]
-    set sizex [expr 1.0*[[$obj getMaster] getWidth] / $dbu]
+    set sizex [::ord::dbu_to_microns [[$obj getMaster] getWidth]]
     set nextx [expr $curx+$sizex]
     if {$nextx > $width} {
       if {$currot == "R0"} {
@@ -84,3 +82,74 @@ proc pos_stdcell_box {x y width path} {
     set curx $nextx
   }
 }
+
+proc route_vouts_comp {ya1 ya2 path} {
+  global track
+  global row
+  global metal1
+  global metal2
+  global metal2_w
+  global metal3
+  global ::block
+
+  setAddStripeMode -orthogonal_only false
+  setAddStripeMode -stacked_via_top_layer $metal3 -stacked_via_bottom_layer $metal1
+
+  set vp_cmp_objs [filter_by_regex [list ${path}.vp_cmp\..*] [$::block getInsts]]
+  set vn_cmp_objs [filter_by_regex [list ${path}.vn_cmp\..*] [$::block getInsts]]
+
+  set n [llength $vp_cmp_objs]
+
+  for {set i 0} {$i < $n} {incr i} {
+    set up_obj [lindex $vp_cmp_objs $i]
+    set dw_obj [lindex $vn_cmp_objs $i]
+    set up_a2_obj [$up_obj findITerm a2]
+    set dw_a2_obj [$dw_obj findITerm a2]
+    set up_net [[$up_a2_obj getNet] getName]
+    set dw_net [[$dw_a2_obj getNet] getName]
+
+    set up_ipin_shapes [$up_a2_obj getGeometries]
+    lassign [lindex $up_ipin_shapes 0] up_ipin_layer_obj up_ipin_obj
+    foreach up_ipin_layer_shape $up_ipin_shapes {
+      lassign $up_ipin_layer_shape up_ipin_layer up_ipin_shape
+      set dx [$up_ipin_shape dx]
+      set dy [$up_ipin_shape dy]
+      set dya [$up_ipin_obj dy]
+      if {$dy > $dya && [$up_ipin_layer getName] == $metal1} {
+        set up_ipin_layer_obj $up_ipin_layer
+        set up_ipin_obj $up_ipin_shape
+      }
+    }
+    set x1 [expr [::ord::dbu_to_microns [$up_ipin_obj xCenter]] - $metal2_w/2]
+    set x2 [expr $x1 + $metal2_w]
+    set y1 [::ord::dbu_to_microns [$up_ipin_obj yMin]]
+    set y2 $ya2
+    set area [list $x1 $y1 $x2 $y2]
+    addStripe -nets $up_net -layer $metal2 -direction vertical \
+      -width [expr $x2 - $x1] -spacing 0.0 -set_to_set_distance 1.0 \
+      -start_from left -start_offset 0 -area $area
+
+    set dw_ipin_shapes [$dw_a2_obj getGeometries]
+    lassign [lindex $dw_ipin_shapes 0] dw_ipin_layer_obj dw_ipin_obj
+    foreach dw_ipin_layer_shape $dw_ipin_shapes {
+      lassign $dw_ipin_layer_shape dw_ipin_layer dw_ipin_shape
+      set dx [$dw_ipin_shape dx]
+      set dy [$dw_ipin_shape dy]
+      set dya [$dw_ipin_obj dy]
+      if {$dy > $dya && [$dw_ipin_layer getName] == $metal1} {
+        set dw_ipin_layer_obj $dw_ipin_layer
+        set dw_ipin_obj $dw_ipin_shape
+      }
+    }
+    set x1 [expr [::ord::dbu_to_microns [$dw_ipin_obj xCenter]] - $metal2_w/2]
+    set x2 [expr $x1 + $metal2_w]
+    set y1 $ya1
+    set y2 [::ord::dbu_to_microns [$dw_ipin_obj yMax]]
+    set area [list $x1 $y1 $x2 $y2]
+    addStripe -nets $dw_net -layer $metal2 -direction vertical \
+      -width [expr $x2 - $x1] -spacing 0.0 -set_to_set_distance 1.0 \
+      -start_from left -start_offset 0 -area $area
+  }
+  setAddStripeMode -reset
+}
+

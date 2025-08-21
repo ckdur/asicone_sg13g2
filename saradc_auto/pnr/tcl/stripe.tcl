@@ -237,7 +237,7 @@ proc get_or_generate_via {blayer tlayer dx dy} {
   return $vias
 }
 
-proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1 geoms other_geoms} {
+proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1 geoms other_geoms new_swire} {
   global stripe_ortho
   global stacked_via_bottom_layer
   global stacked_via_top_layer
@@ -245,7 +245,7 @@ proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1 geoms other_geoms} 
   global ::block
   set netobj [$::block findNet $net]
   set commits {}
-  set new_swire [odb::dbSWire_create $netobj ROUTED]
+  #set new_swire [odb::dbSWire_create $netobj ROUTED]
   set layerobj [$tech findLayer $layer]
   set min_stack_level [[$tech findLayer $stacked_via_bottom_layer] getRoutingLevel]
   set max_stack_level [[$tech findLayer $stacked_via_top_layer] getRoutingLevel]
@@ -501,7 +501,7 @@ proc add_stripe_over_area {nets layer direction width spacing ssdistance offset 
     #puts "odb::dbSBox_create $new_swire $metal_obj $xl0 $yl0 $xl1 $yl1 STRIPE $isver"
     odb::dbSBox_create $new_swire $metal_obj $xl0 $yl0 $xl1 $yl1 STRIPE $isver
     # puts "add_vias_over_area $net $layer $direction $xl0 $yl0 $xl1 $yl1"
-    add_vias_over_area $net $layer $direction $xl0 $yl0 $xl1 $yl1 $geoms $other_geoms
+    add_vias_over_area $net $layer $direction $xl0 $yl0 $xl1 $yl1 $geoms $other_geoms $new_swire
 
     # TODO: Search for the existing SRoutes, and other ITerms and see if they can
     # connect (Very difficult huh)
