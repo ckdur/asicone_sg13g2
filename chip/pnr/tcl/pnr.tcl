@@ -153,7 +153,7 @@ make_tracks TopMetal2 -x_offset 2.0  -x_pitch 4.0  -y_offset 2.0 -y_pitch 4.0
 #    -distance [expr $row*16]\
 #    -tapcell_master "$TAPCells"
 
-tapcell -halo_width_x 10 -halo_width_y 10
+tapcell -halo_width_x [expr 3*$row] -halo_width_y [expr 3*$row]
 
 #source ${ROOT_DIR}/lib/library.sg13g2.tcl
 set_macro_extension 10
@@ -198,7 +198,8 @@ add_pdn_stripe \
         -grid stdcell_grid \
         -layer Metal1 \
         -width 0.3 \
-        -followpins
+        -followpins \
+        -extend_to_core_ring
 
 add_pdn_connect \
     -grid stdcell_grid \
@@ -221,20 +222,21 @@ define_pdn_grid \
     -grid_over_pg_pins \
     -halo "5 5"
 
-add_pdn_ring \
-    -grid macro \
-    -layers "TopMetal1 Metal5" \
-    -widths "3.2 3.0" \
-    -spacings "1.64 1.64" \
-    -core_offset "$row $row"
+#add_pdn_ring \
+#    -grid macro \
+#    -layers "TopMetal1 Metal5" \
+#    -widths "3.2 3.0" \
+#    -spacings "1.64 1.64" \
+#    -core_offset "$row $row" \
+#    -allow_out_of_die
 
-add_pdn_stripe \
-    -grid macro \
-    -layer Metal5 \
-    -width 3.2 \
-    -pitch 10 \
-    -offset 10 \
-    -spacing 1.6
+#add_pdn_stripe \
+#    -grid macro \
+#    -layer TopMetal1 \
+#    -width 6 \
+#    -pitch 50 \
+#    -offset 25 \
+#    -spacing 2
 
 add_pdn_connect \
     -grid macro \

@@ -185,6 +185,6 @@ module asicone_202508 (
   sg13g2_Filler2000 FILLER_14();
   sg13g2_Filler1000 FILLER_15();
 
-  //SARADC adc();
+  SARADC adc();
   SPI spi();
 endmodule
