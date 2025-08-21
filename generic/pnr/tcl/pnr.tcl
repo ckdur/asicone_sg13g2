@@ -327,7 +327,7 @@ detailed_route\
 #################################################
 # Metal fill
 #################################################
-density_fill -rules $env(ROOT_DIR)/lib/$env(TECH)_fill.json
+density_fill -rules $env(ROOT_DIR)/lib/$env(TECH)_fill_metal5.json
 
 #################################################
 ## Write out final files

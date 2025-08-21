@@ -75,7 +75,7 @@ set ::block [$::chip getBlock]
 set dbu [$tech getDbUnitsPerMicron]
 
 # TODO: Is there a way to extract from a command?
-set siteobj [[[::ord::get_db] findLib sg13g2f] findSite obssite]
+set siteobj [[[::ord::get_db] findLib sg13g2] findSite obssite]
 set row   [::ord::dbu_to_microns [$siteobj getHeight]]
 set track [::ord::dbu_to_microns [$siteobj getWidth]]
 set pitch [expr 32*$row]
@@ -327,7 +327,7 @@ detailed_route\
 #################################################
 # Metal fill
 #################################################
-density_fill -rules $env(ROOT_DIR)/lib/$env(TECH)_fill.json
+density_fill -rules $env(ROOT_DIR)/lib/$env(TECH)_fill_metal5.json
 
 #################################################
 ## Write out final files

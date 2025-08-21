@@ -94,9 +94,19 @@ read_def -floorplan_initialize $RTL_DIR/${TOP}.block.def
 
 add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
-add_global_connection -net IOVDD -inst_pattern .* -pin_pattern {^iovdd$} -power
-add_global_connection -net IOVSS -inst_pattern .* -pin_pattern {^iovss$} -ground
-set_voltage_domain -name CORE -power VDD -ground VSS
+
+add_global_connection -net AVDD -inst_pattern "adc" -pin_pattern {^AVDD$} -power
+add_global_connection -net VDD -inst_pattern "adc" -pin_pattern {^VDD$} -power
+add_global_connection -net VSS -inst_pattern "adc" -pin_pattern {^VSS$} -ground
+add_global_connection -net VDD -inst_pattern "spi" -pin_pattern {^VDD$} -power
+add_global_connection -net VSS -inst_pattern "spi" -pin_pattern {^VSS$} -ground
+
+add_global_connection -net VDDD -inst_pattern "\(pad|FILLER\).*" -pin_pattern {^vdd$} -power
+add_global_connection -net VSSD -inst_pattern "\(pad|FILLER\).*" -pin_pattern {^vss$} -ground
+add_global_connection -net VDDIO -inst_pattern "\(pad|FILLER\).*" -pin_pattern {^iovdd$} -power
+add_global_connection -net VSSIO -inst_pattern "\(pad|FILLER\).*" -pin_pattern {^iovss$} -ground
+
+set_voltage_domain -name CORE -power VDD -ground VSS -secondary_power {AVDD}
 
 #insert_tiecells "sg13g2_tielo/L_LO" -prefix "TIE_ZERO_"
 #insert_tiecells "sg13g2_tiehi/L_HI" -prefix "TIE_ONE_"
@@ -164,10 +174,8 @@ place_io_terminals */PAD -allow_non_top_layer
 ## Power planning & SRAMs placement
 ####################################
 
-add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
-add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
-add_global_connection -net VDD -inst_pattern .* -pin_pattern {^VDD$} -power
-add_global_connection -net VSS -inst_pattern .* -pin_pattern {^VSS$} -ground
+[[$::block findInst pad_adc_avdd] findITerm pad] setSpecial
+
 global_connect
 
 define_pdn_grid \
