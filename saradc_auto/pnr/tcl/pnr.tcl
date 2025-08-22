@@ -703,19 +703,35 @@ global_connect
 ###############################################
 # Detail routing
 ###############################################
-#catch
+
 set_thread_count 10
-detailed_route\
-    -output_maze $PNR_DIR/reports/${TOP}_maze.log\
-    -output_drc $PNR_DIR/reports/${TOP}.drc\
-    -droute_end_iter 64 \
-    -or_seed 42\
-    -verbose 1
+
+set all_args [concat [list \
+  -output_maze $PNR_DIR/reports/${TOP}_maze.log \
+  -output_drc $PNR_DIR/reports/${TOP}.drc \
+  -droute_end_iter 64 \
+  -or_seed 42\
+  -verbose 1]]
+
+detailed_route {*}$all_args
+
+set repair_antennas_iters 1
+if { [repair_antennas] } {
+  detailed_route {*}$all_args
+}
+
+while { [check_antennas] && $repair_antennas_iters < 10 } {
+  repair_antennas
+  detailed_route {*}$all_args
+  incr repair_antennas_iters
+}
+
+check_antennas -report_file $PNR_DIR/reports/${TOP}.antenna.rpt
 
 #################################################
 # Metal fill
 #################################################
-density_fill -rules $env(ROOT_DIR)/cells/$env(TECH)_fill.json
+# density_fill -rules $env(ROOT_DIR)/cells/$env(TECH)_fill.json
 
 #################################################
 ## Write out final files
