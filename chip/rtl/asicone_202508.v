@@ -21,8 +21,6 @@ module asicone_202508 (
   AVDD,
   VDD,
   VSS,
-  VDDD,
-  VSSD,
   VDDIO,
   VSSIO);
 
@@ -129,7 +127,7 @@ module asicone_202508 (
   sg13g2_bpd70 bd_pad_adc_result_3();
   sg13g2_IOPadOut16mA pad_adc_result_4(.pad(pad_adc_result_4_pad), .c2p(pad_adc_result_4_c2p));
   sg13g2_bpd70 bd_pad_adc_result_4();
-  sg13g2_IOPadVss pad_adc_vss();
+  sg13g2_IOPadVssExt pad_adc_vss();
   sg13g2_bpd70 bd_pad_adc_vss();
   sg13g2_IOPadAnalog pad_adc_vrefp(.padres(pad_adc_vrefp_padres), .pad(pad_adc_vrefp_pad));
   sg13g2_bpd70 bd_pad_adc_vrefp();
@@ -141,9 +139,9 @@ module asicone_202508 (
   sg13g2_bpd70 bd_pad_adc_valid();
   sg13g2_IOPadIn pad_adc_go(.pad(pad_adc_go_pad), .p2c(pad_adc_go_p2c));
   sg13g2_bpd70 bd_pad_adc_go();
-  sg13g2_IOPadVss pad_vss_north_0();
+  sg13g2_IOPadVssExt pad_vss_north_0();
   sg13g2_bpd70 bd_vss_north_0();
-  sg13g2_IOPadVdd pad_vdd_north_0();
+  sg13g2_IOPadVddExt pad_vdd_north_0();
   sg13g2_bpd70 bd_vdd_north_0();
   sg13g2_IOPadIOVss pad_vsspst_north_0();
   sg13g2_bpd70 bd_vsspst_north_0();

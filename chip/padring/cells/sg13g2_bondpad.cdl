@@ -1,0 +1,8 @@
+.SUBCKT sg13g2_bpd60
+.ENDS
+
+.SUBCKT sg13g2_bpd70
+.ENDS
+
+.SUBCKT sg13g2_bpd80
+.ENDS

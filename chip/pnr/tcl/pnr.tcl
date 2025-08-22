@@ -61,11 +61,11 @@ if {![file exists reports]} {
 ## Cells declaration
 ####################################
 
-set BUFCells [list sg13g2_buf_1]
-set INVCells [list sg13g2_inv_1]
+set BUFCells [list BUFFD1]
+set INVCells [list INVD1]
 # TODO
-set FILLERCells [list sg13g2_fill_1 sg13g2_fill_2 sg13g2_fill_4 sg13g2_fill_8]
-set TAPCells [list ]
+set FILLERCells [list FILL1 FILL2 FILL4 FILL8]
+set TAPCells [list TAPCELL]
 set DCAPCells [list ]
 set DIODECells [list ]
 
@@ -85,6 +85,7 @@ set pitch [expr 32*$row]
 set margin [expr 5*$row]
 
 set padsize 180.000
+set top_metal "TopMetal2"
 set corearea "[expr $padsize+$margin] [expr $padsize+$margin] [expr $X-$padsize-$margin] [expr $Y-$padsize-$margin]"
 
 initialize_floorplan -site $techsite -die_area "0 0 $X $Y" -core_area $corearea
@@ -96,20 +97,27 @@ add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
 
 add_global_connection -net AVDD -inst_pattern "adc" -pin_pattern {^AVDD$} -power
-add_global_connection -net VDD -inst_pattern "adc" -pin_pattern {^VDD$} -power
-add_global_connection -net VSS -inst_pattern "adc" -pin_pattern {^VSS$} -ground
-add_global_connection -net VDD -inst_pattern "spi" -pin_pattern {^VDD$} -power
-add_global_connection -net VSS -inst_pattern "spi" -pin_pattern {^VSS$} -ground
+add_global_connection -net VDD -inst_pattern "\(adc|spi\)" -pin_pattern {^VDD$} -power
+add_global_connection -net VSS -inst_pattern "\(adc|spi\)" -pin_pattern {^VSS$} -ground
 
-add_global_connection -net VDDD -inst_pattern "\(pad|FILLER\).*" -pin_pattern {^vdd$} -power
-add_global_connection -net VSSD -inst_pattern "\(pad|FILLER\).*" -pin_pattern {^vss$} -ground
-add_global_connection -net VDDIO -inst_pattern "\(pad|FILLER\).*" -pin_pattern {^iovdd$} -power
-add_global_connection -net VSSIO -inst_pattern "\(pad|FILLER\).*" -pin_pattern {^iovss$} -ground
+#add_global_connection -net AVDD -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^pad$} -power
+add_global_connection -net VDD -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^vdd$}
+add_global_connection -net VSS -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^vss$}
+add_global_connection -net VDDIO -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^iovdd$}
+add_global_connection -net VSSIO -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^iovss$}
 
 set_voltage_domain -name CORE -power VDD -ground VSS -secondary_power {AVDD}
 
-#insert_tiecells "sg13g2_tielo/L_LO" -prefix "TIE_ZERO_"
-#insert_tiecells "sg13g2_tiehi/L_HI" -prefix "TIE_ONE_"
+# Flag some pins as special. If not, global routing will fail
+source tcl/padring.tcl
+[$::block findNet VDDIO] setSpecial
+[$::block findNet VSSIO] setSpecial
+[$::block findNet VDDIO] setSigType "POWER"
+[$::block findNet VSSIO] setSigType "GROUND"
+set_pins_as_special
+
+insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
+insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
 
 set ::chip [[::ord::get_db] getChip]
 set ::tech [[::ord::get_db] getTech]
@@ -127,10 +135,10 @@ set die_coords {}
 set core_coords {}
 
 foreach coord $die_area {
-    lappend die_coords [expr {1.0 * $coord / $dbu}]
+  lappend die_coords [::ord::dbu_to_microns $coord]
 }
 foreach coord $core_area {
-    lappend core_coords [expr {1.0 * $coord / $dbu}]
+  lappend core_coords [::ord::dbu_to_microns $coord]
 }
 
 # write out the floorplan size
@@ -168,58 +176,49 @@ tapcell -halo_width_x [expr 3*$row] -halo_width_y [expr 3*$row]
 #source ${ROOT_DIR}/lib/library.sg13g2.tcl
 set_macro_extension 10
 connect_by_abutment
-place_io_terminals */PAD -allow_non_top_layer
+#place_io_terminals */PAD -allow_non_top_layer
 
 ####################################
 ## Power planning & SRAMs placement
 ####################################
 
-[[$::block findInst pad_adc_avdd] findITerm pad] setSpecial
+#[[$::block findInst pad_adc_avdd] findITerm pad] setSpecial
 
 global_connect
 
-define_pdn_grid \
-    -name stdcell_grid
-
-add_pdn_stripe \
-    -grid stdcell_grid \
-    -layer TopMetal1 \
-    -width 3.2 \
-    -pitch $pitch \
-    -offset $pitch \
-    -spacing 1.64 -extend_to_core_ring
-
-add_pdn_stripe \
-    -grid stdcell_grid \
-    -layer Metal5 \
-    -width 3.2 \
-    -pitch $pitch \
-    -offset $pitch \
-    -spacing 1.6 \
-    -starts_with POWER -extend_to_core_ring
-
-add_pdn_connect \
-    -grid stdcell_grid \
-        -layers "Metal5 TopMetal1"
-
-add_pdn_stripe \
-        -grid stdcell_grid \
-        -layer Metal1 \
-        -width 0.3 \
-        -followpins \
-        -extend_to_core_ring
-
-add_pdn_connect \
-    -grid stdcell_grid \
-        -layers "Metal1 Metal5"
+define_pdn_grid -name Core
 
 add_pdn_ring \
-        -grid stdcell_grid \
-        -layers "TopMetal1 Metal5" \
-        -widths "3.2 3.0" \
-        -spacings "1.64 1.64" \
-        -core_offset "$row $row" \
-        -connect_to_pads
+	-grid Core \
+	-layers "TopMetal1 Metal5" \
+	-widths "6 6" \
+	-spacings "1.64 1.64" \
+	-core_offset "$row $row" \
+	-connect_to_pads
+
+add_pdn_stripe \
+	-grid Core \
+	-layer TopMetal1 \
+	-width 3.2 \
+	-pitch $pitch \
+	-offset $pitch \
+	-spacing 1.64 -extend_to_core_ring
+
+add_pdn_stripe \
+	-grid Core \
+	-layer Metal5 \
+	-width 3.2 \
+	-pitch $pitch \
+	-offset $pitch \
+	-spacing 1.6 \
+	-starts_with POWER -extend_to_core_ring
+
+add_pdn_stripe -grid Core -layer Metal1 -width 0.3 -followpins -extend_to_core_ring
+
+add_pdn_connect -grid Core -layers "Metal5 TopMetal1"
+add_pdn_connect -grid Core -layers "Metal1 Metal5"
+add_pdn_connect -grid Core -layers "Metal3 TopMetal1"
+add_pdn_connect -grid Core -layers "Metal2 Metal5"
 
 if {1} {
 
@@ -253,15 +252,9 @@ add_pdn_connect \
 
 pdngen
 
-catch
-
 ###################################
 ## Placement
 ####################################
-
-place_pins \
-	-hor_layers Metal4 \
-	-ver_layers Metal3
 
 # -density 1.0 -overflow 0.9 -init_density_penalty 0.0001 -initial_place_max_iter 20 -bin_grid_count 64
 global_placement -density 0.85
@@ -289,9 +282,10 @@ if { [catch {check_placement -verbose} errmsg] } {
 # CTS
 ####################################
 set_global_routing_layer_adjustment Metal1-Metal5 0.05
-
 set_routing_layers -signal Metal1-Metal5 -clock Metal1-Metal5
 
+# No CTS
+if {0} {
 # correlateRC.py gcd,ibex,aes,jpeg,chameleon,riscv32i,chameleon_hier
 # cap units pf/um
 set_layer_rc -layer Metal1    -capacitance 3.49E-05 -resistance 0.135e-03
@@ -321,6 +315,7 @@ set_propagated_clock [all_clocks]
 estimate_parasitics -placement
 
 repair_clock_nets -max_wire_length 0
+}
 
 estimate_parasitics -placement
 
@@ -331,7 +326,9 @@ if { [catch {check_placement -verbose} errmsg] } {
     exit 1
 }
 
+if {0} {
 report_cts -out_file $PNR_DIR/reports/cts.rpt
+}
 
 ###############################################
 # Global routing
@@ -345,10 +342,10 @@ global_route -congestion_iterations 50 -verbose -congestion_report_file $PNR_DIR
 ###############################################
 # Fillers
 ###############################################
-filler_placement "$FILLERCells"
+filler_placement -prefix "STDFILL" "$FILLERCells"
 
-add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
-add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
+add_global_connection -net VDD -inst_pattern STDFILL.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern STDFILL.* -pin_pattern {^vss$} -ground
 global_connect
 
 ###############################################
@@ -366,22 +363,23 @@ detailed_route\
     -verbose 1
 
 #################################################
-# Metal fill
+# Metal fill and pin placement
 #################################################
+put_pins_on_bondpad 70
 density_fill -rules $env(ROOT_DIR)/lib/$env(TECH)_fill.json
 
 #################################################
 ## Write out final files
 #################################################
-define_process_corner -ext_model_index 0 X
-extract_parasitics -ext_model_file $RCX_RULES -lef_res
+#define_process_corner -ext_model_index 0 X
+#extract_parasitics -ext_model_file $RCX_RULES -lef_res
 
 write_db DesignLib
 
 write_verilog $PNR_DIR/outputs/${TOP}.v
 write_verilog -include_pwr_gnd $PNR_DIR/outputs/${TOP}_pg.v
 write_def $PNR_DIR/outputs/${TOP}.def
-write_spef $PNR_DIR/outputs/${TOP}.spef
-write_abstract_lef $PNR_DIR/outputs/${TOP}.lef
+#write_spef $PNR_DIR/outputs/${TOP}.spef
+#write_abstract_lef $PNR_DIR/outputs/${TOP}.lef
 # write_timing_model $PNR_DIR/outputs/${TOP}.lib
 write_cdl -masters ${CDLS} $PNR_DIR/outputs/${TOP}.cdl

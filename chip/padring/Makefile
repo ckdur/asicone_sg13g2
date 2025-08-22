@@ -17,7 +17,7 @@ all: $(DEF)
 
 $(DEF): $(SYN_NET) $(PRJ_DIR)/rtl/${TOP}.padring.cfg
 	mkdir -p $(PADRING_DIR)/outputs
-	padring -v --lef $(TECH_PDK)/libs.ref/sg13g2_io/lef/sg13g2_io.lef --lef $(CELLS_DIR)/sg13g2_bondpad.lef --svg $(PADRING_DIR)/outputs/padring.svg --def $(DEF) --ver $(PADRING_DIR)/outputs/padring.v --csv $(PADRING_DIR)/outputs/padring.csv $(PRJ_DIR)/rtl/${TOP}.padring.cfg | tee $(PADRING_DIR)/padring.log
+	padring -v --lef $(TECH_PDK)/libs.ref/sg13g2_io/lef/sg13g2_io.lef --lef $(CELLS_DIR)/sg13g2_io_mod.lef --lef $(CELLS_DIR)/sg13g2_bondpad.lef --svg $(PADRING_DIR)/outputs/padring.svg --def $(DEF) --ver $(PADRING_DIR)/outputs/padring.v --csv $(PADRING_DIR)/outputs/padring.csv $(PRJ_DIR)/rtl/${TOP}.padring.cfg | tee $(PADRING_DIR)/padring.log
 	sed -i "s|PLACED|FIXED|g" $(DEF)
 
 gds: $(GDS)
