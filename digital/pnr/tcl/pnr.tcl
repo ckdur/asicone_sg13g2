@@ -300,7 +300,35 @@ set_propagated_clock [all_clocks]
 
 set_macro_extension 0
 
-global_route -congestion_iterations 50 -verbose -congestion_report_file $PNR_DIR/reports/congestion.rpt
+pin_access
+global_route -congestion_iterations 50 -congestion_report_iter_step 5 -verbose -congestion_report_file $PNR_DIR/reports/${TOP}_congestion.rpt
+
+set_placement_padding -global -left 0 -right 0
+set_propagated_clock [all_clocks]
+estimate_parasitics -global_routing
+
+# Incremental repair blob
+repair_design -verbose
+global_route -start_incremental
+detailed_placement
+global_route -end_incremental -congestion_report_file $PNR_DIR/reports/${TOP}_congestion_post_repair_design.rpt
+
+repair_timing -verbose -setup_margin 0 -repair_tns 100
+
+global_route -start_incremental
+detailed_placement
+global_route -end_incremental -congestion_report_file $PNR_DIR/reports/${TOP}_congestion_post_repair_timing.rpt
+
+# Repair power blob
+global_route -start_incremental
+# recover_power_helper
+global_route -end_incremental -congestion_report_file $PNR_DIR/reports/${TOP}_congestion_post_recover_power.rpt
+
+# Repair antennas blob
+repair_antennas -iterations 10
+check_placement -verbose
+check_antennas -report_file $PNR_DIR/reports/${TOP}_global_routing_antennas.log
+estimate_parasitics -global_routing
 
 ###############################################
 # Fillers
@@ -317,12 +345,11 @@ global_connect
 set_thread_count 10
 
 set all_args [concat [list \
-  -output_maze $PNR_DIR/reports/${TOP}_maze.log \
-  -output_drc $PNR_DIR/reports/${TOP}.drc \
+  -output_drc $PNR_DIR/reports/SPI.drc \
+  -output_maze $PNR_DIR/reports/SPI_maze.log \
   -droute_end_iter 64 \
-  -or_seed 42 \
-  -clean_patches \
-  -verbose 1]]
+  -verbose 1 \
+  -drc_report_iter_step 5]]
 
 detailed_route {*}$all_args
 
@@ -347,15 +374,16 @@ check_antennas -report_file $PNR_DIR/reports/${TOP}.antenna.rpt
 #################################################
 ## Write out final files
 #################################################
-define_process_corner -ext_model_index 0 X
-extract_parasitics -ext_model_file $RCX_RULES -lef_res
+# NOTE: The extraction of parasitcs deletes the min-area extra metal... why?
+#define_process_corner -ext_model_index 0 X
+#extract_parasitics -ext_model_file $RCX_RULES -lef_res
 
 write_db DesignLib
 
 write_verilog $PNR_DIR/outputs/${TOP}.v
 write_verilog -include_pwr_gnd $PNR_DIR/outputs/${TOP}_pg.v
 write_def $PNR_DIR/outputs/${TOP}.def
-write_spef $PNR_DIR/outputs/${TOP}.spef
+#write_spef $PNR_DIR/outputs/${TOP}.spef
 write_abstract_lef $PNR_DIR/outputs/${TOP}.lef
 # write_timing_model $PNR_DIR/outputs/${TOP}.lib
 write_cdl -masters ${CDLS} $PNR_DIR/outputs/${TOP}.cdl
