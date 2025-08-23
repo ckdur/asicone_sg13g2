@@ -38,13 +38,14 @@ proc pos_stdcell_comp {x y path} {
     set up_sizex [::ord::dbu_to_microns [[$up_obj getMaster] getWidth]]
     set dw_sizex [::ord::dbu_to_microns [[$dw_obj getMaster] getWidth]]
 
+    # TODO: The R0 and MX maybe needs to be deduced from the site
     if {[[$::block findInst $up_inst] isPlaced] == 0} {
-      # puts "place_inst -name \[list $up_inst\] -location \"$upx $upy\" -orientation R0 -status LOCKED"
-      place_inst -name [list $up_inst] -location "$upx $upy" -orientation R0 -status LOCKED
+      # puts "place_inst -name \[list $up_inst\] -location \"$upx $upy\" -orientation MX -status LOCKED"
+      place_inst -name [list $up_inst] -location "$upx $upy" -orientation MX -status LOCKED
     }
     if {[[$::block findInst $dw_inst] isPlaced] == 0} {
-      # puts "place_inst -name \[list $dw_inst\] -location \"$dwx $dwy\" -orientation MX -status LOCKED"
-      place_inst -name [list $dw_inst] -location "$dwx $dwy" -orientation MX -status LOCKED
+      # puts "place_inst -name \[list $dw_inst\] -location \"$dwx $dwy\" -orientation R0 -status LOCKED"
+      place_inst -name [list $dw_inst] -location "$dwx $dwy" -orientation R0 -status LOCKED
     }
     set upx [expr $upx + $up_sizex]
     set dwx [expr $dwx + $dw_sizex]
