@@ -198,6 +198,18 @@ M_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 
 ******* EOF
 
+** Created by: circuit_gen.ANTENNA
+** Cell name: ANTENNA
+** Lib name: sg13g2f
+.SUBCKT ANTENNA i vdd vss
+*.PININFO i:I vdd:B vss:B
+Ddn_1 vss i dantenna m=1 w=1.485u l=970n a=1440.45f
+DD0 i vdd dpantenna m=1 w=1.485u l=970n a=1440.45f
+.ENDS
+
+
+******* EOF
+
 ** Created by: circuit_gen.BUFFD1_1
 ** Cell name: BUFFD1_1
 ** Lib name: sg13g2

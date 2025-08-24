@@ -42,6 +42,8 @@ module SARADC_SW (
     .vdd(Z2), .zn(Z2), .vss(Z1), .i(S)
   );
 
+  // TODO: We might need to put a pair of antennas
+
 endmodule
 
 module SARADC_SW_MULT # (

@@ -3,7 +3,7 @@
 ROOT_DIR?=$(abspath .)
 TECH?=sg13g2f
 
-X=700
+X=566.44
 Y=361.08
 # NOTE: Change Y at the moment of having a completed floorplan
 

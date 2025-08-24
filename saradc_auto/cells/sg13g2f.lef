@@ -1472,6 +1472,45 @@ END AOI21D4
 
 #--------EOF---------
 
+MACRO ANTENNA
+  CLASS CORE ANTENNACELL ;
+  FOREIGN ANTENNA ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 2.380 BY 6.120 ;
+  SYMMETRY X Y R90 ;
+  SITE obssite ;
+  PIN vss
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER Metal1 ;
+        RECT 0.000 -0.150 2.380 0.150 ;
+    END
+  END vss
+  PIN vdd
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER Metal1 ;
+        RECT 0.000 5.970 2.380 6.270 ;
+    END
+  END vdd
+  PIN i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 1.440450 ;
+    ANTENNADIFFAREA 2.880900 ;
+    PORT
+      LAYER Metal1 ;
+        RECT 0.590 5.040 1.810 5.200 ;
+        RECT 0.640 1.080 0.800 5.040 ;
+        RECT 0.590 0.920 1.810 1.080 ;
+    END
+  END i
+END ANTENNA
+
+#--------EOF---------
+
 MACRO BUFFD0
   CLASS CORE ;
   FOREIGN BUFFD0 ;
@@ -8514,8 +8553,8 @@ MACRO OAI211D4
         RECT 2.590 0.740 2.720 0.920 ;
         RECT 3.550 0.740 3.680 0.920 ;
       LAYER Metal1 ;
-        RECT 1.615 2.230 1.775 2.710 ;
-        RECT 1.565 2.070 1.825 2.230 ;
+#        RECT 1.615 2.230 1.775 2.710 ;
+        RECT 1.565 2.070 1.825 2.710 ;
     END
   END a2
   PIN a1
@@ -8543,8 +8582,8 @@ MACRO OAI211D4
         RECT 6.430 0.740 6.560 0.920 ;
         RECT 7.390 0.740 7.520 0.920 ;
       LAYER Metal1 ;
-        RECT 7.375 2.230 7.535 2.710 ;
-        RECT 7.325 2.070 7.585 2.230 ;
+#        RECT 7.375 2.230 7.535 2.710 ;
+        RECT 7.325 2.070 7.585 2.710 ;
     END
   END a1
   PIN b
@@ -8573,8 +8612,8 @@ MACRO OAI211D4
         RECT 11.230 0.740 11.360 0.920 ;
         RECT 12.190 0.740 12.320 0.920 ;
       LAYER Metal1 ;
-        RECT 11.215 2.710 11.375 3.190 ;
-        RECT 11.165 2.550 11.425 2.710 ;
+#        RECT 11.215 2.710 11.375 3.190 ;
+        RECT 11.165 2.550 11.425 3.190 ;
     END
   END b
   PIN c
@@ -8603,8 +8642,8 @@ MACRO OAI211D4
         RECT 15.070 0.740 15.200 0.920 ;
         RECT 16.030 0.740 16.160 0.920 ;
       LAYER Metal1 ;
-        RECT 13.085 3.030 13.345 3.190 ;
-        RECT 13.135 2.550 13.295 3.030 ;
+        RECT 13.085 2.550 13.345 3.190 ;
+#        RECT 13.135 2.550 13.295 3.030 ;
     END
   END c
   PIN vss

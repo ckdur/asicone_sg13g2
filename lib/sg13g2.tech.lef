@@ -3643,7 +3643,7 @@ END via4Array
 ###########################################
 ViaRULE viagen56 GENERATE
   LAYER Metal5 ;
-    ENCLOSURE 0 0 ;
+    ENCLOSURE 0.1 0.1 ;
   LAYER TopMetal1 ;
     ENCLOSURE 0.61 0.61 ;
   LAYER TopVia1 ;

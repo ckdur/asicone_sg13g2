@@ -19,6 +19,7 @@ TECH_PDK=$(PDK_ROOT)/$(PDK)
 #PDK_FILE ?= $(TECH_PDK)/libs.tech/magic/$(PDK).magicrc
 PDK_FILE?=none
 PDK_KFILE ?= $(TECH_PDK)/libs.tech/klayout/tech/sg13g2.lyp
+PDK_KNFILE ?= $(TECH_PDK)/libs.tech/klayout/tech/sg13g2.lyt
 export PDK_ROOT
 export PDK
 
@@ -44,10 +45,10 @@ else
 endif
 
 view: $(GDS)
-	klayout -s $(GDS) -l $(PDK_KFILE)
+	klayout -nn $(PDK_KNFILE) -s $(GDS)
 
 viewpre: $(GDSPRE)
-	klayout -s $(GDSPRE) -l $(PDK_KFILE)
+	klayout -nn $(PDK_KNFILE) -s $(GDSPRE)
 
 drc: $(GDS)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py --path=$(GDS) --mp=10 --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --no_density --density_thr=10 --antenna

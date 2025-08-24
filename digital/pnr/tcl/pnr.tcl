@@ -60,11 +60,10 @@ if {![file exists reports]} {
 
 set BUFCells [list BUFFD1]
 set INVCells [list INVD1]
-# TODO
 set FILLERCells [list FILL1 FILL2 FILL4 FILL8]
 set TAPCells [list TAPCELL]
 set DCAPCells [list ]
-set DIODECells [list ]
+set DIODECells [list ANTENNA]
 
 ####################################
 ## Floor Plan
@@ -231,11 +230,11 @@ global_placement -density 0.85
 # TODO: This is zero in the config.tcl
 set cell_pad_value 0
 # TODO: Most of the time, diode_pad_value is 2
-# set diode_pad_value 2
+set diode_pad_value 2
 set cell_pad_side [expr $cell_pad_value / 2]
 set_placement_padding -global -right $cell_pad_side -left $cell_pad_side
 # set_placement_padding -masters $::env(CELL_PAD_EXCLUDE) -right 0 -left 0
-# set_placement_padding -masters $DIODECells -left $diode_pad_value
+set_placement_padding -masters $DIODECells -left $diode_pad_value
 
 detailed_placement -max_displacement [subst { "500" "100" }]
 optimize_mirroring

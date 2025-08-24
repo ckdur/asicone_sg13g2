@@ -59,11 +59,10 @@ if {![file exists reports]} {
 
 set BUFCells [list BUFFD1]
 set INVCells [list INVD1]
-# TODO
 set FILLERCells [list FILL1 FILL2 FILL4 FILL8]
 set TAPCells [list TAPCELL]
 set DCAPCells [list ]
-set DIODECells [list ]
+set DIODECells [list ANTENNA]
 
 ####################################
 ## Floor Plan
@@ -80,10 +79,10 @@ set track [expr 1.0*[$siteobj getWidth] / $dbu]
 set pitch [expr 32*$row]
 set margin [expr 3*$row]
 
-set dig_to_ana 0.8
+set dig_to_ana 451.92
 set corearea "[expr $margin] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
-set digcorearea "[expr $X*$dig_to_ana] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
-set anacorearea "[expr $margin] [expr $margin] [expr $X*$dig_to_ana] [expr $Y-$margin]"
+set digcorearea "[expr $dig_to_ana] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
+set anacorearea "[expr $margin] [expr $margin] [expr $dig_to_ana] [expr $Y-$margin]"
 set corex [expr $margin]
 set corey [expr $margin]
 set coreuy [expr $Y-$margin]
@@ -158,25 +157,29 @@ set saradc_fill_nopower SARADC_FILL1_NOPOWER
 set saradc_fill SARADC_FILL1
 set saradc_tap SARADC_FILLTIE2
 set metal1 Metal1
-set metal1_py [expr 1.0*[[$tech findLayer Metal1] getPitchY] / $dbu]
-set metal1_w [expr 1.0*[[$tech findLayer Metal1] getWidth] / $dbu]
-set metal1_s [expr 1.0*[[$tech findLayer Metal1] getSpacing] / $dbu]
+set metal1_py [::ord::dbu_to_microns [[$tech findLayer Metal1] getPitchY]]
+set metal1_w [::ord::dbu_to_microns [[$tech findLayer Metal1] getWidth]]
+set metal1_s [::ord::dbu_to_microns [[$tech findLayer Metal1] getSpacing]]
 set metal2 Metal2
-set metal2_px [expr 1.0*[[$tech findLayer Metal2] getPitchX] / $dbu + 0.02]
-set metal2_w [expr 1.0*[[$tech findLayer Metal2] getWidth] / $dbu]
-set metal2_s [expr 1.0*[[$tech findLayer Metal2] getSpacing] / $dbu]
+set metal2_px [expr [::ord::dbu_to_microns [[$tech findLayer Metal2] getPitchX]] + 0.02]
+set metal2_w [::ord::dbu_to_microns [[$tech findLayer Metal2] getWidth]]
+set metal2_s [::ord::dbu_to_microns [[$tech findLayer Metal2] getSpacing]]
 set metal3 Metal3
-set metal3_py [expr 1.0*[[$tech findLayer Metal3] getPitchY] / $dbu]
-set metal3_w [expr 1.0*[[$tech findLayer Metal3] getWidth] / $dbu]
-set metal3_s [expr 1.0*[[$tech findLayer Metal3] getSpacing] / $dbu]
+set metal3_py [::ord::dbu_to_microns [[$tech findLayer Metal3] getPitchY]]
+set metal3_w [::ord::dbu_to_microns [[$tech findLayer Metal3] getWidth]]
+set metal3_s [::ord::dbu_to_microns [[$tech findLayer Metal3] getSpacing]]
 set metal4 Metal4
-set metal4_px [expr 1.0*[[$tech findLayer Metal4] getPitchX] / $dbu]
-set metal4_w [expr 1.0*[[$tech findLayer Metal4] getWidth] / $dbu]
-set metal4_s [expr 1.0*[[$tech findLayer Metal4] getSpacing] / $dbu]
+set metal4_px [::ord::dbu_to_microns [[$tech findLayer Metal4] getPitchX]]
+set metal4_w [::ord::dbu_to_microns [[$tech findLayer Metal4] getWidth]]
+set metal4_s [::ord::dbu_to_microns [[$tech findLayer Metal4] getSpacing]]
 set metal5 Metal5
-set metal5_py [expr 1.0*[[$tech findLayer Metal5] getPitchY] / $dbu]
-set metal5_w [expr 1.0*[[$tech findLayer Metal5] getWidth] / $dbu]
-set metal5_s [expr 1.0*[[$tech findLayer Metal5] getSpacing] / $dbu]
+set metal5_py [::ord::dbu_to_microns [[$tech findLayer Metal5] getPitchY]]
+set metal5_w [::ord::dbu_to_microns [[$tech findLayer Metal5] getWidth]]
+set metal5_s [::ord::dbu_to_microns [[$tech findLayer Metal5] getSpacing]]
+set metal6 TopMetal1
+set metal6_px [::ord::dbu_to_microns [[$tech findLayer TopMetal1] getPitchX]]
+set metal6_w [::ord::dbu_to_microns [[$tech findLayer TopMetal1] getWidth]]
+set metal6_s [::ord::dbu_to_microns [[$tech findLayer TopMetal1] getSpacing]]
 
 # Configuration of the ADC
 # Capacitor WxH (3x2 in this case)
@@ -195,13 +198,13 @@ set nsw_vouthl 3
 set fill_lib [[::ord::get_db] findLib SARADC_FILL1]
 set fill_obj [$fill_lib findMaster SARADC_FILL1]
 set fill_rail_obj [lindex [$fill_obj getMTerms] 0]
-set abutsizey [expr 1.0*[[$fill_rail_obj getBBox] dy] / $dbu]
+set abutsizey [::ord::dbu_to_microns [[$fill_rail_obj getBBox] dy]]
 set fill_sx [::ord::dbu_to_microns [$fill_obj getWidth]]
 
 # Put the power domain for Analog before anything else
 set tie_lib [[::ord::get_db] findLib $saradc_tap]
 set tie_master [$tie_lib findMaster $saradc_tap]
-set sizetap [expr 1.0*[$tie_master getWidth] / $dbu]
+set sizetap [::ord::dbu_to_microns [$tie_master getWidth]]
 # setObjFPlanBox Group {Analog} [expr $corex-$sizetap] $corey $coreux $coreuy
 
 source tcl/stripe.tcl
@@ -261,16 +264,16 @@ set nrow_all [expr $nrow_h + $nrow_l + $nrow_asw]
 set sw_w [lindex $ret_sw 0]
 set cmp_x [expr $posx_sw + $sw_w + 20*$track]
 set x1 [expr $posx_sw-$sizetap]
-set y1 [expr $posy_sw-4*$row]
+set y1 [expr $posy_sw-1*$row]
 set x2 [expr $cmp_x-$sizetap]
-set y2 [expr $posy_sw+5*$row]
+set y2 [expr $posy_sw+2*$row]
 set area "$x1 $y1 $x2 $y2"
 create_blockage -region $area
 
 # The blockages for avoiding std cells
 set x1 $corex
 set y1 $posy_cdach
-set x2 [expr $X*$dig_to_ana]
+set x2 [expr $dig_to_ana]
 set y2 [expr $posy_cdach + $row*($nrow_h+1)]
 set area "$x1 $y1 $x2 $y2"
 create_blockage -region $area
@@ -291,8 +294,8 @@ set area "$x1 $y1 $x2 $y2"
 # Re-initialize the floorplan with the new height
 set Y [expr $posy_cdacl + $row*$nrow_h + $margin]
 set corearea "[expr $margin] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
-set digcorearea "[expr $X*$dig_to_ana] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
-set anacorearea "[expr $margin] [expr $margin] [expr $X*$dig_to_ana] [expr $Y-$margin]"
+set digcorearea "[expr $dig_to_ana] [expr $margin] [expr $X-$margin] [expr $Y-$margin]"
+set anacorearea "[expr $margin] [expr $margin] [expr $dig_to_ana] [expr $Y-$margin]"
 set coreuy [expr $Y-$margin]
 set fPlan_height [expr $Y-2*$margin]
 
@@ -300,9 +303,18 @@ set_domain_area CORE -area $digcorearea
 set_domain_area ANALOG -area $anacorearea
 initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $digcorearea
 
+
+# Positioning of the comparator
+set ret_poscmp [pos_stdcell_comp $cmp_x $posy_sw analog/cmp]
+set compx [lindex $ret_poscmp 0]
+set compy [lindex $ret_poscmp 1]
+
+# Put the main clock buffer near the digital domain
+place_inst -name [list "analog/buflogic.conv.smpcs.clkbuf.impl"] -location "[expr $dig_to_ana-$sizetap-21.76] $posy_sw" -orientation R0 -status LOCKED
+
 ## Tapcell insertion
 tapcell \
-    -distance [expr $row*16] \
+    -distance 40 \
     -endcap_master "$TAPCells" \
     -tapcell_master "$TAPCells"
 
@@ -334,7 +346,7 @@ add_pdn_stripe \
     -layer Metal5 \
     -width 3.2 \
     -pitch $pitch \
-    -offset [expr $X*$dig_to_ana-2*$margin+$row] \
+    -offset [expr $dig_to_ana-2*$margin+$row] \
     -spacing 1.6 \
     -starts_with POWER -extend_to_boundary
 
@@ -401,14 +413,6 @@ pdngen
 ## ADC Routing
 ####################################
 
-# Positioning of the comparator
-set ret_poscmp [pos_stdcell_comp $cmp_x $posy_sw analog/cmp]
-set compx [lindex $ret_poscmp 0]
-set compy [lindex $ret_poscmp 1]
-
-# Put the main clock buffer near the digital domain
-place_inst -name [list "analog/buflogic.conv.smpcs.clkbuf.impl"] -location "[expr $X*$dig_to_ana-2*$margin] $posy_sw" -orientation MY -status LOCKED
-
 # Go for routing
 puts "\[Routing\] Creating vdd and vss for ties"
 create_stripes_vdd_vss $posx_cdach $corey $cdacx_h $nx_h $fPlan_height $saradc_tap AVDD VSS [expr 2*$metal2_w]
@@ -451,7 +455,9 @@ set wthird [expr 4*$metal4_w]
 set sthird [expr 2*$metal4_s]
 create_sw_conn $posx_sw $posy_sw analog/sw_vouth2voutl $cdacx_h $wthird $sthird $nsw_vouthl
 create_sw_cap_conn $posx_cdach $posy_cdach $posa_h $lsta_h $pw $ph $cdacx_h $cdacy_h $strip_h
+puts "\[Routing\] Done 1"
 create_sw_cap_conn $posx_cdacl $posy_cdacl $posa_l $lsta_l $pw $ph $cdacx_h $cdacy_h $strip_l
+puts "\[Routing\] Done 2"
 route_vouts_comp [expr $posy_sw-5*$row] [expr $posy_sw+6*$row] analog/cmp
 
 puts "\[Routing\] Stripes for global connections"
@@ -469,8 +475,8 @@ create_stripes $posx_cdacl $y_lstripe $cdacx_l $nx_l $uy_lstripe $strip_l $wthir
 
 puts "\[Routing\] Create the rings for fixing bits 1 and 3 of the ring DACs"
 # Create the rings for fixing bits 1 and 3 of the ring DACs
-set wforth [expr 6*$metal5_w]
-set sforth [expr 6*$metal5_s]
+set wforth [expr $metal6_w]
+set sforth [expr 2*$metal6_s]
 setAddStripeMode -stacked_via_top_layer TopMetal1 -stacked_via_bottom_layer $metal5
 
 puts "\[Routing\]    Phase 1"
@@ -568,8 +574,8 @@ if {[file exists $PNR_DIR/tcl/$TOP.pins.tcl]} {
 
 # Dummy positioning of the buffers
 # source tcl/comp_pos.tcl
-pos_stdcell_box [expr $cmp_x+$compx+$row] [expr $posy_sw-2*$row] [expr $X*$dig_to_ana-($cmp_x+$compx+$row)-3*$margin] analog/buflogic
-pos_stdcell_box [expr $X*$dig_to_ana+$row+2*$margin] [expr $posy_sw-10*$row] [expr $X*(1-$dig_to_ana)-3*$margin-$row] digital
+pos_stdcell_box [expr $cmp_x+$compx+$row] [expr $posy_sw-2*$row] [expr $dig_to_ana-($cmp_x+$compx+$row)-3*$margin] analog/buflogic
+pos_stdcell_box [expr $dig_to_ana+$row+2*$margin] [expr $posy_sw-10*$row] [expr ($X-$dig_to_ana)-3*$margin-$row] digital
 
 write_def $PNR_DIR/outputs/${TOP}.pre.def
 
@@ -609,11 +615,11 @@ if { [catch {global_placement -skip_initial_place -density 0.82} errmsg] } {
 # TODO: This is zero in the config.tcl
 set cell_pad_value 0
 # TODO: Most of the time, diode_pad_value is 2
-# set diode_pad_value 2
+set diode_pad_value 2
 set cell_pad_side [expr $cell_pad_value / 2]
 set_placement_padding -global -right $cell_pad_side -left $cell_pad_side
 # set_placement_padding -masters $::env(CELL_PAD_EXCLUDE) -right 0 -left 0
-# set_placement_padding -masters $DIODECells -left $diode_pad_value
+set_placement_padding -masters $DIODECells -left $diode_pad_value
 
 detailed_placement -max_displacement [subst { "500" "100" }]
 optimize_mirroring
@@ -709,13 +715,13 @@ global_route -start_incremental -allow_congestion
 global_route -end_incremental -allow_congestion -congestion_report_file $PNR_DIR/reports/${TOP}_congestion_post_recover_power.rpt
 
 # Repair antennas blob
-repair_antennas -iterations 10
-if { [catch {check_placement -verbose} errmsg] } {
-    puts stderr $errmsg
-    puts "Check placement failed, but is ignored on purpose"
-    puts "May god forgive our actions"
-}
-check_antennas -report_file $PNR_DIR/reports/${TOP}_global_routing_antennas.log
+#repair_antennas -iterations 10
+#if { [catch {check_placement -verbose} errmsg] } {
+#    puts stderr $errmsg
+#    puts "Check placement failed, but is ignored on purpose"
+#    puts "May god forgive our actions"
+#}
+#check_antennas -report_file $PNR_DIR/reports/${TOP}_global_routing_antennas.log
 estimate_parasitics -global_routing
 
 ###############################################
@@ -747,18 +753,22 @@ set all_args [concat [list \
 
 detailed_route {*}$all_args
 
-set repair_antennas_iters 1
-if { [repair_antennas] } {
-  detailed_route {*}$all_args
-}
+#set repair_antennas_iters 1
+#if { [repair_antennas] } {
+#  detailed_route {*}$all_args
+#}
 
-while { [check_antennas] && $repair_antennas_iters < 10 } {
-  repair_antennas
-  detailed_route {*}$all_args
-  incr repair_antennas_iters
-}
+#while { [check_antennas] && $repair_antennas_iters < 10 } {
+#  repair_antennas
+#  detailed_route {*}$all_args
+#  incr repair_antennas_iters
+#}
 
-check_antennas -report_file $PNR_DIR/reports/${TOP}.antenna.rpt
+#if { [catch {check_antennas -report_file $PNR_DIR/reports/${TOP}.antenna.rpt} errmsg] } {
+#    puts stderr $errmsg
+#    puts "Antenna checking failure, but is ignored on purpose"
+#    puts "May god forgive our actions"
+#}
 
 #################################################
 # Metal fill

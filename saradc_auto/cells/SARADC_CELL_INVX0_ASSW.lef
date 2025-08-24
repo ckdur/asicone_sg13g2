@@ -28,9 +28,7 @@ MACRO SARADC_CELL_INVX0_ASSW
     USE POWER ;
     PORT
       LAYER Metal1 ;
-        RECT 1.085 4.970 1.345 5.130 ;
-        RECT 1.135 1.150 1.295 4.970 ;
-        RECT 1.085 0.990 1.345 1.150 ;
+        RECT 1.135 0.940 1.295 5.180 ;
     END
   END zn
   PIN vss

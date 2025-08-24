@@ -253,9 +253,9 @@ proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
       }
     }
     # We need to shift the position of I if ZN is too near
-    set vsh_i_llx_aft_fl [expr $fl_zn_llx + $metal2_px]
+    set vsh_i_llx_aft_fl [expr $fl_zn_llx + $metal2_px + $metal2_w]
     set vsh_i_llx [expr {$vsh_i_llx < $vsh_i_llx_aft_fl ? $vsh_i_llx_aft_fl : $vsh_i_llx}]
-    set vsh_i_urx_aft_fl [expr $fl_zn_urx - $metal2_px]
+    set vsh_i_urx_aft_fl [expr $fl_zn_urx - $metal2_px - $metal2_w]
     set vsh_i_urx [expr {$vsh_i_urx > $vsh_i_urx_aft_fl ? $vsh_i_urx_aft_fl : $vsh_i_urx}]
     
     # Iterate all the instances
@@ -312,8 +312,8 @@ proc create_sw_cap_conn {x y pos lst pw ph sizex sizey strip} {
       set zncx1 [expr 1.0*[$znshape xMin] / $dbu]
       # set zncx2 [lindex $znshape 2] Possibly wrong. This has a M1 width, and we need to connect M2
       set zncx2 [expr $zncx1 + $metal2_w]
-      set znnx1 [expr $zncx1 - 2*$metal2_px - $metal2_w]
-      set znnx2 [expr $zncx2 - 2*$metal2_px - $metal2_w]
+      set znnx1 [expr $zncx1 - $metal2_px - $metal2_w]
+      set znnx2 [expr $zncx2 - $metal2_px - $metal2_w]
       
       # Get the pin that is not connected to zn
       set zsnnet [expr {$znnet == $vddnet? $vssnet : $vddnet}]

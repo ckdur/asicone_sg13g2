@@ -4,14 +4,15 @@ proc pos_sw_wtap {x y path capw tapcap nsw} {
   global metal1_py
   global saradc_fill_nopower
   global dbu
-  set spc 6
+  set spc 2
+  set spcend 8
   set tap_lib [[::ord::get_db] findLib $tapcap]
   set tap_master [$tap_lib findMaster $tapcap]
   set sizetap [expr 1.0*[$tap_master getWidth] / $dbu]
   set sw_lib [[::ord::get_db] findLib "SARADC_CELL_INVX0_ASSW"]
   set sw_master [$sw_lib findMaster "SARADC_CELL_INVX0_ASSW"]
   set swsizex [expr 1.0*[$sw_master getWidth] / $dbu]
-  set totalsizex [expr 4*$nsw*$swsizex + ((4*$nsw-1)*$spc+1)*$track]
+  set totalsizex [expr 4*$nsw*$swsizex + (3*$spc*$nsw + $spcend*($nsw-1))*$track]
   set stpx [expr $x+($capw - $totalsizex)/2.0]
   set px $stpx
   set py $y
@@ -21,7 +22,7 @@ proc pos_sw_wtap {x y path capw tapcap nsw} {
     set ppath "${path}.impl\\\[${i}\\\].impl"
     # Spacings (always 2 in the middle, before only in 0, end always 2 except last
     set spcb 0
-    set spca [expr {$i != ($nsw-1) ? $spc : 0}]
+    set spca [expr {$i != ($nsw-1) ? $spcend : 0}]
     
     # puts "\[pos_cdac_unit\] pos_sw $px $py $ppath $spc $spcb $spca 1"
     set swxy [pos_sw $px $py $ppath $spc $spcb $spca 1]
@@ -356,11 +357,13 @@ proc pos_cdac_unit {x y path ind pw ph} {
   
   # Positioning of the switch
   # TODO: We are assuming 12 implementations
-  set spc 6
+  set nsw 3
+  set spc 2
+  set spcend 8
   set sw_lib [[::ord::get_db] findLib "SARADC_CELL_INVX0_ASSW"]
   set sw_master [$sw_lib findMaster "SARADC_CELL_INVX0_ASSW"]
   set swsizex [expr 1.0*[$sw_master getWidth] / $dbu]
-  set totalsizex [expr 12*$swsizex + (11*$spc+1)*$track]
+  set totalsizex [expr 4*$nsw*$swsizex + (3*$spc*$nsw + $spcend*($nsw-1))*$track]
   set stpx [expr $x+(($capx-$x) - $totalsizex)/2.0]
   set px $stpx
   set py [expr $capy + $metal1_py*$ntrack_capsw]
@@ -371,7 +374,7 @@ proc pos_cdac_unit {x y path ind pw ph} {
     set ppath "${path}.${type}\\\[${ind}\\\].sw_${type}"
     # Spacings (always 2 in the middle, before only in 0, end always 2 except last
     set spcb 0
-    set spca [expr {$i != ($types_l-1) ? $spc : 0}]
+    set spca [expr {$i != ($types_l-1) ? $spcend : 0}]
     
     # puts "\[pos_cdac_unit\] pos_sw $px $py $ppath $spc $spcb $spca 1"
     set swxy [pos_sw $px $py $ppath $spc $spcb $spca 1]
