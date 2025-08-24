@@ -310,6 +310,14 @@ proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1 geoms other_geoms n
     set dy [expr abs($yi1-$yi0)]
     set larea [expr $dx*$dy]
 
+    # If the intersection is too small, we skip it also
+    # Too small is just less than the minimal width of any layer
+    set layer1_width [$dbTechLayer getWidth]
+    set layer2_width [$layerobj getWidth]
+    if {$dx < $layer1_width || $dy < $layer1_width || $dx < $layer2_width || $dy < $layer2_width} {
+      continue
+    }
+
     set icommit 0
     set adj_skip 0
     foreach commit $commits {

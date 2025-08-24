@@ -303,21 +303,6 @@ set_domain_area CORE -area $digcorearea
 set_domain_area ANALOG -area $anacorearea
 initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $digcorearea
 
-
-# Positioning of the comparator
-set ret_poscmp [pos_stdcell_comp $cmp_x $posy_sw analog/cmp]
-set compx [lindex $ret_poscmp 0]
-set compy [lindex $ret_poscmp 1]
-
-# Put the main clock buffer near the digital domain
-place_inst -name [list "analog/buflogic.conv.smpcs.clkbuf.impl"] -location "[expr $dig_to_ana-$sizetap-21.76] $posy_sw" -orientation R0 -status LOCKED
-
-## Tapcell insertion
-tapcell \
-    -distance 40 \
-    -endcap_master "$TAPCells" \
-    -tapcell_master "$TAPCells"
-
 # connect the fillers
 add_global_connection -net AVDD -inst_pattern analog\./.* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern analog\./.* -pin_pattern {^vss$} -ground
@@ -416,6 +401,13 @@ pdngen
 # Go for routing
 puts "\[Routing\] Creating vdd and vss for ties"
 create_stripes_vdd_vss $posx_cdach $corey $cdacx_h $nx_h $fPlan_height $saradc_tap AVDD VSS [expr 2*$metal2_w]
+
+# Positioning of the comparator
+# NOTE: We do it AFTER the vdd and vss to avoid some silly DRC
+# once a better stripe generator exists, this may be not needed
+set ret_poscmp [pos_stdcell_comp $cmp_x $posy_sw analog/cmp]
+set compx [lindex $ret_poscmp 0]
+set compy [lindex $ret_poscmp 1]
 
 # Trace horizontal stripes for connecting VREFH, VIN, VIP for down, and VREFL, VIN, VIP for up
 puts "\[Routing\] Trace horizontal stripes for connecting VREFH, VIN, VIP for down, and VREFL, VIN, VIP for up"
@@ -571,6 +563,21 @@ add_stripe_over_area {analog/VOUTH analog/VOUTL} $metal4 vertical \
 if {[file exists $PNR_DIR/tcl/$TOP.pins.tcl]} {
   source $PNR_DIR/tcl/$TOP.pins.tcl
 }
+
+# Put the main clock buffer near the digital domain
+place_inst -name [list "analog/buflogic.conv.smpcs.clkbuf.impl"] -location "[expr $dig_to_ana-$sizetap-21.76] $posy_sw" -orientation R0 -status LOCKED
+
+## Tapcell insertion
+tapcell \
+    -distance 40 \
+    -endcap_master "$TAPCells" \
+    -tapcell_master "$TAPCells"
+
+# connect the fillers
+add_global_connection -net AVDD -inst_pattern analog\./.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern analog\./.* -pin_pattern {^vss$} -ground
+do_global_from_areas
+global_connect
 
 # Dummy positioning of the buffers
 # source tcl/comp_pos.tcl
