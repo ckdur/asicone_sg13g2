@@ -131,8 +131,8 @@ proc route_vouts_comp {ya1 ya2 path} {
         set up_ipin_obj $up_ipin_shape
       }
     }
-    set x1 [expr [::ord::dbu_to_microns [$up_ipin_obj xCenter]] - $metal2_w/2]
-    set x2 [expr $x1 + $metal2_w]
+    set x1 [expr [::ord::dbu_to_microns [$up_ipin_obj xCenter]] - $metal2_w]
+    set x2 [expr $x1 + 2*$metal2_w]
     set y1 [::ord::dbu_to_microns [$up_ipin_obj yMin]]
     set y2 $ya2
     set area [list $x1 $y1 $x2 $y2]
@@ -152,8 +152,8 @@ proc route_vouts_comp {ya1 ya2 path} {
         set dw_ipin_obj $dw_ipin_shape
       }
     }
-    set x1 [expr [::ord::dbu_to_microns [$dw_ipin_obj xCenter]] - $metal2_w/2]
-    set x2 [expr $x1 + $metal2_w]
+    set x1 [expr [::ord::dbu_to_microns [$dw_ipin_obj xCenter]] - $metal2_w]
+    set x2 [expr $x1 + 2*$metal2_w]
     set y1 $ya1
     set y2 [::ord::dbu_to_microns [$dw_ipin_obj yMax]]
     set area [list $x1 $y1 $x2 $y2]

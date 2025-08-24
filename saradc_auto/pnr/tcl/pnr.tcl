@@ -420,7 +420,7 @@ create_stripes_vdd_vss $posx_cdach $corey $cdacx_h $nx_h $fPlan_height $saradc_t
 # Trace horizontal stripes for connecting VREFH, VIN, VIP for down, and VREFL, VIN, VIP for up
 puts "\[Routing\] Trace horizontal stripes for connecting VREFH, VIN, VIP for down, and VREFL, VIN, VIP for up"
 set midoff [expr $metal3_s+$metal3_py]
-set midspc [expr 2*$midoff]
+set midspc [expr 6*$midoff]
 set midwidth [expr $row - $midspc]
 set x1 [expr 0]
 set x2 [expr $die_width]
@@ -458,7 +458,7 @@ create_sw_cap_conn $posx_cdach $posy_cdach $posa_h $lsta_h $pw $ph $cdacx_h $cda
 puts "\[Routing\] Done 1"
 create_sw_cap_conn $posx_cdacl $posy_cdacl $posa_l $lsta_l $pw $ph $cdacx_h $cdacy_h $strip_l
 puts "\[Routing\] Done 2"
-route_vouts_comp [expr $posy_sw-5*$row] [expr $posy_sw+6*$row] analog/cmp
+route_vouts_comp [expr $posy_sw-5*$row] [expr $posy_sw+5.5*$row] analog/cmp
 
 puts "\[Routing\] Stripes for global connections"
 # Stripes for global connections
