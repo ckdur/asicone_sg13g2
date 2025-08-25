@@ -318,7 +318,8 @@ proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1 geoms other_geoms n
     set layer1_area [$dbTechLayer getArea]
     set layer2_area [$layerobj getArea]
     if {($dx < $layer1_width || $dy < $layer1_width || $dx < $layer2_width || $dy < $layer2_width) && ($luarea < $layer1_area || $luarea < $layer2_area)} {
-      continue
+      #continue
+      # Nah.. it doesnt work. Lets come up with something better
     }
 
     set icommit 0

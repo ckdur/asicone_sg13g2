@@ -306,6 +306,8 @@ initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $digcorearea
 # connect the fillers
 add_global_connection -net AVDD -inst_pattern analog/buflogic.* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern analog/buflogic.* -pin_pattern {^vss$} -ground
+add_global_connection -net AVDD -inst_pattern analog/(m|l)sb_cdac_(h|l).tie(h|l).impl.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern analog/(m|l)sb_cdac_(h|l).tie(h|l).impl.* -pin_pattern {^vss$} -ground
 add_global_connection -net AVDD -inst_pattern analog/.* -pin_pattern {^vnw$} -power
 add_global_connection -net VSS -inst_pattern analog/.* -pin_pattern {^vpw$} -ground
 do_global_from_areas
@@ -561,6 +563,18 @@ set area "$x1 $y1 $x2 $y2"
 setAddStripeMode -orthogonal_only true
 add_stripe_over_area {analog/VOUTH analog/VOUTL VIN VIP} $metal4 vertical \
   $wthird $sthird 100 \
+  0 $area
+
+# Trace a long-ass AVDD, VDD, and VSS stripe to connect the two domains
+
+set x1 [expr 0]
+set x2 [expr $X]
+set y1 [expr $posy_sw]
+set y2 [expr $posy_sw + 4*3.2 + 3*1.64]
+set area "$x1 $y1 $x2 $y2"
+setAddStripeMode -stacked_via_top_layer TopMetal1 -stacked_via_bottom_layer $metal5
+add_stripe_over_area {AVDD VDD VSS} TopMetal1 horizontal \
+  3.2 1.64 100 \
   0 $area
 
 # Put a blockage around all of $row width
