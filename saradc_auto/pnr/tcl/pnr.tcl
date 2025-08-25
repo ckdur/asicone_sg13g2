@@ -304,8 +304,10 @@ set_domain_area ANALOG -area $anacorearea
 initialize_floorplan -site obssite -die_area "0 0 $X $Y" -core_area $digcorearea
 
 # connect the fillers
-add_global_connection -net AVDD -inst_pattern analog\./.* -pin_pattern {^vdd$} -power
-add_global_connection -net VSS -inst_pattern analog\./.* -pin_pattern {^vss$} -ground
+add_global_connection -net AVDD -inst_pattern analog/buflogic.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern analog/buflogic.* -pin_pattern {^vss$} -ground
+add_global_connection -net AVDD -inst_pattern analog/.* -pin_pattern {^vnw$} -power
+add_global_connection -net VSS -inst_pattern analog/.* -pin_pattern {^vpw$} -ground
 do_global_from_areas
 global_connect
 
@@ -469,7 +471,6 @@ puts "\[Routing\] Create the rings for fixing bits 1 and 3 of the ring DACs"
 # Create the rings for fixing bits 1 and 3 of the ring DACs
 set wforth [expr $metal6_w]
 set sforth [expr 2*$metal6_s]
-setAddStripeMode -stacked_via_top_layer TopMetal1 -stacked_via_bottom_layer $metal5
 
 puts "\[Routing\]    Phase 1"
 set nx_l_2 [expr int($nx_l / 2)]
@@ -482,6 +483,7 @@ set area "$x1 $y1 $x2 $y2"
 # Get "analog/LSB_L_VSH[2] analog/LSB_L_FL[2]"
 set capobj [$::block findInst "analog/lsb_cdac_l.cdac_bit\\\[1\\\].cdac_unit.cap\\\[0\\\].cap/impl"]
 set LSB_L_VSH_FL_2 [list [[[$capobj findITerm i] getNet] getName] [[[$capobj findITerm zn] getNet] getName]]
+setAddStripeMode -stacked_via_top_layer $metal5 -stacked_via_bottom_layer $metal4
 add_stripe_over_area $LSB_L_VSH_FL_2 $metal5 horizontal \
     $wforth $sforth $cdacy_l \
     $offset $area
@@ -494,6 +496,7 @@ if {$nbits >= 5} {
   set y1 [expr $posy_cdacl + (2)*$cdacy_l]
   set y2 [expr $posy_cdacl + (4)*$cdacy_l]
   set area "$x1 $y1 $x2 $y2"
+  setAddStripeMode -stacked_via_top_layer $metal5 -stacked_via_bottom_layer $metal4
   add_stripe_over_area $LSB_L_VSH_FL_4 $metal5 horizontal \
       $wforth $sforth $cdacy_l \
       $offset $area
@@ -501,6 +504,7 @@ if {$nbits >= 5} {
   set x2 [expr $posx_cdacl + ($nx_l_2+1)*$cdacx_l]
   set offset [expr $cdacx_l/2 - (2*$wforth+$sforth)/2]
   set area "$x1 $y1 $x2 $y2"
+  setAddStripeMode -stacked_via_top_layer TopMetal1 -stacked_via_bottom_layer $metal5
   add_stripe_over_area $LSB_L_VSH_FL_4 TopMetal1 vertical \
       $wforth $sforth $cdacx_l \
       $offset $area
@@ -517,6 +521,7 @@ set area "$x1 $y1 $x2 $y2"
 # Get "analog/LSB_H_VSH[2] analog/LSB_H_FL[2]"
 set capobj [$::block findInst "analog/lsb_cdac_h.cdac_bit\\\[1\\\].cdac_unit.cap\\\[0\\\].cap/impl"]
 set LSB_H_VSH_FL_2 [list [[[$capobj findITerm i] getNet] getName] [[[$capobj findITerm zn] getNet] getName]]
+setAddStripeMode -stacked_via_top_layer $metal5 -stacked_via_bottom_layer $metal4
 add_stripe_over_area $LSB_H_VSH_FL_2 $metal5 horizontal \
     $wforth $sforth $cdacy_h \
     $offset $area
@@ -529,6 +534,7 @@ if {$nbits >= 5} {
   set y1 [expr $posy_cdach + ($ny_h-4)*$cdacy_h]
   set y2 [expr $posy_cdach + ($ny_h-2)*$cdacy_h]
   set area "$x1 $y1 $x2 $y2"
+  setAddStripeMode -stacked_via_top_layer $metal5 -stacked_via_bottom_layer $metal4
   add_stripe_over_area $LSB_H_VSH_FL_4 $metal5 horizontal \
       $wforth $sforth $cdacy_h \
       $offset $area
@@ -536,6 +542,7 @@ if {$nbits >= 5} {
   set x2 [expr $posx_cdach + ($nx_h_2+1)*$cdacx_h]
   set offset [expr $cdacx_h/2 - (2*$wforth+$sforth)/2]
   set area "$x1 $y1 $x2 $y2"
+  setAddStripeMode -stacked_via_top_layer TopMetal1 -stacked_via_bottom_layer $metal5
   add_stripe_over_area $LSB_H_VSH_FL_4 TopMetal1 vertical \
       $wforth $sforth $cdacx_h \
       $offset $area
@@ -547,12 +554,12 @@ puts "\[Routing\]    Phase 3"
 set y_swstripe [expr $corey + $row*$nrow_h + $midoff]
 set uy_swstripe [expr $corey + $row*($nrow_h+$nrow_asw) - $midoff]
 set x1 [expr $posx_sw]
-set x2 [expr $x1 + 2*$wthird + 1*$sthird]
+set x2 [expr $x1 + 4*$wthird + 3*$sthird]
 set y1 [expr $y_swstripe]
 set y2 [expr $uy_swstripe]
 set area "$x1 $y1 $x2 $y2"
 setAddStripeMode -orthogonal_only true
-add_stripe_over_area {analog/VOUTH analog/VOUTL} $metal4 vertical \
+add_stripe_over_area {analog/VOUTH analog/VOUTL VIN VIP} $metal4 vertical \
   $wthird $sthird 100 \
   0 $area
 
@@ -574,8 +581,10 @@ tapcell \
     -tapcell_master "$TAPCells"
 
 # connect the fillers
-add_global_connection -net AVDD -inst_pattern analog\./.* -pin_pattern {^vdd$} -power
-add_global_connection -net VSS -inst_pattern analog\./.* -pin_pattern {^vss$} -ground
+add_global_connection -net AVDD -inst_pattern analog/buflogic.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern analog/buflogic.* -pin_pattern {^vss$} -ground
+add_global_connection -net AVDD -inst_pattern analog/.* -pin_pattern {^vnw$} -power
+add_global_connection -net VSS -inst_pattern analog/.* -pin_pattern {^vpw$} -ground
 do_global_from_areas
 global_connect
 
@@ -610,6 +619,10 @@ for {set i 0} {$i < $nbits} {incr i} {
 place_pins -hor_layers Metal4 \
 	-ver_layers Metal3 \
   -exclude top:* -exclude left:* -exclude bottom:*
+
+# just to output an early lef
+write_abstract_lef $PNR_DIR/outputs/${TOP}.lef
+#catch
 
 # We actually do not care
 if { [catch {global_placement -skip_initial_place -density 0.82} errmsg] } {
@@ -740,8 +753,10 @@ add_global_connection -net VDD -inst_pattern clkbuf.* -pin_pattern {^vdd$} -powe
 add_global_connection -net VSS -inst_pattern clkbuf.* -pin_pattern {^vss$} -ground
 add_global_connection -net VDD -inst_pattern clkload.* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern clkload.* -pin_pattern {^vss$} -ground
-add_global_connection -net AVDD -inst_pattern analog/.* -pin_pattern {^vdd$} -power
-add_global_connection -net VSS -inst_pattern analog/.* -pin_pattern {^vss$} -ground
+add_global_connection -net AVDD -inst_pattern analog/buflogic.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern analog/buflogic.* -pin_pattern {^vss$} -ground
+add_global_connection -net AVDD -inst_pattern analog/.* -pin_pattern {^vnw$} -power
+add_global_connection -net VSS -inst_pattern analog/.* -pin_pattern {^vpw$} -ground
 do_global_from_areas
 global_connect
 

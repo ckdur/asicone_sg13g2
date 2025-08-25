@@ -57,8 +57,11 @@ drc: $(GDS)
 drc_magic: $(GDS)
 	magic -dnull -noconsole -rcfile $(PDK_ROOT)/$(PDK)/libs.tech/magic/$(PDK).magicrc $(SIGN_DIR)/tcl/run_magic_drc.tcl
 
-$(SPICE): $(ROOT_DIR)/cells/$(TECH).cdl $(NET)
-	cat $(ROOT_DIR)/cells/$(TECH).cdl $(NET) > $(SPICE)
+ADC_CELLS ?= SARADC_CELL_INVX0_ASSW SARADC_CELL_INVX16_ASCAP SARADC_FILLTIE2 SARADC_FILL1 SARADC_FILL1_NOPOWER
+ADC_CDLS = $(ADC_CELLS:%=$(ROOT_DIR)/cells/%.cdl)
+
+$(SPICE): $(ROOT_DIR)/cells/$(TECH).cdl $(ADC_CDLS) $(NET)
+	cat $(ROOT_DIR)/cells/$(TECH).cdl $(ADC_CDLS) $(NET) > $(SPICE)
 
 lvs: $(GDS) $(SPICE)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --verbose

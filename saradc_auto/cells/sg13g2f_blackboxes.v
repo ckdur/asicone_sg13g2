@@ -1,30 +1,30 @@
 (* blackbox *)
 module SARADC_CELL_INVX0_ASSW(
-`ifdef WITH_BODY
+//`ifdef WITH_BODY
     vnw, vpw, 
-`endif
+//`endif
     vdd, vss, i, zn);
     input i;
     output zn;
     inout 
-`ifdef WITH_BODY
+//`ifdef WITH_BODY
         vnw, vpw, 
-`endif
+//`endif
         vdd, vss;
 endmodule
 
 (* blackbox *)
 module SARADC_CELL_INVX16_ASCAP(
-`ifdef WITH_BODY
+//`ifdef WITH_BODY
     vnw, vpw, 
-`endif
+//`endif
     vdd, vss, i, zn);
     input i;
     output zn;
     inout 
-`ifdef WITH_BODY
+//`ifdef WITH_BODY
         vnw, vpw, 
-`endif
+//`endif
         vdd, vss;
 endmodule
 

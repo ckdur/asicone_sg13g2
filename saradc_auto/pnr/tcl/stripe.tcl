@@ -309,12 +309,15 @@ proc add_vias_over_area {net layer direction xl0 yl0 xl1 yl1 geoms other_geoms n
     set dx [expr abs($xi1-$xi0)]
     set dy [expr abs($yi1-$yi0)]
     set larea [expr $dx*$dy]
+    set luarea [expr [::ord::dbu_to_microns $dx]*[::ord::dbu_to_microns $dy]]
 
     # If the intersection is too small, we skip it also
     # Too small is just less than the minimal width of any layer
     set layer1_width [$dbTechLayer getWidth]
     set layer2_width [$layerobj getWidth]
-    if {$dx < $layer1_width || $dy < $layer1_width || $dx < $layer2_width || $dy < $layer2_width} {
+    set layer1_area [$dbTechLayer getArea]
+    set layer2_area [$layerobj getArea]
+    if {($dx < $layer1_width || $dy < $layer1_width || $dx < $layer2_width || $dy < $layer2_width) && ($luarea < $layer1_area || $luarea < $layer2_area)} {
       continue
     }
 
