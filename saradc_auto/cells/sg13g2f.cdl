@@ -532,37 +532,37 @@ MI1_M_u3 net9 i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.200e-06
 
 ** Created by: circuit_gen.DFCNQD1
 ** Cell name: DFCNQD1
-** Lib name: sg13g2f
+** Lib name: sg13g2
 .SUBCKT DFCNQD1 cdn cp d q vdd vss
 *.PININFO cdn:I cp:I d:I q:O vdd:B vss:B 
-Mcpbn incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=3.600e-07 $pos=0 $flip=0
-Mcpbp incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=6.000e-07 $pos=0 $flip=0
-Mcpn incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.600e-07 $pos=1 $flip=1
-Mcpp incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=6.000e-07 $pos=1 $flip=1
-MI4 net52 incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.600e-07 $pos=3 $flip=1
-MI7 net85 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.850e-07 $pos=3 $flip=1
-Mdd0n d0 d net52 vss sg13_lv_nmos l=1.300e-07 w=3.600e-07 $pos=4 $flip=1
-Mdd0p d0 d net85 vdd sg13_lv_pmos l=1.300e-07 w=8.850e-07 $pos=4 $flip=1
-MI47 d0 incp net59 vss sg13_lv_nmos l=1.300e-07 w=2.500e-07 $pos=5 $flip=0
-MI45 d0 incpb net98 vdd sg13_lv_pmos l=1.300e-07 w=3.600e-07 $pos=5 $flip=0
-MI48 net59 d1 net62 vss sg13_lv_nmos l=1.300e-07 w=2.500e-07 $pos=6 $flip=0
-MI43 net98 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.300e-07 $pos=6 $flip=0
-Mcdn0n net62 cdn vss vss sg13_lv_nmos l=1.300e-07 w=2.500e-07 $pos=7 $flip=0
-Md0d1n d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.450e-07 $pos=8 $flip=1
-Mcdn0p net98 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=3.000e-07 $pos=8 $flip=0
-Mswd1d2n d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=5.000e-07 $pos=9 $flip=0
-Mdod1p d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.800e-07 $pos=9 $flip=1
-MI23 d2 incpb net57 vss sg13_lv_nmos l=1.300e-07 w=2.500e-07 $pos=10 $flip=0
-Mswd1d2p d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=1.125e-06 $pos=10 $flip=0
-MI26 d2 incp net88 vdd sg13_lv_pmos l=1.300e-07 w=3.000e-07 $pos=11 $flip=0
-MI24 net57 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.500e-07 $pos=12 $flip=0
-MI28 net88 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.000e-07 $pos=12 $flip=0
-Mcdn1n net37 cdn vss vss sg13_lv_nmos l=1.300e-07 w=7.200e-07 $pos=13 $flip=1
-Mcdn1p d3 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=1.080e-06 $pos=13 $flip=1
-Md2d3n d3 d2 net37 vss sg13_lv_nmos l=1.300e-07 w=7.200e-07 $pos=14 $flip=1
-Md2d3p d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.080e-06 $pos=14 $flip=0
-Mobp q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.200e-06 $pos=15 $flip=1
-Mobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.200e-07 $pos=16 $flip=1
+Mcpbn incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=0 $flip=0
+Mcpbp incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=0 $flip=0
+Mcpn incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=1 $flip=1
+Mcpp incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=1 $flip=1
+MI4 net52 incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=3 $flip=1
+MI7 net85 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=3 $flip=1
+Mdd0n d0 d net52 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=4 $flip=1
+Mdd0p d0 d net85 vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=4 $flip=1
+MI47 d0 incp net59 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=5 $flip=0
+MI45 d0 incpb net98 vdd sg13_lv_pmos l=1.300e-07 w=3.300e-07 $pos=5 $flip=0
+MI48 net59 d1 net62 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=6 $flip=0
+MI43 net98 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.050e-07 $pos=6 $flip=0
+Mcdn0n net62 cdn vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=7 $flip=0
+Md0d1n d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.300e-07 $pos=8 $flip=1
+Mcdn0p net98 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=8 $flip=0
+Mswd1d2n d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=4.900e-07 $pos=9 $flip=0
+Mdod1p d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.150e-07 $pos=9 $flip=1
+MI23 d2 incpb net57 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=10 $flip=0
+Mswd1d2p d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=1.030e-06 $pos=10 $flip=0
+MI26 d2 incp net88 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=11 $flip=0
+MI24 net57 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=12 $flip=0
+MI28 net88 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=12 $flip=0
+Mcdn1n net37 cdn vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=13 $flip=1
+Mcdn1p d3 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=13 $flip=1
+Md2d3n d3 d2 net37 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=14 $flip=1
+Md2d3p d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=14 $flip=0
+Mobp q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06 $pos=15 $flip=1
+Mobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
 .ENDS
 
 ** Created by: circuit_gen.DFQD1

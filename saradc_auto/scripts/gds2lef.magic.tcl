@@ -3,7 +3,8 @@ crashbackups stop
 #gds flatglob *__example_*
 #gds flatten true
 gds read $env(GDS)
-set base [file rootname $env(GDS)]
+#set base [file rootname $env(GDS)]
+set base "[pwd]/[file rootname [file tail $env(GDS)]]"
 set ports {}
 set dirs {}
 set uses {}

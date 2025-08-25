@@ -57,11 +57,11 @@ drc: $(GDS)
 drc_magic: $(GDS)
 	magic -dnull -noconsole -rcfile $(PDK_ROOT)/$(PDK)/libs.tech/magic/$(PDK).magicrc $(SIGN_DIR)/tcl/run_magic_drc.tcl
 
-$(SPICE): $(ROOT_DIR)/lib/$(TECH).cdl $(NET)
-	cat $(ROOT_DIR)/lib/$(TECH).cdl $(NET) > $(SPICE)
+$(SPICE): $(ROOT_DIR)/cells/$(TECH).cdl $(NET)
+	cat $(ROOT_DIR)/cells/$(TECH).cdl $(NET) > $(SPICE)
 
 lvs: $(GDS) $(SPICE)
-	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --verbose
+	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=deep --verbose
 #	klayout -b -r $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/sg13g2.lvs -rd in_gds=$(GDS) -rd report_file=$(SIGN_DIR)/reports/lvs_report.lvsdb -rd cdl_file=$(SPICE) -rd target_netlist=$(SIGN_DIR)/reports/$(TOP).lay.cdl
 
 clean:
