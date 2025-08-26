@@ -308,6 +308,9 @@ add_global_connection -net AVDD -inst_pattern analog/buflogic.* -pin_pattern {^v
 add_global_connection -net VSS -inst_pattern analog/buflogic.* -pin_pattern {^vss$} -ground
 add_global_connection -net AVDD -inst_pattern analog/(m|l)sb_cdac_(h|l).tie(h|l).impl.* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern analog/(m|l)sb_cdac_(h|l).tie(h|l).impl.* -pin_pattern {^vss$} -ground
+add_global_connection -net AVDD -inst_pattern analog/dummy_(h|l).tie(h|l).impl.* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern analog/dummy_(h|l).tie(h|l).impl.* -pin_pattern {^vss$} -ground
+
 add_global_connection -net AVDD -inst_pattern analog/.* -pin_pattern {^vnw$} -power
 add_global_connection -net VSS -inst_pattern analog/.* -pin_pattern {^vpw$} -ground
 do_global_from_areas
