@@ -214,58 +214,58 @@ module asicone_202508 (
   );
 
   // Just some info
-  BUFFD1 spi_adc_result_0(.i(RESULT[0]), .z(RD[0]));
-  BUFFD1 spi_adc_result_1(.i(RESULT[1]), .z(RD[1]));
-  BUFFD1 spi_adc_result_2(.i(RESULT[2]), .z(RD[2]));
-  BUFFD1 spi_adc_result_3(.i(RESULT[3]), .z(RD[3]));
-  BUFFD1 spi_adc_result_4(.i(RESULT[4]), .z(RD[4]));
-  TIEL tie_spi_0(.zn(RD[5]));
-  TIEL tie_spi_1(.zn(RD[6]));
-  TIEL tie_spi_2(.zn(RD[7]));
-  BUFFD1 spi_adc_valid(.i(pad_adc_valid_c2p), .z(RD[8]));
-  BUFFD1 spi_adc_sample(.i(pad_adc_sample_c2p), .z(RD[9]));
-  TIEL tie_spi_10(.zn(RD[10]));
-  TIEL tie_spi_11(.zn(RD[11]));
-  TIEL tie_spi_12(.zn(RD[12]));
-  TIEL tie_spi_13(.zn(RD[13]));
-  TIEL tie_spi_14(.zn(RD[14]));
-  TIEL tie_spi_15(.zn(RD[15]));
+  sg13g2_BUFFD1 spi_adc_result_0(.i(RESULT[0]), .z(RD[0]));
+  sg13g2_BUFFD1 spi_adc_result_1(.i(RESULT[1]), .z(RD[1]));
+  sg13g2_BUFFD1 spi_adc_result_2(.i(RESULT[2]), .z(RD[2]));
+  sg13g2_BUFFD1 spi_adc_result_3(.i(RESULT[3]), .z(RD[3]));
+  sg13g2_BUFFD1 spi_adc_result_4(.i(RESULT[4]), .z(RD[4]));
+  sg13g2_TIEL tie_spi_0(.zn(RD[5]));
+  sg13g2_TIEL tie_spi_1(.zn(RD[6]));
+  sg13g2_TIEL tie_spi_2(.zn(RD[7]));
+  sg13g2_BUFFD1 spi_adc_valid(.i(pad_adc_valid_c2p), .z(RD[8]));
+  sg13g2_BUFFD1 spi_adc_sample(.i(pad_adc_sample_c2p), .z(RD[9]));
+  sg13g2_TIEL tie_spi_10(.zn(RD[10]));
+  sg13g2_TIEL tie_spi_11(.zn(RD[11]));
+  sg13g2_TIEL tie_spi_12(.zn(RD[12]));
+  sg13g2_TIEL tie_spi_13(.zn(RD[13]));
+  sg13g2_TIEL tie_spi_14(.zn(RD[14]));
+  sg13g2_TIEL tie_spi_15(.zn(RD[15]));
 
   // 0x55AA
-  TIEL tie_spi_16(.zn(RD[16]));
-  TIEH tie_spi_17(.z (RD[17]));
-  TIEL tie_spi_18(.zn(RD[18]));
-  TIEH tie_spi_19(.z (RD[19]));
-  TIEL tie_spi_20(.zn(RD[20]));
-  TIEH tie_spi_21(.z (RD[21]));
-  TIEL tie_spi_22(.zn(RD[22]));
-  TIEH tie_spi_23(.z (RD[23]));
-  TIEH tie_spi_24(.z (RD[24]));
-  TIEL tie_spi_25(.zn(RD[25]));
-  TIEH tie_spi_26(.z (RD[26]));
-  TIEL tie_spi_27(.zn(RD[27]));
-  TIEH tie_spi_28(.z (RD[28]));
-  TIEL tie_spi_29(.zn(RD[29]));
-  TIEH tie_spi_30(.z (RD[30]));
-  TIEL tie_spi_31(.zn(RD[31]));
+  sg13g2_TIEL tie_spi_16(.zn(RD[16]));
+  sg13g2_TIEH tie_spi_17(.z (RD[17]));
+  sg13g2_TIEL tie_spi_18(.zn(RD[18]));
+  sg13g2_TIEH tie_spi_19(.z (RD[19]));
+  sg13g2_TIEL tie_spi_20(.zn(RD[20]));
+  sg13g2_TIEH tie_spi_21(.z (RD[21]));
+  sg13g2_TIEL tie_spi_22(.zn(RD[22]));
+  sg13g2_TIEH tie_spi_23(.z (RD[23]));
+  sg13g2_TIEH tie_spi_24(.z (RD[24]));
+  sg13g2_TIEL tie_spi_25(.zn(RD[25]));
+  sg13g2_TIEH tie_spi_26(.z (RD[26]));
+  sg13g2_TIEL tie_spi_27(.zn(RD[27]));
+  sg13g2_TIEH tie_spi_28(.z (RD[28]));
+  sg13g2_TIEL tie_spi_29(.zn(RD[29]));
+  sg13g2_TIEH tie_spi_30(.z (RD[30]));
+  sg13g2_TIEL tie_spi_31(.zn(RD[31]));
 
   // Bypass some outputs
-  BUFFD1 buf_spi_32(.i(R[0]), .z(RD[32]));
-  BUFFD1 buf_spi_33(.i(R[1]), .z(RD[33]));
-  BUFFD1 buf_spi_34(.i(R[2]), .z(RD[34]));
-  BUFFD1 buf_spi_35(.i(R[3]), .z(RD[35]));
-  BUFFD1 buf_spi_36(.i(R[4]), .z(RD[36]));
-  BUFFD1 buf_spi_37(.i(R[5]), .z(RD[37]));
-  BUFFD1 buf_spi_38(.i(R[6]), .z(RD[38]));
-  BUFFD1 buf_spi_39(.i(R[7]), .z(RD[39]));
-  BUFFD1 buf_spi_40(.i(R[8]), .z(RD[40]));
-  BUFFD1 buf_spi_41(.i(R[9]), .z(RD[41]));
-  BUFFD1 buf_spi_42(.i(R[10]), .z(RD[42]));
-  BUFFD1 buf_spi_43(.i(R[11]), .z(RD[43]));
-  BUFFD1 buf_spi_44(.i(R[12]), .z(RD[44]));
-  BUFFD1 buf_spi_45(.i(R[13]), .z(RD[45]));
-  BUFFD1 buf_spi_46(.i(R[14]), .z(RD[46]));
-  BUFFD1 buf_spi_47(.i(R[15]), .z(RD[47]));
+  sg13g2_BUFFD1 buf_spi_32(.i(R[0]), .z(RD[32]));
+  sg13g2_BUFFD1 buf_spi_33(.i(R[1]), .z(RD[33]));
+  sg13g2_BUFFD1 buf_spi_34(.i(R[2]), .z(RD[34]));
+  sg13g2_BUFFD1 buf_spi_35(.i(R[3]), .z(RD[35]));
+  sg13g2_BUFFD1 buf_spi_36(.i(R[4]), .z(RD[36]));
+  sg13g2_BUFFD1 buf_spi_37(.i(R[5]), .z(RD[37]));
+  sg13g2_BUFFD1 buf_spi_38(.i(R[6]), .z(RD[38]));
+  sg13g2_BUFFD1 buf_spi_39(.i(R[7]), .z(RD[39]));
+  sg13g2_BUFFD1 buf_spi_40(.i(R[8]), .z(RD[40]));
+  sg13g2_BUFFD1 buf_spi_41(.i(R[9]), .z(RD[41]));
+  sg13g2_BUFFD1 buf_spi_42(.i(R[10]), .z(RD[42]));
+  sg13g2_BUFFD1 buf_spi_43(.i(R[11]), .z(RD[43]));
+  sg13g2_BUFFD1 buf_spi_44(.i(R[12]), .z(RD[44]));
+  sg13g2_BUFFD1 buf_spi_45(.i(R[13]), .z(RD[45]));
+  sg13g2_BUFFD1 buf_spi_46(.i(R[14]), .z(RD[46]));
+  sg13g2_BUFFD1 buf_spi_47(.i(R[15]), .z(RD[47]));
 
   SPI spi(
     .CEB(pad_cs_p2c), 

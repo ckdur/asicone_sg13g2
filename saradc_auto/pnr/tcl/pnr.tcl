@@ -57,12 +57,12 @@ if {![file exists reports]} {
 ## Cells declaration
 ####################################
 
-set BUFCells [list BUFFD1]
-set INVCells [list INVD1]
-set FILLERCells [list FILL1 FILL2 FILL4 FILL8]
-set TAPCells [list TAPCELL]
+set BUFCells [list sg13g2f_BUFFD1]
+set INVCells [list sg13g2f_INVD1]
+set FILLERCells [list sg13g2f_FILL1 sg13g2f_FILL2 sg13g2f_FILL4 sg13g2f_FILL8]
+set TAPCells [list sg13g2f_TAPCELL]
 set DCAPCells [list ]
-set DIODECells [list ANTENNA]
+set DIODECells [list sg13g2f_ANTENNA]
 
 ####################################
 ## Floor Plan
@@ -103,8 +103,8 @@ add_global_connection -net AVDD -pin_pattern {nothinghere} -power
 set_voltage_domain -region ANALOG -power AVDD -ground VSS -secondary_power VDD
 set_voltage_domain -power VDD -ground VSS -secondary_power AVDD
 
-insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
-insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
+insert_tiecells "sg13g2f_TIEL/zn" -prefix "TIE_ZERO_"
+insert_tiecells "sg13g2f_TIEH/z" -prefix "TIE_ONE_"
 
 set die_area [$::block getDieArea]
 set core_area [$::block getCoreArea]
@@ -697,7 +697,7 @@ set_wire_rc -clock  -layer Metal5
 
 estimate_parasitics -placement
 repair_clock_inverters
-clock_tree_synthesis -buf_list $BUFCells -root_buf BUFFD1 -sink_clustering_size 25 -sink_clustering_max_diameter 50 -sink_clustering_enable
+clock_tree_synthesis -buf_list $BUFCells -root_buf [lindex $BUFCells 0] -sink_clustering_size 25 -sink_clustering_max_diameter 50 -sink_clustering_enable
 set_propagated_clock [all_clocks]
 
 estimate_parasitics -placement

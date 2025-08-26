@@ -58,7 +58,7 @@ library (mylibrary) {
       "1000.000000, 1001.000000, 1002.000000, 1003.000000, 1004.000000, 1005.000000"
     );
   }
-  cell (AN2D1) {
+  cell (sg13g2f_AN2D1) {
     area: 1.4079;
     cell_footprint: an2;
     pin (a1) {
@@ -216,7 +216,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (AO21D1) {
+  cell (sg13g2f_AO21D1) {
     area: 1.4079;
     cell_footprint: ao21;
     pin (a1) {
@@ -448,7 +448,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (AOI21D1) {
+  cell (sg13g2f_AOI21D1) {
     area: 1.4079;
     cell_footprint: aoi21;
     pin (a1) {
@@ -680,7 +680,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (BUFFD1) {
+  cell (sg13g2f_BUFFD1) {
     area: 1.4079;
     cell_footprint: buff;
     pin (i) {
@@ -767,7 +767,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (DFCNQD1) {
+  cell (sg13g2f_DFCNQD1) {
     area: 1.4079;
     cell_footprint: dfcnq;
     ff (ds, ds_INV) {
@@ -856,7 +856,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (DFQD1) {
+  cell (sg13g2f_DFQD1) {
     area: 1.4079;
     cell_footprint: dfq;
     ff (ds, ds_INV) {
@@ -938,7 +938,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (INVD1) {
+  cell (sg13g2f_INVD1) {
     area: 1.4079;
     cell_footprint: inv;
     pin (i) {
@@ -1022,7 +1022,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (MUX2D1) {
+  cell (sg13g2f_MUX2D1) {
     area: 1.4079;
     cell_footprint: mux2;
     pin (i0) {
@@ -1254,7 +1254,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (ND2D1) {
+  cell (sg13g2f_ND2D1) {
     area: 1.4079;
     cell_footprint: nd2;
     pin (a1) {
@@ -1412,7 +1412,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (ND3D1) {
+  cell (sg13g2f_ND3D1) {
     area: 1.4079;
     cell_footprint: nd3;
     pin (a1) {
@@ -1645,7 +1645,7 @@ library (mylibrary) {
 /*--------EOF---------*/
 /*--------EOF---------*/
 
-  cell (NR2D1) {
+  cell (sg13g2f_NR2D1) {
     area: 1.4079;
     cell_footprint: nr2;
     pin (a1) {
@@ -1803,7 +1803,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (OA21D1) {
+  cell (sg13g2f_OA21D1) {
     area: 1.4079;
     cell_footprint: oa21;
     pin (a1) {
@@ -2035,7 +2035,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (OAI21D1) {
+  cell (sg13g2f_OAI21D1) {
     area: 1.4079;
     cell_footprint: oai21;
     pin (a1) {
@@ -2267,7 +2267,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (OR2D1) {
+  cell (sg13g2f_OR2D1) {
     area: 1.4079;
     cell_footprint: or2;
     pin (a1) {
@@ -2425,7 +2425,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (TIEH) {
+  cell (sg13g2f_TIEH) {
     area: 1.4079;
     cell_footprint: tieh;
     pin (z) {
@@ -2435,7 +2435,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (TIEL) {
+  cell (sg13g2f_TIEL) {
     area: 1.4079;
     cell_footprint: tiel;
     pin (zn) {
@@ -2445,7 +2445,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (XNR2D1) {
+  cell (sg13g2f_XNR2D1) {
     area: 1.4079;
     cell_footprint: xnr2;
     pin (a1) {
@@ -2603,7 +2603,7 @@ library (mylibrary) {
   }
 /*--------EOF---------*/
 
-  cell (XOR2D1) {
+  cell (sg13g2f_XOR2D1) {
     area: 1.4079;
     cell_footprint: xor2;
     pin (a1) {

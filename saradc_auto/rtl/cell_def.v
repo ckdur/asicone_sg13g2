@@ -16,7 +16,7 @@ module SARADC_CELL_INVX1(
   output ZN
 );
   // INVX1 -> INVD1
-  INVD1 impl(
+  sg13g2f_INVD1 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -39,7 +39,7 @@ module SARADC_CELL_INVX6(
   output ZN
 );
   // INVX6 -> INVD6 (TODO)
-  INVD6 impl(
+  sg13g2f_INVD6 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -62,7 +62,7 @@ module SARADC_CELL_INVX8(
   output ZN
 );
   // INVX8 -> INVD8
-  INVD8 impl(
+  sg13g2f_INVD8 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -85,7 +85,7 @@ module SARADC_CELL_OAI211X16(
   output ZN
 );
   // OAI211X16 -> OAI211D4 x4
-  OAI211D4 impl_0(
+  sg13g2f_OAI211D4 impl_0(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -94,7 +94,7 @@ module SARADC_CELL_OAI211X16(
 `endif
     .a1(A0), .a2(A1), .b(B0), .c(C0), .zn(ZN)
   );
-  OAI211D4 impl_1(
+  sg13g2f_OAI211D4 impl_1(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -103,7 +103,7 @@ module SARADC_CELL_OAI211X16(
 `endif
     .a1(A0), .a2(A1), .b(B0), .c(C0), .zn(ZN)
   );
-  OAI211D4 impl_2(
+  sg13g2f_OAI211D4 impl_2(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -112,7 +112,7 @@ module SARADC_CELL_OAI211X16(
 `endif
     .a1(A0), .a2(A1), .b(B0), .c(C0), .zn(ZN)
   );
-  OAI211D4 impl_3(
+  sg13g2f_OAI211D4 impl_3(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -135,7 +135,7 @@ module SARADC_CELL_OAI211X4(
   output ZN
 );
   // OAI211X4 -> OAI211D4
-  OAI211D4 impl(
+  sg13g2f_OAI211D4 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -158,7 +158,7 @@ module SARADC_CELL_NAND2X2(
   output ZN
 );
   // NAND2X2 -> ND2D2
-  ND2D2 impl(
+  sg13g2f_ND2D2 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -181,7 +181,7 @@ module SARADC_CELL_AND2X4(
   output Z
 );
   // AND2X4 -> AN2D4
-  AN2D4 impl(
+  sg13g2f_AN2D4 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -204,7 +204,7 @@ module SARADC_CELL_NOR3X4(
   output ZN
 );
   // NOR3X4 -> NR3D4
-  NR3D4 impl(
+  sg13g2f_NR3D4 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -227,7 +227,7 @@ module SARADC_CELL_AND2X16(
   output Z
 );
   // AND2X16 -> AN2D4
-  AN2D4 impl(
+  sg13g2f_AN2D4 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -250,7 +250,7 @@ module SARADC_CELL_BUFFX0(
   output Z
 );
   // BUFFX0 -> BUFFD0
-  BUFFD0 impl(
+  sg13g2f_BUFFD0 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -273,7 +273,7 @@ module SARADC_CELL_BUFFX2(
   output Z
 );
   // BUFFX2 -> BUFFD2
-  BUFFD2 impl(
+  sg13g2f_BUFFD2 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -296,7 +296,7 @@ module SARADC_CELL_BUFFX4(
   output Z
 );
   // BUFFX4 -> BUFFD4
-  BUFFD4 impl(
+  sg13g2f_BUFFD4 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -319,7 +319,7 @@ module SARADC_CELL_BUFFX8(
   output Z
 );
   // BUFFX8 -> BUFFD8
-  BUFFD8 impl(
+  sg13g2f_BUFFD8 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -342,7 +342,7 @@ module SARADC_CELL_BUFFX16(
   output Z
 );
   // BUFFX16 -> BUFFD16
-  BUFFD16 impl(
+  sg13g2f_BUFFD16 impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -367,7 +367,7 @@ module SARADC_CELL_DEL4X4(
 
   // DEL4X4 -> DEL4 + BUFFD4
   wire Z1;
-  DEL4 impl1(
+  sg13g2f_DEL4 impl1(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -376,7 +376,7 @@ module SARADC_CELL_DEL4X4(
 `endif
     .i(I), .z(Z1)
   );
-  BUFFD4 impl2(
+  sg13g2f_BUFFD4 impl2(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -400,7 +400,7 @@ module SARADC_CELL_DEL4X2(
 );
   // DEL4X2 -> DEL4 + BUFFD2
   wire Z1;
-  DEL4 impl1(
+  sg13g2f_DEL4 impl1(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -409,7 +409,7 @@ module SARADC_CELL_DEL4X2(
 `endif
     .i(I), .z(Z1)
   );
-  BUFFD2 impl2(
+  sg13g2f_BUFFD2 impl2(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -431,7 +431,7 @@ module SARADC_CELL_TIEH(
   output Z
 );
   // TIEH -> TIEH
-  TIEH impl(
+  sg13g2f_TIEH impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif
@@ -453,7 +453,7 @@ module SARADC_CELL_TIEL(
   output ZN
 );
   // TIEL -> TIEL
-  TIEL impl(
+  sg13g2f_TIEL impl(
 `ifdef WITH_POWER
     .vdd(VDD), .vss(VSS), 
 `endif

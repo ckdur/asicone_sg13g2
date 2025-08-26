@@ -58,12 +58,12 @@ if {![file exists reports]} {
 ## Cells declaration
 ####################################
 
-set BUFCells [list BUFFD1]
-set INVCells [list INVD1]
-set FILLERCells [list FILL1 FILL2 FILL4 FILL8]
-set TAPCells [list TAPCELL]
+set BUFCells [list sg13g2_BUFFD1]
+set INVCells [list sg13g2_INVD1]
+set FILLERCells [list sg13g2_FILL1 sg13g2_FILL2 sg13g2_FILL4 sg13g2_FILL8]
+set TAPCells [list sg13g2_TAPCELL]
 set DCAPCells [list ]
-set DIODECells [list ANTENNA]
+set DIODECells [list sg13g2_ANTENNA]
 
 ####################################
 ## Floor Plan
@@ -91,8 +91,8 @@ add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
 set_voltage_domain -name CORE -power VDD -ground VSS
 
-insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
-insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
+insert_tiecells "sg13g2_TIEL/zn" -prefix "TIE_ZERO_"
+insert_tiecells "sg13g2_TIEH/z" -prefix "TIE_ONE_"
 
 set die_area [$::block getDieArea]
 set core_area [$::block getCoreArea]
@@ -247,9 +247,9 @@ if { [catch {check_placement -verbose} errmsg] } {
 ####################################
 # CTS
 ####################################
-set_global_routing_layer_adjustment Metal1-Metal5 0.05
+set_global_routing_layer_adjustment Metal2-Metal5 0.05
 
-set_routing_layers -signal Metal1-Metal5 -clock Metal1-Metal5
+set_routing_layers -signal Metal2-Metal5 -clock Metal2-Metal5
 
 # correlateRC.py gcd,ibex,aes,jpeg,chameleon,riscv32i,chameleon_hier
 # cap units pf/um
@@ -330,15 +330,6 @@ check_antennas -report_file $PNR_DIR/reports/${TOP}_global_routing_antennas.log
 estimate_parasitics -global_routing
 
 ###############################################
-# Fillers
-###############################################
-filler_placement "$FILLERCells"
-
-add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
-add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
-global_connect
-
-###############################################
 # Detail routing
 ###############################################
 set_thread_count 10
@@ -364,6 +355,15 @@ while { [check_antennas] && $repair_antennas_iters < 10 } {
 }
 
 check_antennas -report_file $PNR_DIR/reports/${TOP}.antenna.rpt
+
+###############################################
+# Fillers
+###############################################
+filler_placement "$FILLERCells"
+
+add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
+add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
+global_connect
 
 #################################################
 # Metal fill

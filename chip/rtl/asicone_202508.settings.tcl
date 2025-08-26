@@ -17,3 +17,6 @@ lappend GDSS "${PRJ_DIR}/sealring/sealring.gds"
 
 lappend CDLS "${ROOT_DIR}/digital/pnr/outputs/SPI.cdl"
 lappend CDLS "${ROOT_DIR}/saradc_auto/pnr/outputs/SARADC.cdl"
+lappend CDLS "${PRJ_DIR}/padring/cells/sg13g2_io_mod.cdl"
+lappend CDLS "${PRJ_DIR}/padring/cells/sg13g2_bondpad.cdl"
+lappend CDLS "${PRJ_DIR}/sealring/sealring.cdl"

@@ -61,13 +61,12 @@ if {![file exists reports]} {
 ## Cells declaration
 ####################################
 
-set BUFCells [list BUFFD1]
-set INVCells [list INVD1]
-# TODO
-set FILLERCells [list FILL1 FILL2 FILL4 FILL8]
-set TAPCells [list TAPCELL]
+set BUFCells [list sg13g2_BUFFD1]
+set INVCells [list sg13g2_INVD1]
+set FILLERCells [list sg13g2_FILL1 sg13g2_FILL2 sg13g2_FILL4 sg13g2_FILL8]
+set TAPCells [list sg13g2_TAPCELL]
 set DCAPCells [list ]
-set DIODECells [list ]
+set DIODECells [list sg13g2_ANTENNA]
 
 ####################################
 ## Floor Plan
@@ -116,8 +115,8 @@ source tcl/padring.tcl
 [$::block findNet VSSIO] setSigType "GROUND"
 set_pins_as_special
 
-insert_tiecells "TIEL/zn" -prefix "TIE_ZERO_"
-insert_tiecells "TIEH/z" -prefix "TIE_ONE_"
+insert_tiecells "sg13g2_TIEL/zn" -prefix "TIE_ZERO_"
+insert_tiecells "sg13g2_TIEH/z" -prefix "TIE_ONE_"
 
 set ::chip [[::ord::get_db] getChip]
 set ::tech [[::ord::get_db] getTech]
@@ -281,8 +280,8 @@ if { [catch {check_placement -verbose} errmsg] } {
 ####################################
 # CTS
 ####################################
-set_global_routing_layer_adjustment Metal1-Metal5 0.05
-set_routing_layers -signal Metal1-Metal5 -clock Metal1-Metal5
+set_global_routing_layer_adjustment Metal2-Metal5 0.05
+set_routing_layers -signal Metal2-Metal5 -clock Metal2-Metal5
 
 # No CTS
 if {0} {
@@ -309,7 +308,7 @@ set_wire_rc -clock  -layer Metal5
 
 estimate_parasitics -placement
 repair_clock_inverters
-clock_tree_synthesis -buf_list $BUFCells -root_buf BUFFD1 -sink_clustering_size 25 -sink_clustering_max_diameter 50 -sink_clustering_enable
+clock_tree_synthesis -buf_list $BUFCells -root_buf [lindex $BUFCells 0] -sink_clustering_size 25 -sink_clustering_max_diameter 50 -sink_clustering_enable
 set_propagated_clock [all_clocks]
 
 estimate_parasitics -placement
@@ -337,7 +336,63 @@ set_propagated_clock [all_clocks]
 
 set_macro_extension 0
 
-global_route -congestion_iterations 50 -verbose -congestion_report_file $PNR_DIR/reports/congestion.rpt
+pin_access
+global_route -congestion_iterations 50 -congestion_report_iter_step 5 -verbose -congestion_report_file $PNR_DIR/reports/${TOP}_congestion.rpt
+
+set_placement_padding -global -left 0 -right 0
+set_propagated_clock [all_clocks]
+estimate_parasitics -global_routing
+
+# Incremental repair blob
+#repair_design -verbose
+#global_route -start_incremental
+#detailed_placement
+#global_route -end_incremental -congestion_report_file $PNR_DIR/reports/${TOP}_congestion_post_repair_design.rpt
+
+# NOTE: No repair of timing
+#repair_timing -verbose -setup_margin 0 -repair_tns 100
+
+#global_route -start_incremental
+#detailed_placement
+#global_route -end_incremental -congestion_report_file $PNR_DIR/reports/${TOP}_congestion_post_repair_timing.rpt
+
+# Repair power blob
+global_route -start_incremental
+# recover_power_helper
+global_route -end_incremental -congestion_report_file $PNR_DIR/reports/${TOP}_congestion_post_recover_power.rpt
+
+# Repair antennas blob
+repair_antennas -iterations 10
+check_placement -verbose
+#check_antennas -report_file $PNR_DIR/reports/${TOP}_global_routing_antennas.log
+estimate_parasitics -global_routing
+
+###############################################
+# Detail routing
+###############################################
+set_thread_count 10
+
+set all_args [concat [list \
+  -output_drc $PNR_DIR/reports/SPI.drc \
+  -output_maze $PNR_DIR/reports/SPI_maze.log \
+  -droute_end_iter 64 \
+  -verbose 1 \
+  -drc_report_iter_step 5]]
+
+detailed_route {*}$all_args
+
+set repair_antennas_iters 1
+if { [repair_antennas] } {
+  detailed_route {*}$all_args
+}
+
+while { [check_antennas] && $repair_antennas_iters < 10 } {
+  repair_antennas
+  detailed_route {*}$all_args
+  incr repair_antennas_iters
+}
+
+check_antennas -report_file $PNR_DIR/reports/${TOP}.antenna.rpt
 
 ###############################################
 # Fillers
@@ -348,25 +403,20 @@ add_global_connection -net VDD -inst_pattern STDFILL.* -pin_pattern {^vdd$} -pow
 add_global_connection -net VSS -inst_pattern STDFILL.* -pin_pattern {^vss$} -ground
 global_connect
 
-###############################################
-# Detail routing
-###############################################
-#catch
-set_thread_count 10
-detailed_route\
-    -bottom_routing_layer "Metal1" \
-    -top_routing_layer "Metal5" \
-    -output_maze $PNR_DIR/reports/${TOP}_maze.log\
-    -output_drc $PNR_DIR/reports/${TOP}.drc\
-    -droute_end_iter 64 \
-    -or_seed 42\
-    -verbose 1
-
 #################################################
 # Metal fill and pin placement
 #################################################
 put_pins_on_bondpad 70
 density_fill -rules $env(ROOT_DIR)/lib/$env(TECH)_fill.json
+
+# Sealring insertion
+set sealring_lib [[::ord::get_db] findLib sealring]
+set sealring_master [$sealring_lib findMaster sealring]
+set sealring_w [::ord::dbu_to_microns [$sealring_master getWidth]]
+set sealring_h [::ord::dbu_to_microns [$sealring_master getHeight]]
+set slx [expr ($X - $sealring_w)/2]
+set sly [expr ($X - $sealring_h)/2]
+place_inst -name seal -cell sealring -location "$slx $sly" -orientation R0 -status LOCKED
 
 #################################################
 ## Write out final files

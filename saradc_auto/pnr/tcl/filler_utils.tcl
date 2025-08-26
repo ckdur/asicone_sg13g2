@@ -21,7 +21,7 @@ proc do_global_from_areas {} {
     set all_inst [$::block getInsts]
     foreach inst $all_inst {
         set masterName [[$inst getMaster] getName]
-        if {[$inst isPlaced] == 0 || !($masterName == "SARADC_FILLTIE2" || $masterName == "SARADC_FILL1" || $masterName == "TAPCELL" || [lsearch -exact $FILLERCells $masterName] >= 0)} {
+        if {[$inst isPlaced] == 0 || !($masterName == "SARADC_FILLTIE2" || $masterName == "SARADC_FILL1" || $masterName == "sg13g2f_TAPCELL" || [lsearch -exact $FILLERCells $masterName] >= 0)} {
             continue
         }
         set name [$inst getName]
