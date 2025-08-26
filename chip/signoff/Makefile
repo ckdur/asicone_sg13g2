@@ -38,6 +38,7 @@ gds: $(GDS)
 $(SIGN_DIR)/outputs/%.gds: $(PNR_DIR)/outputs/%.def
 	mkdir -p $(SIGN_DIR)/outputs
 	mkdir -p $(SIGN_DIR)/reports
+	mkdir -p $(SIGN_DIR)/reports_no_filler
 ifeq ($(PDK_FILE),none)
 	klayout -zz -rd design_name=$(TOP) \
 	        -rd in_def=$< \
@@ -52,25 +53,34 @@ else
 	magic -dnull -noconsole -rcfile $(PDK_ROOT)/$(PDK)/libs.tech/magic/$(PDK).magicrc $(SIGN_DIR)/tcl/gds.tcl
 endif
 
-view: $(GDS)
+view_no_filler: $(GDS)
 	klayout -nn $(PDK_KNFILE) -s $(GDS)
 
-drc: $(GDS)
-	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py --path=$(GDS) --mp=10 --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --density_thr=10 --antenna
+drc_no_filler: $(GDS)
+	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py --path=$(GDS) --mp=10 --run_dir=$(SIGN_DIR)/reports_no_filler/ --topcell=$(TOP) --run_mode=flat --density_thr=10 --antenna
 
 $(SPICE): $(ROOT_DIR)/lib/$(TECH).cdl $(CDLS) $(NET)
 	cat $(ROOT_DIR)/lib/$(TECH).cdl $(CDLS) $(NET) > $(SPICE)
 
-lvs: $(GDS) $(SPICE)
-	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --verbose
+lvs_no_filler: $(GDS) $(SPICE)
+	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports_no_filler/ --topcell=$(TOP) --run_mode=flat --verbose
 
 filler: $(GDSFILL)
 
 $(GDSFILL): $(GDS)
 	klayout -nn $(PDK_KNFILE) -n sg13g2 -zz -r $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/scripts/filler.py -rd output_file=$(GDSFILL) $(GDS)
 
+view: $(GDSFILL)
+	klayout -nn $(PDK_KNFILE) -s $(GDS)
+
+drc: $(GDSFILL)
+	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py --path=$(GDSFILL) --mp=10 --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --density_thr=10 --antenna
+
+lvs: $(GDSFILL) $(SPICE)
+	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDSFILL) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --verbose
+
 clean:
-	rm -vrf  outputs reports
+	rm -vrf  outputs reports reports_no_filler
 
 .PHONY: all manual clean
 
