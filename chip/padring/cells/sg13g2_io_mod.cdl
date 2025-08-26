@@ -296,7 +296,7 @@ XR0 vss sub! / ptap1 r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
 XI1 net1 iovss net2 vdd / sg13g2_RCClampInverterExt
 .ENDS
 
-.SUBCKT sg13g2_IOPadAnalog iovdd iovss pad padres vdd vss
+.SUBCKT sg13g2_IOPadAVDD iovdd iovss pad padres vdd vss
 *.PININFO iovdd:B iovss:B pad:B padres:B vdd:B vss:B
 XI9 iovdd iovss pad / sg13g2_Clamp_P20N0DExt
 XI3 iovss pad iovdd / sg13g2_DCNDiodeExt

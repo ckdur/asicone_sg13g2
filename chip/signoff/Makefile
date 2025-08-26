@@ -8,6 +8,7 @@ SEALRING_DIR=$(abspath ../sealring)
 SIGN_DIR=$(abspath .)
 
 GDS=$(SIGN_DIR)/outputs/$(TOP).gds
+GDSFILL=$(SIGN_DIR)/outputs/$(TOP).fill.gds
 DEF=$(PNR_DIR)/outputs/$(TOP).def
 
 SPICE=$(SIGN_DIR)/outputs/$(TOP).spice
@@ -62,6 +63,11 @@ $(SPICE): $(ROOT_DIR)/lib/$(TECH).cdl $(CDLS) $(NET)
 
 lvs: $(GDS) $(SPICE)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --verbose
+
+filler: $(GDSFILL)
+
+$(GDSFILL): $(GDS)
+	klayout -nn $(PDK_KNFILE) -n sg13g2 -zz -r $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/scripts/filler.py -rd output_file=$(GDSFILL) $(GDS)
 
 clean:
 	rm -vrf  outputs reports
