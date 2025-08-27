@@ -19,7 +19,7 @@
 
 Usage:
     run_lvs.py (--help| -h)
-    run_lvs.py (--layout=<layout_path>) (--netlist=<netlist_path>)
+    run_lvs.py (--layout=<layout_path>) (--netlist=<netlist_path>) [--custom_deck=<path_to_lvs>]
     [--run_dir=<run_dir_path>] [--topcell=<topcell_name>] [--run_mode=<run_mode>]
     [--no_net_names] [--spice_comments] [--net_only] [--no_simplify]
     [--no_series_res] [--no_parallel_res] [--combine_devices] [--top_lvl_pins]
@@ -27,6 +27,7 @@ Usage:
 
 Options:
     --help -h                           Displays this help message.
+    --custom_deck=<path_to_lvs>         If there is a custom LVS, put it here
     --layout=<layout_path>              Specifies the file path of the input GDS file.
     --netlist=<netlist_path>            Specifies the file path of the input netlist file.
     --run_dir=<run_dir_path>            Run directory to save all the generated results [default: pwd]
@@ -323,16 +324,34 @@ def main(lvs_run_dir: str, arguments: dict):
             f"The input netlist file path {netlist_path} doesn't exist, please recheck."
         )
         exit(1)
+    
+    pdk_root = os.environ.get("PDK_ROOT")
+    if not pdk_root:
+        raise Exception("Error: Environment variable PDK_ROOT is not set.")
 
-    lvs_rule_deck = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "sg13g2.lvs"
+    # Build path to sg13g2.py
+    lvs_rule_deck = os.path.join(pdk_root, "ihp-sg13g2/libs.tech/klayout/tech/lvs/sg13g2.lvs")
+    deck_path = os.path.join(pdk_root, "ihp-sg13g2/libs.tech/klayout/tech/lvs/rule_decks")
+
+    if arguments["--custom_deck"] is not None:
+        lvs_rule_deck = arguments["--custom_deck"]
+
+    new_lvs_rule = os.path.join(
+        lvs_run_dir, "sg13g2_custom.lvs"
     )
+
+    # IHP gods, forgive me but this LVS system sucks a lot
+    with open(lvs_rule_deck, "r") as f2, open(new_lvs_rule, "w") as out:
+        out.write(f2.read()) # The LVS file is too rigid. We cannot customize here
+
+    # Ohh my god, this is SO ugly to do
+    os.system("cp -r {} {}".format(deck_path, lvs_run_dir))
 
     # Get run switches
     switches = generate_klayout_switches(arguments, layout_path, netlist_path)
 
     # Run LVS check
-    res_db_files = run_check(lvs_rule_deck, layout_path, lvs_run_dir, switches)
+    res_db_files = run_check(new_lvs_rule, layout_path, lvs_run_dir, switches)
 
     # Check run
     check_lvs_results(res_db_files)

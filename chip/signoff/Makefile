@@ -63,7 +63,8 @@ $(SPICE): $(ROOT_DIR)/lib/$(TECH).cdl $(CDLS) $(NET)
 	cat $(ROOT_DIR)/lib/$(TECH).cdl $(CDLS) $(NET) > $(SPICE)
 
 lvs_no_filler: $(GDS) $(SPICE)
-	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports_no_filler/ --topcell=$(TOP) --run_mode=flat --verbose
+#	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports_no_filler/ --topcell=$(TOP) --run_mode=flat --verbose
+	python3 $(ROOT_DIR)/lib/run_lvs.py --custom_deck=$(CELLS_DIR)/lvs/sg13g2_custom.lvs --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports_no_filler/ --topcell=$(TOP) --run_mode=flat --verbose
 
 filler: $(GDSFILL)
 
@@ -71,13 +72,15 @@ $(GDSFILL): $(GDS)
 	klayout -nn $(PDK_KNFILE) -n sg13g2 -zz -r $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/scripts/filler.py -rd output_file=$(GDSFILL) $(GDS)
 
 view: $(GDSFILL)
-	klayout -nn $(PDK_KNFILE) -s $(GDS)
+	klayout -nn $(PDK_KNFILE) -s $(GDSFILL)
 
 drc: $(GDSFILL)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py --path=$(GDSFILL) --mp=10 --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --density_thr=10 --antenna
 
 lvs: $(GDSFILL) $(SPICE)
-	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDSFILL) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --verbose
+#	Ohh my god... why there is no way to put custom scripts in the LVS?!?!?!?!
+#	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDSFILL) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --verbose
+	python3 $(ROOT_DIR)/lib/run_lvs.py --custom_deck=$(SIGN_DIR)/lvs_custom/full_chip_custom.lvs --layout=$(GDSFILL) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --verbose
 
 clean:
 	rm -vrf  outputs reports reports_no_filler

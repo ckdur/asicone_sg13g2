@@ -1,7 +1,8 @@
-ROOT_DIR=$(abspath ../)
-include $(ROOT_DIR)/settings.mk
+ROOT_DIR=$(abspath ../../)
+PRJ_DIR=$(abspath ../)
+include $(PRJ_DIR)/settings.mk
 CELLS_DIR=$(abspath .)
-SCRIPTS_DIR=$(ROOT_DIR)/scripts
+SCRIPTS_DIR=$(PRJ_DIR)/scripts
 
 gds2lef_file=$(SCRIPTS_DIR)/gds2lef.sh
 
@@ -52,7 +53,7 @@ lvs: $(LVS_REPORTS)
 	! grep -rwI "Netlists don't match" reports/
 
 reports/%.lvsdb: $(GDS) $(SPICE)
-	python3 $(CELLS_DIR)/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(CELLS_DIR)/reports/ --topcell=$* --run_mode=flat --verbose
+	python3 $(ROOT_DIR)/lib/run_lvs.py --custom_deck=$(CELLS_DIR)/lvs/sg13g2_custom.lvs --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(CELLS_DIR)/reports/ --topcell=sg13g2f_$* --run_mode=flat --verbose
 
 cells_lef: $(GDS)
 	cd $(CELLS_DIR)/reports/ && bash $(gds2lef_file) $(GDS) $(CELLS_DIR)/sg13g2f.port.csv $(PDK_FILE)

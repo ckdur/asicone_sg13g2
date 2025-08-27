@@ -302,6 +302,14 @@ logger.info('Starting base layers derivations')
 
 # %include rule_decks/devices_connections.lvs
 
+# Additional ones done for this lvs only
+connect_global(pwell, "BULKP")
+connect_global(nwell_drw, "BULKN")
+
+#=== Connect the bulks
+connect_explicit([ "BULKP", "vss" ])
+connect_explicit([ "BULKN", "vdd" ])
+
 #================================================
 #------------- DEVICES EXTRACTION ---------------
 #================================================
