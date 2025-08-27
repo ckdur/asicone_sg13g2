@@ -148,14 +148,14 @@ module asicone_202508 (
   sg13g2_IOPadIOVdd pad_vddpst_north_0();
   sg13g2_bpd70 bd_vddpst_north_0();
   sg13g2_IOPadIn pad_mosi(.pad(pad_mosi_pad), .p2c(pad_mosi_p2c));
-  sg13g2_bpd70 bd_nfpgaio_00();
+  sg13g2_bpd70 bd_pad_mosi();
   sg13g2_IOPadOut16mA pad_miso(.pad(pad_miso_pad), .c2p(pad_miso_c2p));
-  sg13g2_bpd70 bd_nfpgaio_01();
+  sg13g2_bpd70 bd_pad_miso();
   sg13g2_IOPadIn pad_sclk(.pad(pad_sclk_pad), .p2c(pad_sclk_p2c));
   sg13g2_bpd70 bd_pad_sclk();
 
-  sg13g2_IOPadAnalog pad_dum_15();
-  sg13g2_bpd70 bd_pad_dum_15();
+  //sg13g2_IOPadAnalog pad_dum_15();
+  //sg13g2_bpd70 bd_pad_dum_15();
   sg13g2_IOPadAnalog pad_dum_14();
   sg13g2_bpd70 bd_pad_dum_14();
   sg13g2_IOPadAnalog pad_dum_13();
@@ -184,24 +184,16 @@ module asicone_202508 (
   sg13g2_bpd70 bd_pad_dum_2();
   sg13g2_IOPadAnalog pad_dum_1();
   sg13g2_bpd70 bd_pad_dum_1();
-  sg13g2_IOPadAnalog pad_dum_0();
-  sg13g2_bpd70 bd_pad_dum_0();
-  sg13g2_Filler2000 FILLER_0();
-  sg13g2_Filler1000 FILLER_1();
-  sg13g2_Filler2000 FILLER_2();
-  sg13g2_Filler1000 FILLER_3();
-  sg13g2_Filler2000 FILLER_4();
-  sg13g2_Filler1000 FILLER_5();
-  sg13g2_Filler2000 FILLER_6();
-  sg13g2_Filler1000 FILLER_7();
-  sg13g2_Filler2000 FILLER_8();
-  sg13g2_Filler1000 FILLER_9();
-  sg13g2_Filler2000 FILLER_10();
-  sg13g2_Filler1000 FILLER_11();
-  sg13g2_Filler2000 FILLER_12();
-  sg13g2_Filler1000 FILLER_13();
-  sg13g2_Filler2000 FILLER_14();
-  sg13g2_Filler1000 FILLER_15();
+  //sg13g2_IOPadAnalog pad_dum_0();
+  //sg13g2_bpd70 bd_pad_dum_0();
+  sg13g2_Filler4000 FILLER_0();
+  sg13g2_Filler200 FILLER_1();
+  sg13g2_Filler4000 FILLER_2();
+  sg13g2_Filler200 FILLER_3();
+  sg13g2_Filler4000 FILLER_4();
+  sg13g2_Filler200 FILLER_5();
+  sg13g2_Filler4000 FILLER_6();
+  sg13g2_Filler200 FILLER_7();
 
   SARADC adc(
     .AVDD(AVDD), .VDD(VDD), .VSS(VSS),

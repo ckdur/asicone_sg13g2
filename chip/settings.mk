@@ -7,8 +7,8 @@ ROOT_DIR?=$(abspath ..)
 TECH?=sg13g2
 
 # Make sure these match your .cfg
-X?=1190
-Y?=1190
+X?=1160
+Y?=1122
 
 #######################################################
 # TOP name

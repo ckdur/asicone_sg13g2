@@ -415,7 +415,7 @@ set sealring_master [$sealring_lib findMaster sealring]
 set sealring_w [::ord::dbu_to_microns [$sealring_master getWidth]]
 set sealring_h [::ord::dbu_to_microns [$sealring_master getHeight]]
 set slx [expr ($X - $sealring_w)/2]
-set sly [expr ($X - $sealring_h)/2]
+set sly [expr ($Y - $sealring_h)/2]
 place_inst -name seal -cell sealring -location "$slx $sly" -orientation R0 -status LOCKED
 
 #################################################

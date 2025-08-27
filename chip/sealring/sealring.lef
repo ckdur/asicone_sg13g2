@@ -6,7 +6,7 @@ MACRO sealring
   CLASS BLOCK ;
   FOREIGN sealring ;
   ORIGIN 0.000 0.000 ;
-  SIZE 1414 BY 1414 ;
+  SIZE 1432.6 BY 1396.06 ;
   SYMMETRY X Y R90 ;
 END sealring
 END LIBRARY

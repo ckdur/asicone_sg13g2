@@ -26,10 +26,10 @@ $(GDS): $(SIGN_DIR)/tcl/gds.tcl $(SIGN_DIR)/tcl/def2stream.py $(DEF)
 	mkdir -p $(SIGN_DIR)/outputs
 	mkdir -p $(SIGN_DIR)/reports
 ifeq ($(PDK_FILE),none)
-	klayout -zz -rd design_name=padring \
+	klayout -zz -rd design_name=$(TOP) \
 	        -rd in_def=$(DEF) \
-	        -rd lef_files="$(ROOT_DIR)/lib/$(TECH).tech.lef $(ROOT_DIR)/lib/$(TECH).lef $(TECH_PDK)/libs.ref/sg13g2_io/lef/sg13g2_io.lef $(PNR_DIR)/outputs/SPI.lef $(SEAL_DIR)/sealring.lef $(CELLS_DIR)/sg13g2_bondpad.lef" \
-	        -rd in_files="$(ROOT_DIR)/lib/$(TECH).gds $(TECH_PDK)/libs.ref/sg13g2_io/gds/sg13g2_io.gds $(SIGN_DIR)/outputs/SPI.gds $(SEAL_DIR)/sealring.gds $(CELLS_DIR)/sg13g2_bondpad.gds" \
+	        -rd lef_files="$(ROOT_DIR)/lib/$(TECH).tech.lef $(ROOT_DIR)/lib/$(TECH).lef $(TECH_PDK)/libs.ref/sg13g2_io/lef/sg13g2_io.lef $(SEAL_DIR)/sealring.lef $(CELLS_DIR)/sg13g2_bondpad.lef $(CELLS_DIR)/sg13g2_io_mod.lef" \
+	        -rd in_files="$(ROOT_DIR)/lib/$(TECH).gds $(TECH_PDK)/libs.ref/sg13g2_io/gds/sg13g2_io.gds $(SEAL_DIR)/sealring.gds $(CELLS_DIR)/sg13g2_bondpad.gds  $(CELLS_DIR)/sg13g2_io_mod.gds" \
 	        -rd seal_file="" \
 	        -rd out_file=$(GDS) \
 	        -rd tech_file=$(TECH_PDK)/libs.tech/klayout/tech/sg13g2.lyt \
