@@ -29,8 +29,8 @@ ADC_CDLS = $(ADC_CELLS:%=$(ROOT_DIR)/saradc_auto/cells/%.cdl)
 ADC_LEFS = $(ADC_CELLS:%=$(ROOT_DIR)/saradc_auto/cells/%.lef)
 ADC_GDSS = $(ADC_CELLS:%=$(ROOT_DIR)/saradc_auto/cells/%.gds)
 
-CDLS = $(PDK_ROOT)/$(PDK)/libs.ref/sg13g2_io/cdl/sg13g2_io.cdl $(PADRING_DIR)/cells/sg13g2_bondpad.cdl $(PADRING_DIR)/cells/sg13g2_io_mod.cdl $(SEALRING_DIR)/sealring.cdl $(ROOT_DIR)/saradc_auto/cells/sg13g2f.cdl $(ADC_CDLS) $(ROOT_DIR)/saradc_auto/pnr/outputs/SARADC.cdl $(ROOT_DIR)/digital/pnr/outputs/SPI.cdl 
-LEFS = $(PDK_ROOT)/$(PDK)/libs.ref/sg13g2_io/lef/sg13g2_io.lef $(PADRING_DIR)/cells/sg13g2_bondpad.lef $(PADRING_DIR)/cells/sg13g2_io_mod.lef $(SEALRING_DIR)/sealring.lef $(ROOT_DIR)/saradc_auto/cells/sg13g2f.lef $(ADC_LEFS) $(ROOT_DIR)/saradc_auto/pnr/outputs/SARADC.lef $(ROOT_DIR)/digital/pnr/outputs/SPI.lef
+CDLS = $(ROOT_DIR)/lib/sg13g2_io.custom.cdl $(PADRING_DIR)/cells/sg13g2_bondpad.cdl $(PADRING_DIR)/cells/sg13g2_io_mod.cdl $(SEALRING_DIR)/sealring.cdl $(ROOT_DIR)/saradc_auto/cells/sg13g2f.cdl $(ADC_CDLS) $(ROOT_DIR)/saradc_auto/pnr/outputs/SARADC.cdl $(ROOT_DIR)/digital/pnr/outputs/SPI.cdl 
+LEFS = $(ROOT_DIR)/lib/sg13g2_io.custom.lef $(PADRING_DIR)/cells/sg13g2_bondpad.lef $(PADRING_DIR)/cells/sg13g2_io_mod.lef $(SEALRING_DIR)/sealring.lef $(ROOT_DIR)/saradc_auto/cells/sg13g2f.lef $(ADC_LEFS) $(ROOT_DIR)/saradc_auto/pnr/outputs/SARADC.lef $(ROOT_DIR)/digital/pnr/outputs/SPI.lef
 GDSS = $(PDK_ROOT)/$(PDK)/libs.ref/sg13g2_io/gds/sg13g2_io.gds $(PADRING_DIR)/cells/sg13g2_bondpad.gds $(PADRING_DIR)/cells/sg13g2_io_mod.gds $(SEALRING_DIR)/sealring.gds $(ROOT_DIR)/saradc_auto/cells/sg13g2f.gds $(ADC_GDSS) $(ROOT_DIR)/saradc_auto/signoff/outputs/SARADC.gds $(ROOT_DIR)/digital/signoff/outputs/SPI.gds
 
 gds: $(GDS)
@@ -64,7 +64,7 @@ $(SPICE): $(ROOT_DIR)/lib/$(TECH).cdl $(CDLS) $(NET)
 
 lvs_no_filler: $(GDS) $(SPICE)
 #	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports_no_filler/ --topcell=$(TOP) --run_mode=flat --verbose
-	python3 $(ROOT_DIR)/lib/run_lvs.py --custom_deck=$(CELLS_DIR)/lvs/sg13g2_custom.lvs --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports_no_filler/ --topcell=$(TOP) --run_mode=flat --verbose
+	python3 $(ROOT_DIR)/lib/run_lvs.py --custom_deck=$(SIGN_DIR)/lvs_custom/full_chip_custom.lvs --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports_no_filler/ --topcell=$(TOP) --run_mode=flat --verbose
 
 filler: $(GDSFILL)
 

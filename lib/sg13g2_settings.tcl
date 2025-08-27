@@ -9,9 +9,9 @@ if { [info exists ::env(PDK_ROOT)]} {
 set ROOT_DIR $env(ROOT_DIR)
 set LIB_PATHS "$ROOT_DIR"
 set LIBS "${ROOT_DIR}/lib/sg13g2.lib ${PDK_ROOT}/ihp-sg13g2/libs.ref/sg13g2_io/lib/sg13g2_io_typ_1p2V_3p3V_25C.lib"
-set LEFS "${ROOT_DIR}/lib/sg13g2.tech.lef ${ROOT_DIR}/lib/sg13g2.lef ${PDK_ROOT}/ihp-sg13g2/libs.ref/sg13g2_io/lef/sg13g2_io.lef"
+set LEFS "${ROOT_DIR}/lib/sg13g2.tech.lef ${ROOT_DIR}/lib/sg13g2.lef ${ROOT_DIR}/lib/sg13g2_io.custom.lef"
 set GDSS "${ROOT_DIR}/lib/sg13g2.gds ${PDK_ROOT}/ihp-sg13g2/libs.ref/sg13g2_io/gds/sg13g2_io.gds"
-set CDLS "${ROOT_DIR}/lib/sg13g2.cdl ${PDK_ROOT}/ihp-sg13g2/libs.ref/sg13g2_io/cdl/sg13g2_io.cdl"
+set CDLS "${ROOT_DIR}/lib/sg13g2.cdl ${ROOT_DIR}/lib/sg13g2_io.custom.cdl"
 
 # TODO: Do the characterization of the lib
 set LIBS_BC "${ROOT_DIR}/lib/sg13g2.lib ${PDK_ROOT}/ihp-sg13g2/libs.ref/sg13g2_io/lib/sg13g2_io_fast_1p65V_3p6V_m40C.lib"

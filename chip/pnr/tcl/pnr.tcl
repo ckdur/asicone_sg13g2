@@ -104,6 +104,7 @@ add_global_connection -net VDD -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_patt
 add_global_connection -net VSS -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^vss$}
 add_global_connection -net VDDIO -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^iovdd$}
 add_global_connection -net VSSIO -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^iovss$}
+add_global_connection -net VSS -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^sub$}
 
 set_voltage_domain -name CORE -power VDD -ground VSS -secondary_power {AVDD}
 
