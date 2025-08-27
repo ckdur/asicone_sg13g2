@@ -1,9 +1,9 @@
 # This is a manual file to put the macros
 
 DESIGN asicone_202508 ;
-UNITS DISTANCE MICRONS 100 ; 
+UNITS DISTANCE MICRONS 1000 ; 
 COMPONENTS 2 ;
-  - spi SPI + FIXED ( 75000 70000 ) N ;
-  - adc SARADC + FIXED ( 26500 22000 ) N ;
+  - spi SPI + FIXED ( 750000 700000 ) N ;
+  - adc SARADC + FIXED ( 265000 220000 ) N ;
 END COMPONENTS
 END DESIGN
