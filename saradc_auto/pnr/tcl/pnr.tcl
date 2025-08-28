@@ -378,11 +378,9 @@ add_pdn_stripe \
     -layer Metal5 \
     -width 3.2 \
     -spacing 1.6 \
-    -pitch [expr 2*$cdacx_h] \
-    -offset [expr 1.5*$cdacx_h-(3*3.2+2*1.6)/4] \
+    -pitch [expr 7*$cdacx_h] \
+    -offset [expr 1.5*$cdacx_h+9] \
     -extend_to_boundary
-
-puts $cdacx_h
 
 add_pdn_connect \
     -grid stdcell_core_grid \
