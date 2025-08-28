@@ -303,9 +303,14 @@ logger.info('Starting base layers derivations')
 # %include rule_decks/devices_connections.lvs
 
 #=== Connect the sub! global net
+connect_implicit("anode")
+connect_implicit("cathode")
+connect_implicit("guard")
 connect_global(substrate_drw, "sub")
 connect_explicit("sg13g2_IOPadIn", [ "sub", "vss" ])
-same_nets("sg13g2_IOPadIn", "SUB", "VSS")
+same_nets("sg13g2_IOPadIn", "sub", "vss")
+connect_explicit("sg13g2_IOPadIn", [ "iovss", "vss" ])
+same_nets("sg13g2_IOPadIn", "iovss", "vss")
 
 #================================================
 #------------- DEVICES EXTRACTION ---------------

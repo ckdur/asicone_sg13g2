@@ -85,6 +85,7 @@ lvs: $(GDSFILL) $(SPICE)
 # Whyyyyyy the IO is failing to detect?
 lvs_io_test: $(PDK_ROOT)/$(PDK)/libs.ref/sg13g2_io/gds/sg13g2_io.gds $(ROOT_DIR)/lib/sg13g2_io.custom.cdl
 	python3 $(ROOT_DIR)/lib/run_lvs.py --custom_deck=$(SIGN_DIR)/lvs_custom/full_chip_custom.lvs --layout=$(PDK_ROOT)/$(PDK)/libs.ref/sg13g2_io/gds/sg13g2_io.gds --netlist=$(ROOT_DIR)/lib/sg13g2_io.custom.cdl --run_dir=$(SIGN_DIR)/reports/ --topcell=sg13g2_IOPadIn --run_mode=flat --verbose
+	python3 $(ROOT_DIR)/lib/run_lvs.py --custom_deck=$(SIGN_DIR)/lvs_custom/full_chip_custom.lvs --layout=$(PDK_ROOT)/$(PDK)/libs.ref/sg13g2_io/gds/sg13g2_io.gds --netlist=$(ROOT_DIR)/lib/sg13g2_io.custom.cdl --run_dir=$(SIGN_DIR)/reports/ --topcell=sg13g2_DCPDiode --run_mode=flat --verbose
 
 clean:
 	rm -vrf  outputs reports reports_no_filler

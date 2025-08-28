@@ -34,6 +34,20 @@
 *.MEGA
 .PARAM
 
+**ptap1 (TIE SUB)
+.subckt ptap1 1 2 
+.param r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
+*R1 1 2 R=r A=A P=Perim w=w l=l
+D1 2 1 ptap1 A=A P=Perim
+.ends ptap1
+
+**ntap1 (TIE WELL)
+.subckt ntap1 1 2 
+.param r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
+*R1 1 2 R=r A=A P=Perim w=w l=l
+D1 1 2 ntap1 A=A P=Perim
+.ends ntap1
+
 ************************************************************************
 * Library Name: sg13g2_io
 * Cell Name:    sg13g2_IOPadIOVss
@@ -342,8 +356,8 @@ XR0 vss sub / ptap1 r=22.832 A=23.523p Perim=19.4u w=4.85u l=4.85u
 
 .SUBCKT sg13g2_DCNDiode anode cathode guard sub
 *.PININFO anode:B cathode:B guard:B
-DD1 sub cathode dantenna m=1 w=1.26u l=27.78u a=35.003p p=58.08u
-DD0 sub cathode dantenna m=1 w=1.26u l=27.78u a=35.003p p=58.08u
+DD1 sub cathode dantenna m=1 w=1.26u l=27.78u a=35.0028p p=58.08u
+DD0 sub cathode dantenna m=1 w=1.26u l=27.78u a=35.0028p p=58.08u
 XR0 anode sub / ptap1 r=5.191 A=141.253p Perim=47.54u w=11.885u l=11.885u
 .ENDS
 
@@ -355,8 +369,8 @@ XR0 anode sub / ptap1 r=5.191 A=141.253p Perim=47.54u w=11.885u l=11.885u
 
 .SUBCKT sg13g2_DCPDiode anode cathode guard sub
 *.PININFO anode:B cathode:B guard:B
-DD1 anode cathode dpantenna m=1 w=1.26u l=27.78u a=35.003p p=58.08u
-DD0 anode cathode dpantenna m=1 w=1.26u l=27.78u a=35.003p p=58.08u
+DD1 anode cathode dpantenna m=1 w=1.26u l=27.78u a=35.0028p p=58.08u
+DD0 anode cathode dpantenna m=1 w=1.26u l=27.78u a=35.0028p p=58.08u
 XR0 guard sub / ptap1 r=17.289 A=33.524p Perim=23.16u w=5.79u l=5.79u
 .ENDS
 
@@ -666,13 +680,22 @@ XR2 iovss sub / ptap1 r=214.165m A=4.313n Perim=262.7u w=65.675u l=65.675u
 * View Name:    schematic
 ************************************************************************
 
-.SUBCKT sg13g2_IOPadIn iovdd iovss p2c pad vdd vss sub
+*.SUBCKT sg13g2_IOPadIn iovdd iovss p2c pad vdd vss sub
 *.PININFO p2c:O iovdd:B iovss:B pad:B vdd:B vss:B
-XI1 p2c iovdd iovss pad vdd vss sub / sg13g2_LevelDown
-XI3 iovss pad iovdd sub / sg13g2_DCNDiode
-XI2 pad iovdd iovss sub / sg13g2_DCPDiode
-XR1 vss sub / ptap1 r=24.69 A=21.252p Perim=18.44u w=4.61u l=4.61u
-XR2 iovss sub / ptap1 r=173.674m A=5.35n Perim=292.58u w=73.145u l=73.145u
+*XI1 p2c iovdd iovss pad vdd vss sub / sg13g2_LevelDown
+*XI3 iovss pad iovdd sub / sg13g2_DCNDiode
+*XI2 pad iovdd iovss sub / sg13g2_DCPDiode
+*XR1 vss sub / ptap1 r=24.69 A=21.252p Perim=18.44u w=4.61u l=4.61u
+*XR2 iovss sub / ptap1 r=173.674m A=5.35n Perim=292.58u w=73.145u l=73.145u
+*.ENDS
+
+.SUBCKT sg13g2_IOPadIn iovdd p2c pad vdd vss
+*.PININFO p2c:O iovdd:B pad:B vdd:B vss:B
+XI1 p2c iovdd vss pad vdd vss vss / sg13g2_LevelDown
+XI3 vss pad iovdd vss / sg13g2_DCNDiode
+XI2 pad iovdd vss vss / sg13g2_DCPDiode
+XR1 vss vss / ptap1 r=24.69 A=21.252p Perim=18.44u w=4.61u l=4.61u
+XR2 vss vss / ptap1 r=173.674m A=5.35n Perim=292.58u w=73.145u l=73.145u
 .ENDS
 
 ************************************************************************
