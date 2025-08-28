@@ -306,11 +306,14 @@ logger.info('Starting base layers derivations')
 connect_implicit("anode")
 connect_implicit("cathode")
 connect_implicit("guard")
-connect_global(substrate_drw, "sub")
-connect_explicit("sg13g2_IOPadIn", [ "sub", "vss" ])
-same_nets("sg13g2_IOPadIn", "sub", "vss")
-connect_explicit("sg13g2_IOPadIn", [ "iovss", "vss" ])
-same_nets("sg13g2_IOPadIn", "iovss", "vss")
+#connect_implicit("iovss")
+#connect_implicit("iovdd")
+connect_explicit("sg13g2_IOPadAnalog", [ "*iovdd", "iovdd" ])
+#connect_global(substrate_drw, "sub")
+#connect_explicit("sg13g2_IOPadIn", [ "sub", "vss" ])
+#sa#me_nets("sg13g2_IOPadIn", "sub", "vss")
+#connect_explicit("sg13g2_IOPadIn", [ "iovss", "vss" ])
+#same_nets("sg13g2_IOPadIn", "iovss", "vss")
 
 #================================================
 #------------- DEVICES EXTRACTION ---------------
@@ -370,7 +373,8 @@ logger.info('Starting SG13G2 LVS DEVICES EXTRACTION')
 # ------- Taps EXTRACTIONS ------
 #================================
 
-# %include rule_decks/tap_extraction.lvs
+# Fuck the ptap1/ntap1
+##### % include rule_decks/tap_extraction.lvs
 
 #==================================================
 # ------------ COMPARISON PREPARATIONS ------------

@@ -35,17 +35,19 @@
 .PARAM
 
 **ptap1 (TIE SUB)
-.subckt ptap1 1 2 
-.param r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
+.subckt ptap1 1 2 r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
+* TODO: The LVS (up to aug/28) doesnt extract correctly
+*       or extracts correctly, but cannot merge/compare
 *R1 1 2 R=r A=A P=Perim w=w l=l
-D1 2 1 ptap1 A=A P=Perim
+*D1 2 1 ptap1 A=A P=Perim
 .ends ptap1
 
 **ntap1 (TIE WELL)
-.subckt ntap1 1 2 
-.param r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
+.subckt ntap1 1 2 r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
+* TODO: The LVS (up to aug/28) doesnt extract correctly
+*       or extracts correctly, but cannot merge/compare
 *R1 1 2 R=r A=A P=Perim w=w l=l
-D1 1 2 ntap1 A=A P=Perim
+*D1 1 2 ntap1 A=A P=Perim
 .ends ntap1
 
 ************************************************************************
@@ -256,52 +258,53 @@ DD0 sub gate dantenna m=1 w=480n l=480n a=230.4f p=1.92u
 
 .SUBCKT sg13g2_RCClampResistor pin1 pin2 sub
 *.PININFO pin1:B pin2:B
-RR29 net15 net16 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR28 net20 net21 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR27 net23 net24 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR24 net17 net18 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR23 net16 net17 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR21 net25 pin2 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR20 net22 net23 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR19 net19 net20 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR17 net24 net25 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR16 net21 net22 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR15 net18 net19 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR14 net5 net6 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR13 net8 net9 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR12 net11 net12 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR11 net14 net15 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR10 net2 net3 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR9 net1 net2 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
-RR8 net13 net14 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR7 net10 net11 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR6 net7 net8 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
-RR5 net4 net5 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
-RR4 net12 net13 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR3 net9 net10 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
-+ b=0
-RR2 net6 net7 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
-RR1 net3 net4 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
-RR0 pin1 net1 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
+R$274 pin2 pin1 rppd w=1u l=520u ps=0 b=0 m=1
+*RR29 net15 net16 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR28 net20 net21 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR27 net23 net24 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR24 net17 net18 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR23 net16 net17 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR21 net25 pin2 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR20 net22 net23 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR19 net19 net20 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR17 net24 net25 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR16 net21 net22 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR15 net18 net19 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR14 net5 net6 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR13 net8 net9 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR12 net11 net12 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR11 net14 net15 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR10 net2 net3 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR9 net1 net2 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
+*RR8 net13 net14 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR7 net10 net11 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR6 net7 net8 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
+*RR5 net4 net5 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
+*RR4 net12 net13 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR3 net9 net10 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
+*+ b=0
+*RR2 net6 net7 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
+*RR1 net3 net4 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
+*RR0 pin1 net1 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 b=0
 .ENDS
 
 ************************************************************************
@@ -326,7 +329,7 @@ MP0 out in supply supply sg13_hv_pmos m=1 w=350.000u l=500.0n ng=50
 
 .SUBCKT sg13g2_IOPadVdd iovdd iovss vdd vss sub
 *.PININFO iovdd:B iovss:B vdd:B vss:B
-XI0 net2 vdd iovss sub / sg13g2_Clamp_N43N43D4R
+XI0 net2 vdd iovssa sub / sg13g2_Clamp_N43N43D4R
 XI2 vdd net1 sub / sg13g2_RCClampResistor
 XR1 iovss sub / ptap1 r=456.33m A=1.97n Perim=177.54u w=44.385u l=44.385u
 XR0 vss sub / ptap1 r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
@@ -341,7 +344,7 @@ XI1 net1 iovss net2 vdd sub / sg13g2_RCClampInverter
 
 .SUBCKT sg13g2_IOPadIOVdd iovdd iovss vdd vss sub
 *.PININFO iovdd:B iovss:B vdd:B vss:B
-XI0 net2 iovdd iovss sub / sg13g2_Clamp_N43N43D4R
+XI0 net2 iovdd iovssa sub / sg13g2_Clamp_N43N43D4R
 XI2 iovdd net1 sub / sg13g2_RCClampResistor
 XI1 net1 iovss net2 iovdd sub / sg13g2_RCClampInverter
 XR1 iovss sub / ptap1 r=449.797m A=2n Perim=178.88u w=44.72u l=44.72u
@@ -358,7 +361,8 @@ XR0 vss sub / ptap1 r=22.832 A=23.523p Perim=19.4u w=4.85u l=4.85u
 *.PININFO anode:B cathode:B guard:B
 DD1 sub cathode dantenna m=1 w=1.26u l=27.78u a=35.0028p p=58.08u
 DD0 sub cathode dantenna m=1 w=1.26u l=27.78u a=35.0028p p=58.08u
-XR0 anode sub / ptap1 r=5.191 A=141.253p Perim=47.54u w=11.885u l=11.885u
+*XR0 anode sub / ptap1 r=5.191 A=141.253p Perim=47.54u w=11.885u l=11.885u
+XR0 anode sub / ptap1 r=5.191 A=141.2964p Perim=221.76u w=11.885u l=11.885u
 .ENDS
 
 ************************************************************************
@@ -371,7 +375,8 @@ XR0 anode sub / ptap1 r=5.191 A=141.253p Perim=47.54u w=11.885u l=11.885u
 *.PININFO anode:B cathode:B guard:B
 DD1 anode cathode dpantenna m=1 w=1.26u l=27.78u a=35.0028p p=58.08u
 DD0 anode cathode dpantenna m=1 w=1.26u l=27.78u a=35.0028p p=58.08u
-XR0 guard sub / ptap1 r=17.289 A=33.524p Perim=23.16u w=5.79u l=5.79u
+*XR0 guard sub / ptap1 r=17.289 A=33.524p Perim=23.16u w=5.79u l=5.79u
+XR0 guard sub / ptap1 r=17.289 A=33.5104p Perim=197.12u w=5.79u l=5.79u
 .ENDS
 
 ************************************************************************
@@ -525,9 +530,11 @@ XR0 iovss sub / ptap1 r=9.826 A=66.994p Perim=32.74u w=8.185u l=8.185u
 
 .SUBCKT sg13g2_SecondaryProtection core minus pad plus sub
 *.PININFO core:B minus:B pad:B plus:B
-RR0 pad core 586.899 $SUB=sub $[res_rppd] m=1 l=2u w=1u ps=180n trise=0.0 b=0
+*RR0 pad core 586.899 $SUB=sub $[res_rppd] m=1 l=2u w=1u ps=180n trise=0.0 b=0
+RR0 pad core rppd m=1 l=2u w=1u
 DD0 sub core dantenna m=1 w=640n l=3.1u a=1.984p p=7.48u
-XR1 minus sub / ptap1 r=46.556 A=9.03p Perim=12.02u w=3.005u l=3.005u
+*XR1 minus sub / ptap1 r=46.556 A=9.03p Perim=12.02u w=3.005u l=3.005u
+XR1 minus sub / ptap1 r=46.556 A=9.0304p Perim=53.12u w=3.005u l=3.005u
 DD1 core plus dpantenna m=1 w=640n l=4.98u a=3.187p p=11.24u
 .ENDS
 
@@ -543,7 +550,8 @@ MP0 net2 net4 vdd vdd sg13_hv_pmos m=1 w=4.65u l=450.00n ng=1
 MN0 net2 net4 vss sub sg13_hv_nmos m=1 w=2.65u l=450.00n ng=1
 MN1 core net2 vss sub sg13_lv_nmos m=1 w=2.75u l=130.00n ng=1
 MP1 core net2 vdd vdd sg13_lv_pmos m=1 w=4.75u l=130.00n ng=1
-XR0 vss sub / ptap1 r=127.332 A=2.016p Perim=5.68u w=1.42u l=1.42u
+*XR0 vss sub / ptap1 r=127.332 A=2.016p Perim=5.68u w=1.42u l=1.42u
+XR0 vss sub / ptap1 r=127.332 A=2.019p Perim=14.06u w=1.42u l=1.42u
 XI0 net4 iovss pad iovdd sub / sg13g2_SecondaryProtection
 .ENDS
 
@@ -680,22 +688,15 @@ XR2 iovss sub / ptap1 r=214.165m A=4.313n Perim=262.7u w=65.675u l=65.675u
 * View Name:    schematic
 ************************************************************************
 
-*.SUBCKT sg13g2_IOPadIn iovdd iovss p2c pad vdd vss sub
-*.PININFO p2c:O iovdd:B iovss:B pad:B vdd:B vss:B
-*XI1 p2c iovdd iovss pad vdd vss sub / sg13g2_LevelDown
-*XI3 iovss pad iovdd sub / sg13g2_DCNDiode
-*XI2 pad iovdd iovss sub / sg13g2_DCPDiode
+.SUBCKT sg13g2_IOPadIn iovdd iovss p2c pad vdd vss sub
+.PININFO p2c:O iovdd:B iovss:B pad:B vdd:B vss:B
+XI1 p2c iovdd iovss pad vdd vss sub / sg13g2_LevelDown
+XI3 iovss pad iovdd sub / sg13g2_DCNDiode
+XI2 pad iovdd iovss sub / sg13g2_DCPDiode
 *XR1 vss sub / ptap1 r=24.69 A=21.252p Perim=18.44u w=4.61u l=4.61u
 *XR2 iovss sub / ptap1 r=173.674m A=5.35n Perim=292.58u w=73.145u l=73.145u
-*.ENDS
-
-.SUBCKT sg13g2_IOPadIn iovdd p2c pad vdd vss
-*.PININFO p2c:O iovdd:B pad:B vdd:B vss:B
-XI1 p2c iovdd vss pad vdd vss vss / sg13g2_LevelDown
-XI3 vss pad iovdd vss / sg13g2_DCNDiode
-XI2 pad iovdd vss vss / sg13g2_DCPDiode
-XR1 vss vss / ptap1 r=24.69 A=21.252p Perim=18.44u w=4.61u l=4.61u
-XR2 vss vss / ptap1 r=173.674m A=5.35n Perim=292.58u w=73.145u l=73.145u
+XR1 vss sub / ptap1 r=24.69 A=21.981p Perim=107.48u w=4.61u l=4.61u
+XR2 iovss sub / ptap1 r=173.674m A=5223.2628p Perim=221.16u w=73.145u l=73.145u
 .ENDS
 
 ************************************************************************
@@ -750,7 +751,8 @@ XR0 iovss sub / ptap1 r=207.756m A=4.45n Perim=266.84u w=66.71u l=66.71u
 
 .SUBCKT sg13g2_IOPadOut16mA c2p iovdd iovss pad vdd vss sub
 *.PININFO c2p:I iovdd:B iovss:B pad:B vdd:B vss:B
-XI6 c2p iovdd net2 net1 vdd vss sub / sg13g2_GateLevelUpInv
+* TODO: AGAIN?!?!?!
+XI6 c2p iovdda net2 net1 vdd vss sub / sg13g2_GateLevelUpInv
 XI8 net1 iovdd iovss pad sub / sg13g2_Clamp_P8N8D
 XI3 iovss pad iovdd sub / sg13g2_DCNDiode
 XI7 net2 iovss pad sub / sg13g2_Clamp_N8N8D
@@ -891,7 +893,9 @@ XR0 iovss sub / ptap1 r=253.731m A=3.622n Perim=240.72u w=60.18u l=60.18u
 .SUBCKT sg13g2_Clamp_P20N0D iovdd iovss pad sub
 *.PININFO iovdd:B iovss:B pad:B
 MP0 pad net2 iovdd iovdd sg13_hv_pmos m=1 w=266.4u l=600.0n ng=40
-RR0 net2 iovdd 6.768K $SUB=iovdd $[res_rppd] m=1 l=12.9u w=500n ps=180n 
+*RR0 net2 iovdd 6.768K $SUB=iovdd $[res_rppd] m=1 l=12.9u w=500n ps=180n 
++ trise=0.0 b=0
+RR0 iovdd net2 rppd m=1 l=12.9u w=500n
 + trise=0.0 b=0
 XR1 iovss sub / ptap1 r=9.826 A=66.994p Perim=32.74u w=8.185u l=8.185u
 .ENDS
@@ -906,7 +910,9 @@ XR1 iovss sub / ptap1 r=9.826 A=66.994p Perim=32.74u w=8.185u l=8.185u
 *.PININFO iovss:B pad:B
 MN0 pad net2 iovss sub sg13_hv_nmos m=1 w=88.000u l=600.0n ng=20
 XR0 iovss sub / ptap1 r=11.438 A=55.801p Perim=29.88u w=7.47u l=7.47u
-RR1 iovss net2 1.959K $SUB=sub $[res_rppd] m=1 l=3.54u w=500n ps=180n 
+*RR1 iovss net2 1.959K $SUB=sub $[res_rppd] m=1 l=3.54u w=500n ps=180n 
++ trise=0.0 b=0
+RR1 iovss net2 rppd m=1 l=3.54u w=500n
 + trise=0.0 b=0
 .ENDS
 
@@ -921,7 +927,8 @@ RR1 iovss net2 1.959K $SUB=sub $[res_rppd] m=1 l=3.54u w=500n ps=180n
 XI9 iovdd iovss pad sub / sg13g2_Clamp_P20N0D
 XI3 iovss pad iovdd sub / sg13g2_DCNDiode
 XI2 pad iovdd iovss sub / sg13g2_DCPDiode
-XI6 padres iovss pad iovdd sub / sg13g2_SecondaryProtection
+*** WHYYYYYY. Lets put it like that for now. My god this is annoying
+XI6 padres iovss pad iovdda sub / sg13g2_SecondaryProtection
 XI8 iovss pad sub / sg13g2_Clamp_N20N0D
 XR1 vss sub / ptap1 r=22.579 A=23.863p Perim=19.54u w=4.885u l=4.885u
 XR2 iovss sub / ptap1 r=214.8m A=4.3n Perim=262.3u w=65.575u l=65.575u

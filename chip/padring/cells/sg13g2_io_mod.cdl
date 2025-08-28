@@ -9,17 +9,38 @@
 *.MEGA
 .PARAM
 
+**ptap1 (TIE SUB)
+.subckt ptap1 1 2 r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
+* TODO: The LVS (up to aug/28) doesnt extract correctly
+*       or extracts correctly, but cannot merge/compare
+*R1 1 2 R=r A=A P=Perim w=w l=l
+*D1 2 1 ptap1 A=A P=Perim
+.ends ptap1
+
+**ntap1 (TIE WELL)
+.subckt ntap1 1 2 r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
+* TODO: The LVS (up to aug/28) doesnt extract correctly
+*       or extracts correctly, but cannot merge/compare
+*R1 1 2 R=r A=A P=Perim w=w l=l
+*D1 1 2 ntap1 A=A P=Perim
+.ends ntap1
+
 .SUBCKT sg13g2_Clamp_N20N0DExt iovss pad sub
 *.PININFO iovss:B pad:B
 MN0 pad net2 iovss sub sg13_hv_nmos m=1 w=88.000u l=600.0n ng=20
 XR0 iovss sub / ptap1 r=11.438 A=55.801p Perim=29.88u w=7.47u l=7.47u
-RR1 iovss net2 1.959K $SUB=sub $[res_rppd] m=1 l=3.54u w=500n ps=180n 
+*RR1 iovss net2 1.959K $SUB=sub $[res_rppd] m=1 l=3.54u w=500n ps=180n 
++ trise=0.0 b=0
+*RR0 net2 iovdd 6.768K $SUB=iovdd $[res_rppd] m=1 l=12.9u w=500n ps=180n 
++ trise=0.0 b=0
+RR0 iovdd net2 rppd m=1 l=12.9u w=500n
 + trise=0.0 b=0
 .ENDS
 
 .SUBCKT sg13g2_SecondaryProtectionExt core minus pad plus sub
 *.PININFO core:B minus:B pad:B plus:B
-RR0 pad core 586.899 $SUB=sub $[res_rppd] m=1 l=2u w=1u ps=180n trise=0.0 b=0
+*RR0 pad core 586.899 $SUB=sub $[res_rppd] m=1 l=2u w=1u ps=180n trise=0.0 b=0
+RR0 pad core rppd m=1 l=2u w=1u
 DD0 sub core dantenna m=1 w=640n l=3.1u a=1.984p p=7.48u
 XR1 minus sub / ptap1 r=46.556 A=9.03p Perim=12.02u w=3.005u l=3.005u
 DD1 core plus dpantenna m=1 w=640n l=4.98u a=3.187p p=11.24u
@@ -42,6 +63,11 @@ MP0 out in supply supply sg13_hv_pmos m=1 w=350.000u l=500.0n ng=50
 .ENDS
 
 .SUBCKT sg13g2_RCClampResistorExt pin1 pin2 sub
+*.PININFO pin1:B pin2:B
+R$274 pin2 pin1 rppd w=1u l=520u ps=0 b=0 m=1
+.ENDS
+
+.SUBCKT sg13g2_RCClampResistorExt_Orig pin1 pin2 sub
 *.PININFO pin1:B pin2:B
 RR29 net15 net16 5.239K $SUB=sub $[res_rppd] m=1 l=20u w=1u ps=180n trise=0.0 
 + b=0
@@ -293,7 +319,7 @@ XR0 vss sub / ptap1 r=22.832 A=23.523p Perim=19.4u w=4.85u l=4.85u
 
 .SUBCKT sg13g2_IOPadVddExt iovdd iovss vdd vss sub
 *.PININFO iovdd:B iovss:B vdd:B vss:B
-XI0 net2 vdd iovss sub / sg13g2_Clamp_N43N43D4RExt
+XI0 net2 vdd iovssa sub / sg13g2_Clamp_N43N43D4RExt
 XI2 vdd net1 sub / sg13g2_RCClampResistorExt
 XR1 iovss sub / ptap1 r=456.33m A=1.97n Perim=177.54u w=44.385u l=44.385u
 XR0 vss sub / ptap1 r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
