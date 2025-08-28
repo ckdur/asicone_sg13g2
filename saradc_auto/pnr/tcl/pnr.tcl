@@ -344,7 +344,7 @@ add_pdn_stripe \
 
 add_pdn_connect \
     -grid stdcell_core_grid \
-        -layers "Metal5 TopMetal1"
+    -layers "Metal5 TopMetal1"
 
 #add_pdn_stripe \
 #    -grid stdcell_analog_grid \
@@ -357,47 +357,62 @@ add_pdn_connect \
 
 add_pdn_connect \
     -grid stdcell_analog_grid \
-        -layers "Metal5 TopMetal1"
+    -layers "Metal5 TopMetal1"
 
 add_pdn_stripe \
-        -grid stdcell_core_grid \
-        -layer Metal1 \
-        -width 0.3 \
-        -followpins \
-        -extend_to_core_ring
+    -grid stdcell_core_grid \
+    -layer Metal1 \
+    -width 0.3 \
+    -followpins \
+    -extend_to_core_ring
 
 add_pdn_stripe \
-        -grid stdcell_analog_grid \
-        -layer Metal1 \
-        -width 0.3 \
-        -followpins \
-        -extend_to_core_ring
+    -grid stdcell_analog_grid \
+    -layer Metal1 \
+    -width 0.3 \
+    -followpins \
+    -extend_to_core_ring
+
+add_pdn_stripe \
+    -grid stdcell_analog_grid \
+    -layer Metal5 \
+    -width 3.2 \
+    -spacing 1.6 \
+    -pitch [expr 2*$cdacx_h] \
+    -offset [expr 1.5*$cdacx_h-(3*3.2+2*1.6)/4] \
+    -extend_to_boundary
+
+puts $cdacx_h
 
 add_pdn_connect \
     -grid stdcell_core_grid \
-        -layers "Metal1 Metal5"
+    -layers "Metal1 Metal5"
 
 add_pdn_connect \
     -grid stdcell_analog_grid \
-        -layers "Metal1 Metal5"
+    -layers "Metal1 Metal5"
+
+add_pdn_connect \
+    -grid stdcell_analog_grid \
+    -layers "Metal1 TopMetal1"
 
 add_pdn_ring \
-        -grid stdcell_core_grid \
-        -layers "TopMetal1 Metal5" \
-        -widths "3.2 3.0" \
-        -spacings "1.64 1.64" \
-        -core_offset "$metal5_py $metal5_py" \
-        -starts_with GROUND \
-        -allow_out_of_die
+    -grid stdcell_core_grid \
+    -layers "TopMetal1 Metal5" \
+    -widths "3.2 3.0" \
+    -spacings "1.64 1.64" \
+    -core_offset "$metal5_py $metal5_py" \
+    -starts_with GROUND \
+    -allow_out_of_die
 
 add_pdn_ring \
-        -grid stdcell_analog_grid \
-        -layers "TopMetal1 Metal5" \
-        -widths "3.2 3.0" \
-        -spacings "1.64 1.64" \
-        -core_offset "$metal5_py $metal5_py" \
-        -starts_with GROUND \
-        -allow_out_of_die
+    -grid stdcell_analog_grid \
+    -layers "TopMetal1 Metal5" \
+    -widths "3.2 3.0" \
+    -spacings "1.64 1.64" \
+    -core_offset "$metal5_py $metal5_py" \
+    -starts_with GROUND \
+    -allow_out_of_die
 
 pdngen
 

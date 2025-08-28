@@ -329,7 +329,7 @@ MP0 out in supply supply sg13_hv_pmos m=1 w=350.000u l=500.0n ng=50
 
 .SUBCKT sg13g2_IOPadVdd iovdd iovss vdd vss sub
 *.PININFO iovdd:B iovss:B vdd:B vss:B
-XI0 net2 vdd iovssa sub / sg13g2_Clamp_N43N43D4R
+XI0 net2 vdd iovss sub / sg13g2_Clamp_N43N43D4R
 XI2 vdd net1 sub / sg13g2_RCClampResistor
 XR1 iovss sub / ptap1 r=456.33m A=1.97n Perim=177.54u w=44.385u l=44.385u
 XR0 vss sub / ptap1 r=22.472 A=24.01p Perim=19.6u w=4.9u l=4.9u
@@ -344,7 +344,7 @@ XI1 net1 iovss net2 vdd sub / sg13g2_RCClampInverter
 
 .SUBCKT sg13g2_IOPadIOVdd iovdd iovss vdd vss sub
 *.PININFO iovdd:B iovss:B vdd:B vss:B
-XI0 net2 iovdd iovssa sub / sg13g2_Clamp_N43N43D4R
+XI0 net2 iovdd iovss sub / sg13g2_Clamp_N43N43D4R
 XI2 iovdd net1 sub / sg13g2_RCClampResistor
 XI1 net1 iovss net2 iovdd sub / sg13g2_RCClampInverter
 XR1 iovss sub / ptap1 r=449.797m A=2n Perim=178.88u w=44.72u l=44.72u
@@ -752,7 +752,8 @@ XR0 iovss sub / ptap1 r=207.756m A=4.45n Perim=266.84u w=66.71u l=66.71u
 .SUBCKT sg13g2_IOPadOut16mA c2p iovdd iovss pad vdd vss sub
 *.PININFO c2p:I iovdd:B iovss:B pad:B vdd:B vss:B
 * TODO: AGAIN?!?!?!
-XI6 c2p iovdda net2 net1 vdd vss sub / sg13g2_GateLevelUpInv
+*XI6 c2p iovdda net2 net1 vdd vss sub / sg13g2_GateLevelUpInv
+XI6 c2p iovdd net2 net1 vdd vss sub / sg13g2_GateLevelUpInv
 XI8 net1 iovdd iovss pad sub / sg13g2_Clamp_P8N8D
 XI3 iovss pad iovdd sub / sg13g2_DCNDiode
 XI7 net2 iovss pad sub / sg13g2_Clamp_N8N8D
@@ -928,7 +929,8 @@ XI9 iovdd iovss pad sub / sg13g2_Clamp_P20N0D
 XI3 iovss pad iovdd sub / sg13g2_DCNDiode
 XI2 pad iovdd iovss sub / sg13g2_DCPDiode
 *** WHYYYYYY. Lets put it like that for now. My god this is annoying
-XI6 padres iovss pad iovdda sub / sg13g2_SecondaryProtection
+*XI6 padres iovss pad iovdda sub / sg13g2_SecondaryProtection
+XI6 padres iovss pad iovdd sub / sg13g2_SecondaryProtection
 XI8 iovss pad sub / sg13g2_Clamp_N20N0D
 XR1 vss sub / ptap1 r=22.579 A=23.863p Perim=19.54u w=4.885u l=4.885u
 XR2 iovss sub / ptap1 r=214.8m A=4.3n Perim=262.3u w=65.575u l=65.575u
