@@ -1,21 +1,16 @@
 * SARADC testbench
 
-.TEMP 25
-.OPTION
-+    ARTIST=2
-+    INGOLD=2
-+    PARHIER=LOCAL
-+    PSF=2
-+    PROBE
+.options tnom=25 temp=25 gminsteps=0 warn=1 klu=1 acct=1
 
 * Include the models
 * TODO: make it depending on PDK_ROOT
+
 .lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
 .lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
 .lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerCAP.lib cap_typ
 .lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerRES.lib res_typ
 .lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerHBT.lib hbt_typ
-.include /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/diodes.lib
+.inc /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/diodes.lib
 
 * SARADC cells
 .inc ../cells/sg13g2f.ckt
@@ -32,22 +27,25 @@
 .inc saradc_tb_body.sp
 
 * The actual implementation
-xtest vdd clk go result[0] result[1] result[2] result[3]
-+ result[4] rst sample valid dvdd vin vip vrefh vrefl gnd SARADC
+xtest vdd clk go result_0 result_1 result_2 result_3
++ result_4 rst sample valid dvdd vin vip vrefh vrefl gnd SARADC
 
 .PROBE
 +    V(xtest.analog/VOUTL)
 +    V(xtest.analog/VOUTH)
 +    V(xtest.analog/CCMP)
 +    V(xtest.analog/CCMPB)
-+    V(xtest.analog/UNCONNECTED)
++    V(xtest.analog/_unconnected_0)
 +    V(xtest.CMPO)
 
 .control
   run
-  save all
-  wrdata saradc_tb.csv V(vin) V(vip) V(result[0]) V(result[1]) V(result[2]) V(result[3]) V(result[4]) V(go) V(sample) V(valid) V(vout)
-  quit
+  plot V(vin) V(vip) V(vout)
+  plot V(go) V(clk) V(valid) V(sample)
+  plot V(xtest.analog/VOUTL) V(xtest.analog/VOUTH) V(xtest.analog/CCMP) V(xtest.analog/CCMPB) V(xtest.CMPO)
+  write SARADC.raw
+  wrdata saradc_tb.csv V(vin) V(vip) V(result_0) V(result_1) V(result_2) V(result_3) V(result_4) V(go) V(sample) V(valid) V(vout) V(clk)
+  wrdata saradc_tb.debug.csv V(xtest.analog/VOUTL) V(xtest.analog/VOUTH) V(xtest.analog/CCMP) V(xtest.analog/CCMPB) V(xtest.CMPO)
 .endc
 
 .end

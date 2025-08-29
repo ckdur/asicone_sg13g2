@@ -17,6 +17,8 @@ SYN_SIM_SRC=$(ROOT_DIR)/syn/outputs/$(DIGTOP)_net.v
 
 ana: $(SIM_DIR)/outputs/saradc_tb.csv
 
+ana2: $(SIM_DIR)/outputs/saradc_tb.xyce.csv
+
 rcx: $(SIM_DIR)/outputs/saradc_tb_rcx.csv
 
 sim: $(SIM_DIR)/outputs/sar_logic_tb.vcd
@@ -26,11 +28,15 @@ syn: $(SIM_DIR)/outputs/sar_logic_tb_syn.vcd
 # Simulation commands
 $(SIM_DIR)/outputs/saradc_tb.csv: $(TB_ANA_SRC) $(CDL_SRC)
 	mkdir -p $(SIM_DIR)/outputs
-	cd $(SIM_DIR)/outputs/ && ngspice $(TB_ANA_SRC)
+	cd $(SIM_DIR)/outputs/ && ngspice $(TB_ANA_SRC) -r $(SIM_DIR)/outputs/$(TOP).raw --soa-log=$(SIM_DIR)/outputs/$(TOP).soa.log
+
+$(SIM_DIR)/outputs/saradc_tb.xyce.csv: $(TB_ANA_SRC) $(CDL_SRC)
+	mkdir -p $(SIM_DIR)/outputs
+	cd $(SIM_DIR)/outputs/ && Xyce $(TB_ANA_SRC)
 
 $(SIM_DIR)/outputs/saradc_tb_rcx.csv: $(TB_RCX_SRC) $(RCX_SRC)
 	mkdir -p $(SIM_DIR)/outputs
-	cd $(SIM_DIR)/outputs/ && ngspice $(TB_RCX_SRC)
+	cd $(SIM_DIR)/outputs/ && ngspice $(TB_RCX_SRC) -r $(SIM_DIR)/outputs/$(TOP)_rcx.raw --soa-log=$(SIM_DIR)/outputs/$(TOP)_rcx.soa.log
 
 $(SIM_DIR)/outputs/sar_logic_tb.vcd: $(TB_SRC) $(VER_SIM_SRC)
 	mkdir -p $(SIM_DIR)/outputs
@@ -43,12 +49,12 @@ $(SIM_DIR)/outputs/sar_logic_tb_syn.vcd: $(TB_SRC) $(SYN_SIM_SRC)
 	cd $(SIM_DIR)/outputs && $(SIM_DIR)/outputs/$(TOP)_syn.o
 
 clean:
-	rm -rfv *.log* *.ic* *.tr* *.su* *.mt* *.st* *.pa*
+	rm -rfv *.log* *.ic* *.tr* *.su* *.mt* *.st* *.pa* outputs
 
 # TODO: What to use as a waveform viewer?
-viewana: $(ROOT_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/scripts/plot.vin_vout.gnu
-	gnuplot -c $(SIM_DIR)/scripts/plot.vin_vout.gnu $(ROOT_DIR)/outputs/saradc_tb.csv $(ROOT_DIR)/outputs/saradc_tb.vin_vout.pdf "Vin vs Vout"
-	gnuplot -c $(SIM_DIR)/scripts/plot.result.gnu $(ROOT_DIR)/outputs/saradc_tb.csv $(ROOT_DIR)/outputs/saradc_tb.result.pdf "Results"
+viewana: $(SIM_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/scripts/plot.vin_vout.gnu
+	gnuplot -c $(SIM_DIR)/scripts/plot.vin_vout.gnu $(SIM_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/outputs/saradc_tb.vin_vout.pdf "Vin vs Vout"
+	gnuplot -c $(SIM_DIR)/scripts/plot.result.gnu $(SIM_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/outputs/saradc_tb.result.pdf "Results"
 
 viewsim: $(SIM_DIR)/outputs/sar_logic_tb.vcd
 	gtkwave $(SIM_DIR)/outputs/sar_logic_tb.vcd

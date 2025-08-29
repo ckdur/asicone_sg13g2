@@ -5,7 +5,7 @@ csvfile = ARG1      # first argument: input CSV
 pdffile = ARG2      # second argument: output PDF
 plottitle = ARG3    # third argument: figure title
 
-set terminal pdfcairo size 6,8 enhanced font 'Helvetica,10'
+set terminal pdfcairo size 8,8 enhanced font 'Helvetica,10'
 set output pdffile
 
 set multiplot layout 8,1 title "Results" font ",12"
@@ -41,5 +41,9 @@ plot csvfile using 17:18 with lines lw 2 title 'sample'
 set xlabel "time (s)"
 set ylabel "Valid (V)"
 plot csvfile using 19:20 with lines lw 2 title 'valid'
+
+set xlabel "time (s)"
+set ylabel "Clock (V)"
+plot csvfile using 23:24 with lines lw 2 title 'clk'
 
 unset multiplot

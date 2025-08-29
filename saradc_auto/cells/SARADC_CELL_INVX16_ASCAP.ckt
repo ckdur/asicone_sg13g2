@@ -26,4 +26,9 @@ XMU1_M_u3_8 zn i vdd vnw sg13_lv_pmos l=1.300e-07 w=1.200e-06 $pos=8 $flip=0
 XMU1_M_u3_9 zn i vdd vnw sg13_lv_pmos l=1.300e-07 w=1.200e-06 $pos=9 $flip=1
 XMU1_M_u3_10 zn i vdd vnw sg13_lv_pmos l=1.300e-07 w=1.200e-06 $pos=10 $flip=0
 XMU1_M_u3_11 zn i vdd vnw sg13_lv_pmos l=1.300e-07 w=1.200e-06 $pos=11 $flip=1
+
+*********************************************************
+** WARNING: SAVE YOUR CHILDREN! THIS IS DANGEROUS
+*********************************************************
+*Csaveme i zn 10.6f
 .ENDS
