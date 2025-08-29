@@ -1,0 +1,11 @@
+*.log*
+*.meas
+logFile
+*.ic*
+*.tr*
+*.su*
+*.mt*
+*.st*
+*.pa*
+outputs/
+outputs/*

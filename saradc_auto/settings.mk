@@ -10,8 +10,7 @@ Y=361.08
 #######################################################
 # Rules to create the files. 
 # If there is no really rules, then can leave it blank
-TOP?=SARADC
-CHIP_TOP?=asicone
+TOP=SARADC
 
 SARADC_DIR=$(ROOT_DIR)
 SYN_SRC?=$(ROOT_DIR)/rtl/cap.v \
@@ -26,7 +25,7 @@ $(ROOT_DIR)/rtl/sar_logic_buf.v \
 $(ROOT_DIR)/rtl/saradc.v
 
 DIGTOP=sar_logic_wreset
-SYN_DIG_SRC?=$(ROOT_DIR)/rtl/sar_logic_wreset.v
+SYN_DIG_SRC=$(ROOT_DIR)/rtl/sar_logic_wreset.v
 
 #######################################################
 # Rules to create the files. 

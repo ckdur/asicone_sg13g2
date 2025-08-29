@@ -3,7 +3,7 @@
 `timescale 1ps/1ps
 
 module sar_logic_tb;
-  localparam NBITS = 8;
+  localparam NBITS = 5;
   localparam freq = 10000000;
   localparam tf_ps = 1000000000/freq * 1000;
   reg CLK = 0;                    // clock input
@@ -20,8 +20,7 @@ module sar_logic_tb;
 `define DIGTOP sar_logic_wreset
 `endif
 `ifdef SYNTHESIS
-  // `DIGTOP```NBITS8 // TODO: This does not work
-  sar_logic_wreset_NBITS8
+  `DIGTOP
 `else
   `DIGTOP #(
     .NBITS(NBITS)

@@ -4,3 +4,6 @@
 [submodule "digital/rtl/spix"]
 	path = digital/rtl/spix
 	url = https://github.com/ckdur/spix.git
+[submodule "ro_reliability"]
+	path = ro_reliability
+	url = ssh://git@gitlab.symbioticeda.com:20022/Juan_25/ro_reliability_to_sept2025.gi
