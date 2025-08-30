@@ -9,6 +9,7 @@ SIGN_DIR=$(abspath .)
 
 GDS=$(SIGN_DIR)/outputs/$(TOP).gds
 GDSFILL=$(SIGN_DIR)/outputs/$(TOP).fill.gds
+GDSFINAL=$(SIGN_DIR)/outputs/$(TOP).fill.CONTEX_INFO.gds
 DEF=$(PNR_DIR)/outputs/$(TOP).def
 
 SPICE=$(SIGN_DIR)/outputs/$(TOP).spice
@@ -105,8 +106,39 @@ IO_MOD_GDS=$(PADRING_DIR)/cells/sg13g2_io_mod.gds
 reports_no_filler/%.lvsdb: $(IO_MOD_GDS) $(PADRING_DIR)/cells/sg13g2_io_mod.cdl
 	python3 $(ROOT_DIR)/lib/run_lvs.py --custom_deck=$(SIGN_DIR)/lvs_custom/full_chip_custom.lvs --layout=$(IO_MOD_GDS) --netlist=$(PADRING_DIR)/cells/sg13g2_io_mod.cdl --run_dir=$(SIGN_DIR)/reports_no_filler/ --topcell=$* --run_mode=flat --verbose
 
+submit: $(GDSFINAL) $(SPICE) reports/$(TOP).lvsdb reports/$(TOP).fill_$(TOP)_full.lyrdb
+	mkdir -p $(SIGN_DIR)/submit
+	mkdir -p $(SIGN_DIR)/submit/ngspice
+	mkdir -p $(SIGN_DIR)/submit/drc
+	mkdir -p $(SIGN_DIR)/submit/drc/reports
+	mkdir -p $(SIGN_DIR)/submit/lvs
+	mkdir -p $(SIGN_DIR)/submit/lvs/reports
+	mkdir -p $(SIGN_DIR)/submit/gds
+	cp $(GDSFINAL) $(SIGN_DIR)/submit/gds/$(TOP).gds
+	cp $(SPICE) $(SIGN_DIR)/submit/lvs/$(TOP).cdl
+	cp $(ROOT_DIR)/lib/run_lvs.py $(SIGN_DIR)/submit/lvs/
+	cp $(SIGN_DIR)/lvs_custom/full_chip_custom.lvs $(SIGN_DIR)/submit/lvs/
+	@echo "python3 run_lvs.py --custom_deck=full_chip_custom.lvs --layout=$(TOP).gds --netlist=$(TOP).cdl --run_dir=./reports/ --topcell=$(TOP) --run_mode=flat --verbose" > $(SIGN_DIR)/submit/lvs/run.sh
+	cp reports/$(TOP).lvsdb $(SIGN_DIR)/submit/lvs/reports/
+	cp reports/$(TOP)_extracted.cir $(SIGN_DIR)/submit/lvs/reports/
+	cp reports/$(TOP).log $(SIGN_DIR)/submit/lvs/reports/
+	cp reports/lvs_run_* $(SIGN_DIR)/submit/lvs/reports/
+	@echo "python3 $$PDK_ROOT/ihp-sg13g2/libs.tech/klayout/tech/drc/run_drc.py --path=$(TOP).gds --mp=10 --run_dir=./reports/ --topcell=$(TOP) --run_mode=flat --density_thr=10 --antenna" > $(SIGN_DIR)/submit/drc/run.sh
+	cp reports/*.drc $(SIGN_DIR)/submit/drc/reports/
+	cp reports/drc_run_* $(SIGN_DIR)/submit/drc/reports/
+	cp reports/$(TOP).fill_* $(SIGN_DIR)/submit/drc/reports/
+	make -C $(ROOT_DIR)/saradc_auto/sim/ question
+	cp -r $(ROOT_DIR)/saradc_auto/sim/question/* $(SIGN_DIR)/submit/ngspice/
+	cp -r $(ROOT_DIR)/saradc_auto/sim/question/* $(SIGN_DIR)/submit/ngspice/
+	cp -r $(ROOT_DIR)/digital $(SIGN_DIR)/submit/digital
+	rm -rf $(SIGN_DIR)/submit/digital/rtl/aes
+	rm -rf $(SIGN_DIR)/submit/digital/rtl/spix/.git
+	cp -r $(ROOT_DIR)/lib $(SIGN_DIR)/lib
+	cp tcl/for_submit.md $(SIGN_DIR)/submit/README.md
+	cp tcl/metadata.json $(SIGN_DIR)/submit/metadata.json
+
 clean:
-	rm -vrf  outputs reports reports_no_filler
+	rm -vrf  outputs reports reports_no_filler submit
 
 .PHONY: all manual clean
 

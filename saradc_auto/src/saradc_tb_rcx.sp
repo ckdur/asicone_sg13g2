@@ -86,6 +86,7 @@ xtest i|z z zn z$1 vdd i|z$1 z$2 gnd z$3 i|z$2 z$4 dvdd
   plot V(go) V(clk) V(valid) V(sample)
   write SARADC.raw
   wrdata saradc_tb_rcx.csv V(vin) V(vip) V(result_0) V(result_1) V(result_2) V(result_3) V(result_4) V(go) V(sample) V(valid) V(vout) V(clk)
+  quit
 .endc
 
 .end

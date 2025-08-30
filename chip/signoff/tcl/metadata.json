@@ -1,0 +1,14 @@
+{
+  "ProjectName": "asicone_202508",
+  "Shuttle": "MPW 0.13µm Sep 2025(T594)",
+  "Technology": "SG13CMOS",
+  "Design": {
+    "DesignName": "asicone_202508",
+    "FinalGdsName": "asicone_202508.gds",
+    "TopCellName": "asicone_202508",
+    "Width": "1.43260mm",
+    "Height": "1.39606mm",
+    "NumberOfSamples": "10"
+  },
+  "FinalWaferThickness": "200um"
+}

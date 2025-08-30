@@ -52,7 +52,7 @@ clean:
 	rm -rfv *.log* *.ic* *.tr* *.su* *.mt* *.st* *.pa* outputs
 
 # TODO: What to use as a waveform viewer?
-viewana: $(SIM_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/scripts/plot.vin_vout.gnu
+viewana: $(SIM_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/scripts/plot.vin_vout.gnu $(SIM_DIR)/scripts/plot.result.gnu
 	gnuplot -c $(SIM_DIR)/scripts/plot.vin_vout.gnu $(SIM_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/outputs/saradc_tb.vin_vout.pdf "Vin vs Vout"
 	gnuplot -c $(SIM_DIR)/scripts/plot.result.gnu $(SIM_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/outputs/saradc_tb.result.pdf "Results"
 
@@ -61,6 +61,19 @@ viewsim: $(SIM_DIR)/outputs/sar_logic_tb.vcd
 
 viewsyn: $(SIM_DIR)/outputs/sar_logic_tb_syn.vcd
 	gtkwave $(SIM_DIR)/outputs/sar_logic_tb_syn.vcd
+
+question:
+	mkdir -p $(SIM_DIR)/question/
+	mkdir -p $(SIM_DIR)/question/pnr/outputs/
+	mkdir -p $(SIM_DIR)/question/sim
+	mkdir -p $(SIM_DIR)/question/cells
+	cp -r $(ROOT_DIR)/pnr/outputs/$(TOP).cdl $(SIM_DIR)/question/pnr/outputs/
+	cp -r $(ROOT_DIR)/sim/Makefile $(SIM_DIR)/question/sim
+	cp -r $(ROOT_DIR)/sim/scripts $(SIM_DIR)/question/sim
+	cp -r $(ROOT_DIR)/src $(SIM_DIR)/question
+	cp -r $(ROOT_DIR)/cells/*.ckt $(SIM_DIR)/question/cells
+	cp -r $(ROOT_DIR)/cells/*.cdl $(SIM_DIR)/question/cells
+	cp -r $(ROOT_DIR)/settings.mk $(SIM_DIR)/question/
 
 .PHONY: clean
 

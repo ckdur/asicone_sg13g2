@@ -46,6 +46,7 @@ xtest vdd clk go result_0 result_1 result_2 result_3
   write SARADC.raw
   wrdata saradc_tb.csv V(vin) V(vip) V(result_0) V(result_1) V(result_2) V(result_3) V(result_4) V(go) V(sample) V(valid) V(vout) V(clk)
   wrdata saradc_tb.debug.csv V(xtest.analog/VOUTL) V(xtest.analog/VOUTH) V(xtest.analog/CCMP) V(xtest.analog/CCMPB) V(xtest.CMPO)
+  quit
 .endc
 
 .end

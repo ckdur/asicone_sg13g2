@@ -9,3 +9,5 @@ logFile
 *.pa*
 outputs/
 outputs/*
+question/*
+question.zip
