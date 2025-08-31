@@ -5,24 +5,24 @@
 * Include the models
 * TODO: make it depending on PDK_ROOT
 
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerCAP.lib cap_typ
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerRES.lib res_typ
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerHBT.lib hbt_typ
-.inc /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/diodes.lib
+.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerMOSlv.lib mos_tt
+.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerMOShv.lib mos_tt
+.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerCAP.lib cap_typ
+.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerRES.lib res_typ
+.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerHBT.lib hbt_typ
+.inc /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/diodes.lib
 
 * SARADC cells
 .inc ../cells/sg13g2f.ckt
 .inc ../cells/SARADC_CELL_INVX0_ASSW.ckt
 .inc ../cells/SARADC_CELL_INVX16_ASCAP.ckt
-.inc ../cells/SARADC_FILL1_NOPOWER.cdl
+.inc ../cells/SARADC_FILL1_NOPOWER.xyce.ckt
 .inc ../cells/SARADC_FILL1.cdl
 .inc ../cells/SARADC_FILLTIE2.cdl
 
 * Include the actual netlist
 * NOTE: Relative to this file
-.inc ../pnr/outputs/SARADC.cdl
+.inc ./outputs/SARADC.xyce.ckt
 
 .inc saradc_tb_body.sp
 

@@ -52,27 +52,29 @@ Xcape7 resultq_7 result_7 validn vdd gnd resultd[7] sg13g2f_MUX2D1
 xi1 resultq_7 resultq_6 resultq_5 resultq_4 resultq_3 resultq_2 resultq_1 resultq_0 vout dac_ideal vth=600e-3
 
 * Sources
-vvddesd vddesd gnd DC=supply
-vvddio vddio gnd DC=supply
-vgndio gndio gnd DC=0
-vvdd vdd gnd DC=supply
-vdvdd dvdd gnd DC=supply
-*vgnd gnd 0 DC=0
+vvddesd vddesd gnd DC 1.8
+vvddio vddio gnd DC 1.8
+vgndio gndio gnd DC 0
+vvdd vdd gnd DC 1.8
+vdvdd dvdd gnd DC 1.8
+vgnd gnd 0 DC 0
 .global gnd
 
 * Digital
-vgor gor gnd PULSE 0 1.8 {5*tclk} trise tfall 1e-3
-vclkr clkr gnd PULSE 0 1.8 0 trise tfall {0.5*tclk} tclk
-vrstr rstr gnd PULSE 1.8 0 25e-9 trise tfall 1e-3
+vgor gor gnd PULSE 0 1.8 {5*tclk} {trise} {tfall} 1e-3
+vclkr clkr gnd PULSE 0 1.8 0 {trise} {tfall} {0.5*tclk} {tclk}
+vrstr rstr gnd PULSE 1.8 0 25e-9 {trise} {tfall} 1e-3
 
-vvrefl vrefl gnd DC=vreflval
-vvrefh vrefh gnd DC=vrefhval
+*vvrefl vrefl gnd DC=vreflval
+*vvrefh vrefh gnd DC=vrefhval
+vvrefl vrefl gnd DC 0.45
+vvrefh vrefh gnd DC 1.35
 
-vvinr vindc vinr     DC=0 SIN 0 vid fin 0 0
-vvipr vipr vindc     DC=0 SIN 0 vid fin 0 0
+*vvinr vindc vinr     DC 0 SIN 0 {vid} {fin} 0 0
+*vvipr vipr vindc     DC 0 SIN 0 {vid} {fin} 0 0
 *vvinr vindc vinr     DC 0.15
 *vvipr vipr vindc     DC 0.15
-vvindc vindc gnd DC=600e-3
+vvindc vindc gnd DC 600e-3
 
 * Loads
 ccmp_begin cmp_begin gnd {Cdigload}

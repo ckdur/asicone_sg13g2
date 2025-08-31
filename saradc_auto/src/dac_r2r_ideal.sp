@@ -38,6 +38,7 @@ eu3 vb3 vb2 vol='v(result_3)>vth?((vrefp-vrefn)/(2**5)):0'
 eu2 vb2 vb1 vol='v(result_2)>vth?((vrefp-vrefn)/(2**6)):0'
 eu1 vb1 vb0 vol='v(result_1)>vth?((vrefp-vrefn)/(2**7)):0'
 eu0 vb0 rfn vol='v(result_0)>vth?((vrefp-vrefn)/(2**8)):0'
-Vvrefn rfn 0 DC vrefn
+*Vvrefn rfn 0 DC vrefn
+Vvrefn rfn 0 DC -0.6
 
 .ends

@@ -6,6 +6,9 @@ SIM_DIR=$(abspath .)
 TB_ANA_SRC=$(ROOT_DIR)/src/saradc_tb.sp
 CDL_SRC=$(ROOT_DIR)/pnr/outputs/$(TOP).cdl
 
+TB_ANA_XYCE_SRC=$(ROOT_DIR)/src/saradc_tb.xyce.sp
+CDL_XYCE_SRC=$(SIM_DIR)/outputs/$(TOP).xyce.ckt
+
 # For now, just using the LVS result.
 # Replace me with the actual RCX when ready
 TB_RCX_SRC=$(ROOT_DIR)/src/saradc_tb_rcx.sp
@@ -30,9 +33,12 @@ $(SIM_DIR)/outputs/saradc_tb.csv: $(TB_ANA_SRC) $(CDL_SRC)
 	mkdir -p $(SIM_DIR)/outputs
 	cd $(SIM_DIR)/outputs/ && ngspice $(TB_ANA_SRC) -r $(SIM_DIR)/outputs/$(TOP).raw --soa-log=$(SIM_DIR)/outputs/$(TOP).soa.log
 
-$(SIM_DIR)/outputs/saradc_tb.xyce.csv: $(TB_ANA_SRC) $(CDL_SRC)
+$(CDL_XYCE_SRC): $(CDL_SRC)
+	sed 's/SARADC_FILL1_NOPOWER/dummynet SARADC_FILL1_NOPOWER/' $(CDL_SRC) > $(CDL_XYCE_SRC)
+
+$(SIM_DIR)/outputs/saradc_tb.xyce.csv: $(TB_ANA_XYCE_SRC) $(CDL_XYCE_SRC)
 	mkdir -p $(SIM_DIR)/outputs
-	cd $(SIM_DIR)/outputs/ && Xyce $(TB_ANA_SRC)
+	cd $(SIM_DIR)/outputs/ && Xyce -plugin $(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_PSP103_VA.so,$(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_r3_cmc.so $(TB_ANA_XYCE_SRC)
 
 $(SIM_DIR)/outputs/saradc_tb_rcx.csv: $(TB_RCX_SRC) $(RCX_SRC)
 	mkdir -p $(SIM_DIR)/outputs
