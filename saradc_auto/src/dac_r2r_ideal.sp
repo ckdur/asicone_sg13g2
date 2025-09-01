@@ -28,17 +28,16 @@ xu7 result_7 vb6 vb7 refn refp dac_r2r_unit_ideal R=R
 
 .ends
 
-.subckt dac_ideal result_7 result_6 result_5 result_4 result_3 result_2 result_1 result_0 vb7 vth=0.6 vrefp=0.6 vrefn=-0.6 R=1k
+.subckt dac_ideal result_7 result_6 result_5 result_4 result_3 result_2 result_1 result_0 vb7 vth=0.6 vrefp=0.6 vrefn=-0.6 R=1k nbits=5
 
-eu7 vb7 vb6 vol='v(result_7)>vth?((vrefp-vrefn)/(2**1)):0'
-eu6 vb6 vb5 vol='v(result_6)>vth?((vrefp-vrefn)/(2**2)):0'
-eu5 vb5 vb4 vol='v(result_5)>vth?((vrefp-vrefn)/(2**3)):0'
-eu4 vb4 vb3 vol='v(result_4)>vth?((vrefp-vrefn)/(2**4)):0'
-eu3 vb3 vb2 vol='v(result_3)>vth?((vrefp-vrefn)/(2**5)):0'
-eu2 vb2 vb1 vol='v(result_2)>vth?((vrefp-vrefn)/(2**6)):0'
-eu1 vb1 vb0 vol='v(result_1)>vth?((vrefp-vrefn)/(2**7)):0'
-eu0 vb0 rfn vol='v(result_0)>vth?((vrefp-vrefn)/(2**8)):0'
-*Vvrefn rfn 0 DC vrefn
-Vvrefn rfn 0 DC -0.6
+eu7 vb7 vb6 vol='v(result_7)>vth?((vrefp-vrefn)/(2**(nbits-7))):0'
+eu6 vb6 vb5 vol='v(result_6)>vth?((vrefp-vrefn)/(2**(nbits-6))):0'
+eu5 vb5 vb4 vol='v(result_5)>vth?((vrefp-vrefn)/(2**(nbits-5))):0'
+eu4 vb4 vb3 vol='v(result_4)>vth?((vrefp-vrefn)/(2**(nbits-4))):0'
+eu3 vb3 vb2 vol='v(result_3)>vth?((vrefp-vrefn)/(2**(nbits-3))):0'
+eu2 vb2 vb1 vol='v(result_2)>vth?((vrefp-vrefn)/(2**(nbits-2))):0'
+eu1 vb1 vb0 vol='v(result_1)>vth?((vrefp-vrefn)/(2**(nbits-1))):0'
+eu0 vb0 rfn vol='v(result_0)>vth?((vrefp-vrefn)/(2**(nbits-0))):0'
+Vvrefn rfn 0 DC {vrefn}
 
 .ends

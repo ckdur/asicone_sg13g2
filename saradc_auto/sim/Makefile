@@ -34,6 +34,7 @@ $(SIM_DIR)/outputs/saradc_tb.csv: $(TB_ANA_SRC) $(CDL_SRC)
 	cd $(SIM_DIR)/outputs/ && ngspice $(TB_ANA_SRC) -r $(SIM_DIR)/outputs/$(TOP).raw --soa-log=$(SIM_DIR)/outputs/$(TOP).soa.log
 
 $(CDL_XYCE_SRC): $(CDL_SRC)
+	mkdir -p $(SIM_DIR)/outputs
 	sed 's/SARADC_FILL1_NOPOWER/dummynet SARADC_FILL1_NOPOWER/' $(CDL_SRC) > $(CDL_XYCE_SRC)
 
 $(SIM_DIR)/outputs/saradc_tb.xyce.csv: $(TB_ANA_XYCE_SRC) $(CDL_XYCE_SRC)
@@ -61,6 +62,10 @@ clean:
 viewana: $(SIM_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/scripts/plot.vin_vout.gnu $(SIM_DIR)/scripts/plot.result.gnu
 	gnuplot -c $(SIM_DIR)/scripts/plot.vin_vout.gnu $(SIM_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/outputs/saradc_tb.vin_vout.pdf "Vin vs Vout"
 	gnuplot -c $(SIM_DIR)/scripts/plot.result.gnu $(SIM_DIR)/outputs/saradc_tb.csv $(SIM_DIR)/outputs/saradc_tb.result.pdf "Results"
+
+viewana2: $(SIM_DIR)/outputs/saradc_tb.xyce.csv $(SIM_DIR)/scripts/plot.vin_vout.xyce.gnu $(SIM_DIR)/scripts/plot.result.xyce.gnu
+	gnuplot -c $(SIM_DIR)/scripts/plot.vin_vout.xyce.gnu $(SIM_DIR)/outputs/saradc_tb.xyce.csv $(SIM_DIR)/outputs/saradc_tb.vin_vout.xyce.pdf "Vin vs Vout"
+	gnuplot -c $(SIM_DIR)/scripts/plot.result.xyce.gnu $(SIM_DIR)/outputs/saradc_tb.xyce.csv $(SIM_DIR)/outputs/saradc_tb.result.xyce.pdf "Results"
 
 viewsim: $(SIM_DIR)/outputs/sar_logic_tb.vcd
 	gtkwave $(SIM_DIR)/outputs/sar_logic_tb.vcd
