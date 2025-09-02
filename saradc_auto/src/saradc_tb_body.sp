@@ -1,19 +1,21 @@
 .PARAM N=128
 .PARAM NBITS=5
 .PARAM k=((N/2)-1)
-.PARAM vid=0.3
-.PARAM fclk=100000000
+*.PARAM fclk=100000000 * slready defined in the top
 .PARAM fin=(fclk / 100 * k / N)
 .PARAM supply=1.8
 .PARAM trise=4e-10
 .PARAM tfall=4e-10
 
 .PARAM tclk=(1/fclk)
+.PARAM tin=(1/fin)
 .PARAM vrefhval=(supply*0.9/1.2)
 .PARAM vreflval=(supply*0.3/1.2)
+.PARAM vid=(supply*0.3/1.2)
 .PARAM tcv=(tclk*(NBITS+1))
 .PARAM startFFT=tcv
-.PARAM stopFFT=(startFFT + (tcv*N))
+*.PARAM stopFFT=(startFFT + (tcv*N))
+.PARAM stopFFT=(startFFT + (tin*1))
 .PARAM stopsim=(stopFFT+1e-7)
 
 * The digital load in C and R
@@ -59,7 +61,6 @@ vvddio vddio gnd DC {supply}
 vgndio gndio gnd DC 0
 vvdd vdd gnd DC {supply}
 vdvdd dvdd gnd DC {supply}
-vgnd gnd 0 DC 0
 .global gnd
 
 * Digital
@@ -76,7 +77,7 @@ vvinr vindc vinr     DC 0 SIN 0 {vid} {fin} 0 0
 vvipr vipr vindc     DC 0 SIN 0 {vid} {fin} 0 0
 *vvinr vindc vinr     DC 0.15
 *vvipr vipr vindc     DC 0.15
-vvindc vindc gnd DC 600e-3
+vvindc vindc gnd DC {0.5*supply}
 
 * Loads
 ccmp_begin cmp_begin gnd {Cdigload}

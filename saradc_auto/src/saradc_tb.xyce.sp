@@ -13,17 +13,19 @@
 .inc /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/diodes.lib
 
 * SARADC cells
-.inc ../cells/sg13g2f.ckt
-.inc ../cells/SARADC_CELL_INVX0_ASSW.ckt
-.inc ../cells/SARADC_CELL_INVX16_ASCAP.ckt
-.inc ../cells/SARADC_FILL1_NOPOWER.xyce.ckt
-.inc ../cells/SARADC_FILL1.cdl
-.inc ../cells/SARADC_FILLTIE2.cdl
+.inc sg13g2f.ckt
+.inc SARADC_CELL_INVX0_ASSW.ckt
+.inc SARADC_CELL_INVX16_ASCAP.ckt
+.inc SARADC_FILL1_NOPOWER.xyce.ckt
+.inc SARADC_FILL1.cdl
+.inc SARADC_FILLTIE2.cdl
 
 * Include the actual netlist
 * NOTE: Relative to this file
-.inc ../sim/outputs/SARADC.xyce.ckt
+.inc SARADC.xyce.ckt
 
+.PARAM DEF_CLK=10000000
+.PARAM fclk={DEF_FCLK}
 .inc saradc_tb_body.sp
 
 * The actual implementation
@@ -33,6 +35,8 @@ xtest vdd clk go result_0 result_1 result_2 result_3
 Rresult_5 result_5 gnd 1k
 Rresult_6 result_6 gnd 1k
 Rresult_7 result_7 gnd 1k
+
+vgnd gnd 0 DC 0
 
 .PROBE
 +    V(xtest.analog/VOUTL)

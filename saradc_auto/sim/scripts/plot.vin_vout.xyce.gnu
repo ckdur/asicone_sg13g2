@@ -15,16 +15,16 @@ set datafile separator ","
 # --- First subplot: Vin ---
 set xlabel "time (s)"
 set ylabel "Vin (V)"
-plot csvfile using 1:2 with lines lw 2 title 'Vin'
+plot csvfile skip 50 using 1:2 with lines lw 2 title 'Vin'
 
 # --- First subplot: Vin ---
 set xlabel "time (s)"
 set ylabel "Vip (V)"
-plot csvfile using 1:3 with lines lw 2 title 'Vip'
+plot csvfile skip 50 using 1:3 with lines lw 2 title 'Vip'
 
 # --- Second subplot: Vout ---
 set xlabel "time (s)"
 set ylabel "Vout (V)"
-plot csvfile using 1:12 with lines lw 2 title 'Vout'
+plot csvfile skip 50 using 1:12 with lines lw 2 title 'Vout'
 
 unset multiplot

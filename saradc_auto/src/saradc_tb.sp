@@ -30,6 +30,10 @@
 xtest vdd clk go result_0 result_1 result_2 result_3
 + result_4 rst sample valid dvdd vin vip vrefh vrefl gnd SARADC
 
+Rresult_5 result_5 gnd 1k
+Rresult_6 result_6 gnd 1k
+Rresult_7 result_7 gnd 1k
+
 .PROBE
 +    V(xtest.analog/VOUTL)
 +    V(xtest.analog/VOUTH)
