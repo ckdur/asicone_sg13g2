@@ -35,6 +35,8 @@ ana2: $(TRAN_DATAS)
 
 viewana2: $(TRAN_PDFS)
 
+test_cap_linearity: $(SIM_DIR)/outputs/cap_linearity.xyce.csv
+
 rcx: $(SIM_DIR)/outputs/saradc_tb_rcx.csv
 
 sim: $(SIM_DIR)/outputs/sar_logic_tb.vcd
@@ -64,6 +66,13 @@ $(SIM_DIR)/outputs/saradc_tb.xyce.%.csv: $(TB_ANA_XYCE_SRC) $(CDL_XYCE_SRC)
 $(SIM_DIR)/outputs/saradc_tb.xyce.%.pdf: $(SIM_DIR)/outputs/saradc_tb.xyce.%.csv $(SIM_DIR)/scripts/plot.vin_vout.xyce.gnu $(SIM_DIR)/scripts/plot.result.xyce.gnu
 	gnuplot -c $(SIM_DIR)/scripts/plot.vin_vout.xyce.gnu $(SIM_DIR)/outputs/saradc_tb.xyce.$*.csv $(SIM_DIR)/outputs/saradc_tb.vin_vout.xyce.$*.pdf "Vin vs Vout"
 	gnuplot -c $(SIM_DIR)/scripts/plot.result.xyce.gnu $(SIM_DIR)/outputs/saradc_tb.xyce.$*.csv $(SIM_DIR)/outputs/saradc_tb.result.xyce.$*.pdf "Results"
+
+$(SIM_DIR)/outputs/cap_linearity.xyce.csv: $(ROOT_DIR)/src/cap_linearity.xyce.sp $(CDL_XYCE_SRC)
+	mkdir -p $(SIM_DIR)/outputs
+	cp $(ROOT_DIR)/src/cap_linearity.xyce.sp $(SIM_DIR)/outputs/cap_linearity.xyce.sp
+	cp $(ROOT_DIR)/cells/*.ckt $(SIM_DIR)/outputs
+	cp $(ROOT_DIR)/cells/*.cdl $(SIM_DIR)/outputs
+	cd $(SIM_DIR)/outputs/ && mpirun Xyce -plugin $(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_PSP103_VA.so,$(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_r3_cmc.so $(SIM_DIR)/outputscap_linearity.xyce.sp | tee $(SIM_DIR)/outputs/cap_linearity.xyce.log
 
 $(SIM_DIR)/outputs/saradc_tb_rcx.csv: $(TB_RCX_SRC) $(RCX_SRC)
 	mkdir -p $(SIM_DIR)/outputs
