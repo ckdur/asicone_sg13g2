@@ -16,7 +16,7 @@ RCX_SRC=$(ROOT_DIR)/signoff/results/$(TOP).cir
 
 # The fclk stuff we want
 FREQS=100000000 50000000 200000000
-CORNER=mos_ss
+CORNER=mos_tt
 TRAN_DATAS=$(FREQS:%=$(SIM_DIR)/outputs/saradc_tb.xyce.%.csv)
 TRAN_PDFS=$(FREQS:%=$(SIM_DIR)/outputs/saradc_tb.xyce.%.pdf)
 
@@ -35,7 +35,10 @@ ana2: $(TRAN_DATAS)
 
 viewana2: $(TRAN_PDFS)
 
-test_cap_linearity: $(SIM_DIR)/outputs/cap_linearity.xyce.csv
+CAP_BIAS_LIST=$(shell python3 $(ROOT_DIR)/src/cap_extract.py)
+CAP_BIAS_DATAS=$(CAP_BIAS_LIST:%=$(SIM_DIR)/outputs/cap_linearity.xyce.%.csv)
+test_cap_linearity: $(CAP_BIAS_DATAS)
+	python3 $(ROOT_DIR)/src/cap_extract.py $(SIM_DIR)/outputs
 
 rcx: $(SIM_DIR)/outputs/saradc_tb_rcx.csv
 
@@ -53,26 +56,27 @@ $(CDL_XYCE_SRC): $(CDL_SRC)
 	mkdir -p $(SIM_DIR)/outputs
 	sed 's/SARADC_FILL1_NOPOWER/dummynet SARADC_FILL1_NOPOWER/' $(CDL_SRC) > $(CDL_XYCE_SRC)
 
-$(SIM_DIR)/outputs/saradc_tb.xyce.%.csv: $(TB_ANA_XYCE_SRC) $(CDL_XYCE_SRC)
+DEPS=$(SIM_DIR)/outputs/SARADC_CELL_INVX16_ASCAP.ckt
+$(DEPS): $(ROOT_DIR)/cells/SARADC_CELL_INVX16_ASCAP.ckt
 	mkdir -p $(SIM_DIR)/outputs
-	cp $(TB_ANA_XYCE_SRC) $(SIM_DIR)/outputs/main.$*.sp
 	cp $(ROOT_DIR)/cells/*.ckt $(SIM_DIR)/outputs
 	cp $(ROOT_DIR)/cells/*.cdl $(SIM_DIR)/outputs
+
+$(SIM_DIR)/outputs/saradc_tb.xyce.%.csv: $(TB_ANA_XYCE_SRC) $(CDL_XYCE_SRC) $(DEPS)
+	cp $(TB_ANA_XYCE_SRC) $(SIM_DIR)/outputs/saradc_tb.$*.sp
 	cp $(ROOT_DIR)/src/saradc_tb_body.sp $(SIM_DIR)/outputs
 	cp $(ROOT_DIR)/src/dac_r2r_ideal.sp $(SIM_DIR)/outputs
-	sed -i -e 's/{DEF_FCLK}/$*/g ; s/saradc_tb.xyce/saradc_tb.xyce.$*/g ; s/mos_tt/$(CORNER)/g' $(SIM_DIR)/outputs/main.$*.sp
-	cd $(SIM_DIR)/outputs/ && mpirun Xyce -plugin $(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_PSP103_VA.so,$(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_r3_cmc.so $(SIM_DIR)/outputs/main.$*.sp | tee $(SIM_DIR)/outputs/main.$*.log
+	sed -i -e 's/{DEF_FCLK}/$*/g ; s/saradc_tb.xyce/saradc_tb.xyce.$*/g ; s/mos_tt/$(CORNER)/g' $(SIM_DIR)/outputs/saradc_tb.$*.sp
+	cd $(SIM_DIR)/outputs/ && mpirun Xyce -plugin $(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_PSP103_VA.so,$(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_r3_cmc.so $(SIM_DIR)/outputs/saradc_tb.$*.sp | tee $(SIM_DIR)/outputs/saradc_tb.$*.log
 
 $(SIM_DIR)/outputs/saradc_tb.xyce.%.pdf: $(SIM_DIR)/outputs/saradc_tb.xyce.%.csv $(SIM_DIR)/scripts/plot.vin_vout.xyce.gnu $(SIM_DIR)/scripts/plot.result.xyce.gnu
 	gnuplot -c $(SIM_DIR)/scripts/plot.vin_vout.xyce.gnu $(SIM_DIR)/outputs/saradc_tb.xyce.$*.csv $(SIM_DIR)/outputs/saradc_tb.vin_vout.xyce.$*.pdf "Vin vs Vout"
 	gnuplot -c $(SIM_DIR)/scripts/plot.result.xyce.gnu $(SIM_DIR)/outputs/saradc_tb.xyce.$*.csv $(SIM_DIR)/outputs/saradc_tb.result.xyce.$*.pdf "Results"
 
-$(SIM_DIR)/outputs/cap_linearity.xyce.csv: $(ROOT_DIR)/src/cap_linearity.xyce.sp $(CDL_XYCE_SRC)
-	mkdir -p $(SIM_DIR)/outputs
-	cp $(ROOT_DIR)/src/cap_linearity.xyce.sp $(SIM_DIR)/outputs/cap_linearity.xyce.sp
-	cp $(ROOT_DIR)/cells/*.ckt $(SIM_DIR)/outputs
-	cp $(ROOT_DIR)/cells/*.cdl $(SIM_DIR)/outputs
-	cd $(SIM_DIR)/outputs/ && mpirun Xyce -plugin $(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_PSP103_VA.so,$(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_r3_cmc.so $(SIM_DIR)/outputscap_linearity.xyce.sp | tee $(SIM_DIR)/outputs/cap_linearity.xyce.log
+$(SIM_DIR)/outputs/cap_linearity.xyce.%.csv: $(ROOT_DIR)/src/cap_linearity.xyce.sp $(CDL_XYCE_SRC)
+	cp $(ROOT_DIR)/src/cap_linearity.xyce.sp $(SIM_DIR)/outputs/cap_linearity.xyce.$*.sp
+	sed -i -e 's/{vi}/$*/g ; s/cap_linearity.xyce/cap_linearity.xyce.$*/g ; s/mos_tt/$(CORNER)/g' $(SIM_DIR)/outputs/cap_linearity.xyce.$*.sp
+	cd $(SIM_DIR)/outputs/ && Xyce -plugin $(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_PSP103_VA.so,$(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_r3_cmc.so $(SIM_DIR)/outputs/cap_linearity.xyce.$*.sp | tee $(SIM_DIR)/outputs/cap_linearity.xyce.$*.log
 
 $(SIM_DIR)/outputs/saradc_tb_rcx.csv: $(TB_RCX_SRC) $(RCX_SRC)
 	mkdir -p $(SIM_DIR)/outputs

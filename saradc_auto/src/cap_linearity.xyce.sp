@@ -12,7 +12,7 @@
 .lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerHBT.lib hbt_typ
 .inc /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/diodes.lib
 
-.inc SARADC_CELL_INVX0_ASSW.ckt
+.inc SARADC_CELL_INVX16_ASCAP.ckt
 
 .PARAM supply=1.8
 .PARAM vi=1.2
@@ -26,12 +26,13 @@ Vgnd vss 0 DC 0
 * DUT
 *.SUBCKT SARADC_CELL_INVX16_ASCAP i vdd vss zn vnw vpw
 xdut vplus vminus vminus vminus vdd vss SARADC_CELL_INVX16_ASCAP
+*Cdut vplus vss 15f
 
 * PORT definition
-*Vport vplus vss DC 0 SIN 0 {vi} {f} 0 0
-Vport vplus vplusp AC 1
-Rport vplusp vss 50
+Rport vplus vplusp 50
+Vport vplusp vpluspp AC 1
+Vbias vpluspp vss DC {vi}
 
-.AC dec 100 1M 10G
+.AC dec 10 1e6 1e9
 
 .print ac format=csv file=cap_linearity.xyce.csv V(vplus) I(Vport)
