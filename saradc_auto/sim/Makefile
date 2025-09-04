@@ -2,6 +2,7 @@
 ROOT_DIR=$(abspath ../)
 include $(ROOT_DIR)/settings.mk
 SIM_DIR=$(abspath .)
+SYN_DIR=$(abspath ../syn)
 
 TB_ANA_SRC=$(ROOT_DIR)/src/saradc_tb.sp
 CDL_SRC=$(ROOT_DIR)/pnr/outputs/$(TOP).cdl
@@ -20,6 +21,8 @@ CORNER=mos_tt
 TRAN_DATAS=$(FREQS:%=$(SIM_DIR)/outputs/saradc_tb.xyce.%.csv)
 TRAN_PDFS=$(FREQS:%=$(SIM_DIR)/outputs/saradc_tb.xyce.%.pdf)
 
+XYCE_RUN_COMMAND=Xyce -plugin $(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_PSP103_VA.so,$(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_r3_cmc.so
+
 TB_SRC=$(ROOT_DIR)/rtl/sar_logic_tb.v
 VER_SIM_SRC=$(ROOT_DIR)/rtl/$(DIGTOP).v
 SYN_SIM_SRC=$(ROOT_DIR)/syn/outputs/$(DIGTOP)_net.v
@@ -35,10 +38,6 @@ ana2: $(TRAN_DATAS)
 
 viewana2: $(TRAN_PDFS)
 
-CAP_BIAS_LIST=$(shell python3 $(ROOT_DIR)/src/cap_extract.py)
-CAP_BIAS_DATAS=$(CAP_BIAS_LIST:%=$(SIM_DIR)/outputs/cap_linearity.xyce.%.csv)
-test_cap_linearity: $(CAP_BIAS_DATAS)
-	python3 $(ROOT_DIR)/src/cap_extract.py $(SIM_DIR)/outputs
 
 rcx: $(SIM_DIR)/outputs/saradc_tb_rcx.csv
 
@@ -67,16 +66,25 @@ $(SIM_DIR)/outputs/saradc_tb.xyce.%.csv: $(TB_ANA_XYCE_SRC) $(CDL_XYCE_SRC) $(DE
 	cp $(ROOT_DIR)/src/saradc_tb_body.sp $(SIM_DIR)/outputs
 	cp $(ROOT_DIR)/src/dac_r2r_ideal.sp $(SIM_DIR)/outputs
 	sed -i -e 's/{DEF_FCLK}/$*/g ; s/saradc_tb.xyce/saradc_tb.xyce.$*/g ; s/mos_tt/$(CORNER)/g' $(SIM_DIR)/outputs/saradc_tb.$*.sp
-	cd $(SIM_DIR)/outputs/ && mpirun Xyce -plugin $(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_PSP103_VA.so,$(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_r3_cmc.so $(SIM_DIR)/outputs/saradc_tb.$*.sp | tee $(SIM_DIR)/outputs/saradc_tb.$*.log
+	cd $(SIM_DIR)/outputs/ && mpirun $(XYCE_RUN_COMMAND) $(SIM_DIR)/outputs/saradc_tb.$*.sp | tee $(SIM_DIR)/outputs/saradc_tb.$*.log
 
 $(SIM_DIR)/outputs/saradc_tb.xyce.%.pdf: $(SIM_DIR)/outputs/saradc_tb.xyce.%.csv $(SIM_DIR)/scripts/plot.vin_vout.xyce.gnu $(SIM_DIR)/scripts/plot.result.xyce.gnu
 	gnuplot -c $(SIM_DIR)/scripts/plot.vin_vout.xyce.gnu $(SIM_DIR)/outputs/saradc_tb.xyce.$*.csv $(SIM_DIR)/outputs/saradc_tb.vin_vout.xyce.$*.pdf "Vin vs Vout"
 	gnuplot -c $(SIM_DIR)/scripts/plot.result.xyce.gnu $(SIM_DIR)/outputs/saradc_tb.xyce.$*.csv $(SIM_DIR)/outputs/saradc_tb.result.xyce.$*.pdf "Results"
 
-$(SIM_DIR)/outputs/cap_linearity.xyce.%.csv: $(ROOT_DIR)/src/cap_linearity.xyce.sp $(CDL_XYCE_SRC)
-	cp $(ROOT_DIR)/src/cap_linearity.xyce.sp $(SIM_DIR)/outputs/cap_linearity.xyce.$*.sp
-	sed -i -e 's/{vi}/$*/g ; s/cap_linearity.xyce/cap_linearity.xyce.$*/g ; s/mos_tt/$(CORNER)/g' $(SIM_DIR)/outputs/cap_linearity.xyce.$*.sp
-	cd $(SIM_DIR)/outputs/ && Xyce -plugin $(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_PSP103_VA.so,$(PDK_ROOT)/$(PDK)/libs.tech/xyce/plugins/libXyce_Plugin_r3_cmc.so $(SIM_DIR)/outputs/cap_linearity.xyce.$*.sp | tee $(SIM_DIR)/outputs/cap_linearity.xyce.$*.log
+test_cap_linearity: $(ROOT_DIR)/src/cap_linearity.xyce.sp $(CDL_XYCE_SRC) $(DEPS)
+	python3 $(ROOT_DIR)/src/cap_extract.py $(SIM_DIR)/outputs $(ROOT_DIR)/src/cap_linearity.xyce.sp "$(XYCE_RUN_COMMAND)"
+
+CHARGE_INJECTION_DEPS=$(SIM_DIR)/outputs/SARADC_SW.cdl $(SIM_DIR)/outputs/SARADC_SWDUM.cdl
+
+$(SIM_DIR)/outputs/%.cdl: $(SYN_DIR)/Makefile
+	make -C $(SYN_DIR) gen TOP=$*
+	cp $(SYN_DIR)/outputs/$*.cdl $@
+
+test_sw_charge_injection: $(ROOT_DIR)/src/sw_charge_injection.xyce.sp $(CDL_XYCE_SRC) $(DEPS) $(CHARGE_INJECTION_DEPS)
+	cp $(ROOT_DIR)/src/sw_classic.sp $(SIM_DIR)/outputs
+	cp $(ROOT_DIR)/src/sw_load.sp $(SIM_DIR)/outputs
+	python3 $(ROOT_DIR)/src/sw_charge_injection.py $(SIM_DIR)/outputs $(ROOT_DIR)/src/sw_charge_injection.xyce.sp "$(XYCE_RUN_COMMAND)"
 
 $(SIM_DIR)/outputs/saradc_tb_rcx.csv: $(TB_RCX_SRC) $(RCX_SRC)
 	mkdir -p $(SIM_DIR)/outputs

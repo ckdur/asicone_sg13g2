@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import sys
+import sys, os
 
 if __name__ == "__main__":
     voltages = np.linspace(0.0, 1.8, 10)
@@ -10,16 +10,41 @@ if __name__ == "__main__":
     cap_avg = None
     cap_std = None
 
-    if len(sys.argv) <= 1:
-        print(" ".join(voltages_str))
+    if len(sys.argv) <= 3:
+        print("USAGE: {} run_dir template spice_cmd")
         sys.exit(0)
+    
+    run_dir = sys.argv[1]
+    template = sys.argv[2]
+    sim_cmd = sys.argv[3]
+
+    # Read original content
+    with open(template, "r") as f:
+        content = f.read()
 
     for i in range(len(voltages)):
         volt = voltages_str[i]
         volt_str = voltages_str[i]
+
+        # Modify the content
+        new_content = content.replace("{vi}", volt_str)
+        new_content = new_content.replace("cap_linearity.xyce", "cap_linearity.xyce."+volt_str)
+        new_content = new_content.replace("mos_tt", "mos_tt")
+
+        netlist_path = "{}/cap_linearity.xyce.{}.sp".format(run_dir, volt_str)
+
+        # Overwrite with modified content
+        with open(netlist_path, "w") as f:
+            f.write(new_content)
+
+        # Do the simulation
+        cmd = "cd {} && {} {}".format(run_dir, sim_cmd, netlist_path)
+        print("Running: ", cmd)
+        os.system(cmd)
+
         # Load simulation data
         #data = np.loadtxt("outputs/cap_linearity.xyce.csv", skiprows=1)
-        df = pd.read_csv("{}/cap_linearity.xyce.{}.csv".format(sys.argv[1], volt_str))
+        df = pd.read_csv("{}/cap_linearity.xyce.{}.csv".format(run_dir, volt_str))
 
         freq = df["FREQ"].to_numpy()
         V = df["Re(V(VPLUS))"].to_numpy() + 1j*df["Im(V(VPLUS))"].to_numpy()

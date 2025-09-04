@@ -46,6 +46,31 @@ module SARADC_SW (
 
 endmodule
 
+// Switch for testing purposes
+(* keep_hierarchy = "yes" *)
+module SARADC_SWDUM (
+  inout VDD, VSS,
+  input SB, S, // Negated and non-negated
+  inout Z1, Z2 // Inouts of the switch
+);
+  
+  wire Z3;
+  
+  SARADC_CELL_INVX0_ASSW sw1 (
+//`ifdef WITH_BODY
+    .vnw(VDD), .vpw(VSS),
+//`endif
+    .vdd(Z2), .zn(Z1), .vss(Z3), .i(SB)
+  );
+  SARADC_CELL_INVX0_ASSW sw2 (
+//`ifdef WITH_BODY
+    .vnw(VDD), .vpw(VSS),
+//`endif
+    .vdd(Z3), .zn(Z1), .vss(Z2), .i(S)
+  );
+
+endmodule
+
 module SARADC_SW_MULT # (
   parameter N = 3
 ) (
