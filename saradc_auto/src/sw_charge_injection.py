@@ -9,6 +9,26 @@ if __name__ == "__main__":
     voltages_str = ["{:.2f}".format(v) for v in voltages]
     delays = np.linspace(10, 20, 6)
     delays_str = ["{:.2f}p".format(v) for v in delays]
+    freq = 100000000
+    tperiod = 1/freq
+    t1 = 0.25*tperiod
+    t2 = 0.75*tperiod
+
+    nvoltages = len(voltages)
+    ndelays = len(delays)
+
+    SARADC_SW_ideal = np.zeros((nvoltages, ndelays))
+    SARADC_SW_iter = np.zeros((nvoltages, ndelays))
+
+    SARADC_SWDUM_ideal = np.zeros((nvoltages, ndelays))
+    SARADC_SWDUM_iter = np.zeros((nvoltages, ndelays))
+
+    sw_classic_ideal = np.zeros((nvoltages, ndelays))
+    sw_classic_iter = np.zeros((nvoltages, ndelays))
+
+    pg_classic_ideal = np.zeros((nvoltages, ndelays))
+    pg_classic_iter1 = np.zeros((nvoltages, ndelays))
+    pg_classic_iter2 = np.zeros((nvoltages, ndelays))
 
     name_gen = lambda v, d: "{}_{}".format(v, d)
 
@@ -24,7 +44,7 @@ if __name__ == "__main__":
     with open(template, "r") as f:
         content = f.read()
 
-    for idx_volt, idx_delay in itertools.product(range(len(voltages)), range(len(delays))):
+    for idx_volt, idx_delay in itertools.product(range(nvoltages), range(ndelays)):
         volt = voltages_str[idx_volt]
         volt_str = voltages_str[idx_volt]
         delay = delays_str[idx_delay]
@@ -38,20 +58,22 @@ if __name__ == "__main__":
         new_content = new_content.replace("mos_tt", "mos_tt")
 
         netlist_path = "{}/sw_charge_injection.xyce.{}.sp".format(run_dir, name)
+        data_path = "{}/sw_charge_injection.xyce.{}.csv".format(run_dir, name)
 
         # Overwrite with modified content
         with open(netlist_path, "w") as f:
             f.write(new_content)
 
         # Do the simulation
-        cmd = "cd {} && {} {}".format(run_dir, sim_cmd, netlist_path)
-        print("Running: ", cmd)
-        os.system(cmd)
+        if not os.path.isfile(data_path):
+            cmd = "cd {} && {} {}".format(run_dir, sim_cmd, netlist_path)
+            print("Running: ", cmd)
+            os.system(cmd)
 
         # Load simulation data
-        df = pd.read_csv("{}/sw_charge_injection.xyce.{}.csv".format(run_dir, name))
+        df = pd.read_csv(data_path)
 
-        t = df["TIME"].to_numpy()
+        t = df["TIME"].to_numpy() * 1e-9
         CS = df["V(CS)"].to_numpy()
         NCS = df["V(NCS)"].to_numpy()
         VOv4 = df["V(VOV4)"].to_numpy()
@@ -64,14 +86,82 @@ if __name__ == "__main__":
         VO1videal = df["V(VO1VIDEAL)"].to_numpy()
         VO2videal = df["V(VO2VIDEAL)"].to_numpy()
 
-        fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(6, 5), sharex=True)
-        ax1.plot(t, CS, color="blue")
-        ax1.plot(t, NCS, color="red")
-        ax1.set_ylabel("Time (s)")
-        ax1.set_xlabel("Voltage (V)")
-        ax1.set_title("CS & NCS")
-        
-        ax2.plot(t, VOv4, color="blue")
-        ax3.plot(t, VOv5, color="blue")
+        # If fails here, is because the time is not right
+        ti1 = np.where(t >= t1)[0][0]
+        ti2 = np.where(t >= t2)[0][0]
 
-        plt.show()
+        # Get the difference
+        SARADC_SW_ideal[idx_volt, idx_delay] = np.abs(VO2videal[ti2] - VO2videal[ti1])
+        SARADC_SW_iter[idx_volt, idx_delay] = np.abs(VOv4[ti2] - VOv4[ti1])
+
+        SARADC_SWDUM_ideal[idx_volt, idx_delay] = np.abs(VO1videal[ti2] - VO1videal[ti1])
+        SARADC_SWDUM_iter[idx_volt, idx_delay] = np.abs(VOv5[ti2] - VOv5[ti1])
+
+        sw_classic_ideal[idx_volt, idx_delay] = np.abs(VOclassicideal[ti2] - VOclassicideal[ti1])
+        sw_classic_iter[idx_volt, idx_delay] = np.abs(VOclassic2[ti2] - VOclassic2[ti1])
+
+        pg_classic_ideal[idx_volt, idx_delay] = np.abs(VOnd3[ti2] - VOnd3[ti1])
+        pg_classic_iter1[idx_volt, idx_delay] = np.abs(VOnd2[ti2] - VOnd2[ti1])
+        pg_classic_iter2[idx_volt, idx_delay] = np.abs(VOnd[ti2] - VOnd[ti1])
+
+        if 0:
+            plt.figure()
+            plt.plot(t, VO2videal)
+            plt.show()
+            print(ti1, t[ti1], t1)
+            print(ti2, t[ti2], t2)
+
+    fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(10, 8), sharex=True)
+    fig2, (ax5, ax6, ax7, ax8) = plt.subplots(4, 1, figsize=(10, 8), sharex=True)
+    for idx_delay in range(ndelays):
+        delay = delays_str[idx_delay]
+        ax1.plot(voltages, SARADC_SW_iter[:, idx_delay], label="$delay$={:.2} ps".format(delay))
+        ax2.plot(voltages, SARADC_SWDUM_iter[:, idx_delay], label="$delay$={:.2} ps".format(delay))
+        ax3.plot(voltages, sw_classic_iter[:, idx_delay], label="$delay$={:.2} ps".format(delay))
+        ax4.plot(voltages, pg_classic_iter1[:, idx_delay], label="$delay$={:.2} ps".format(delay))
+        ax5.plot(voltages, SARADC_SW_ideal[:, idx_delay], label="$delay$={:.2} ps".format(delay))
+        ax6.plot(voltages, SARADC_SWDUM_ideal[:, idx_delay], label="$delay$={:.2} ps".format(delay))
+        ax7.plot(voltages, sw_classic_ideal[:, idx_delay], label="$delay$={:.2} ps".format(delay))
+        ax8.plot(voltages, pg_classic_ideal[:, idx_delay], label="$delay$={:.2} ps".format(delay))
+
+    ax1.set_ylabel("Delta ON-OFF (V)")
+    ax1.set_xlabel("Voltage (V)")
+    ax1.set_title("SARADC 4T switch (Non-ideal)")
+    ax1.legend(fontsize=8)
+
+    ax2.set_ylabel("Delta ON-OFF (V)")
+    ax2.set_xlabel("Voltage (V)")
+    ax2.set_title("SARADC 2T switch (Non-ideal)")
+    ax2.legend(fontsize=8)
+
+    ax3.set_ylabel("Delta ON-OFF (V)")
+    ax3.set_xlabel("Voltage (V)")
+    ax3.set_title("Ideal switch (Non-ideal)")
+    ax3.legend(fontsize=8)
+
+    ax4.set_ylabel("Delta ON-OFF (V)")
+    ax4.set_xlabel("Voltage (V)")
+    ax4.set_title("Passgate switch (Non-ideal)")
+    ax4.legend(fontsize=8)
+
+    ax5.set_ylabel("Delta ON-OFF (V)")
+    ax5.set_xlabel("Voltage (V)")
+    ax5.set_title("SARADC 4T switch (Non-ideal)")
+    ax5.legend(fontsize=8)
+
+    ax6.set_ylabel("Delta ON-OFF (V)")
+    ax6.set_xlabel("Voltage (V)")
+    ax6.set_title("SARADC 2T switch (Non-ideal)")
+    ax6.legend(fontsize=8)
+
+    ax7.set_ylabel("Delta ON-OFF (V)")
+    ax7.set_xlabel("Voltage (V)")
+    ax7.set_title("Ideal switch (Non-ideal)")
+    ax7.legend(fontsize=8)
+
+    ax8.set_ylabel("Delta ON-OFF (V)")
+    ax8.set_xlabel("Voltage (V)")
+    ax8.set_title("Passgate switch (Non-ideal)")
+    ax8.legend(fontsize=8)
+
+    plt.show()

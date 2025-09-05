@@ -83,18 +83,31 @@ CLOAD_VOclassicideal VOclassicideal VSS {Csh}
 CLOAD_VOclassic2 VOclassic2 VSS {Csh}
 CLOAD_VOclassic VOclassic VSS {Csh}
 
-XLOAD_VInd3 VInd3 net119 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VInd2 VInd2 net118 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VInd VInd net113 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VIclassicideal VIclassicideal net96 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VI1videal VI1videal net95 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VI2videal VI2videal net94 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VIclassic2 VIclassic2 net73 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VIv5 VIv5 net72 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VIv4 VIv4 net71 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VIclassic VIclassic net21 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VIv1 VIv1 net19 sw_load vdc={vdc} Rin={Rin}
-XLOAD_VIv2 VIv2 net17 sw_load vdc={vdc} Rin={Rin}
+CLOAD_VIv1 VIv1 VSS {Csh}
+CLOAD_VIv2 VIv2 VSS {Csh}
+CLOAD_VIv4 VIv4 VSS {Csh}
+CLOAD_VIv5 VIv5 VSS {Csh}
+CLOAD_VInd3 VInd3 VSS {Csh}
+CLOAD_VInd2 VInd2 VSS {Csh}
+CLOAD_VInd VInd VSS {Csh}
+CLOAD_VI2videal VI2videal VSS {Csh}
+CLOAD_VI1videal VI1videal VSS {Csh}
+CLOAD_VIclassicideal VIclassicideal VSS {Csh}
+CLOAD_VIclassic2 VIclassic2 VSS {Csh}
+CLOAD_VIclassic VIclassic VSS {Csh}
+
+XLOAD_VIv1 VIv1 VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VIv2 VIv2 VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VIv4 VIv4 VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VIv5 VIv5 VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VInd3 VInd3 VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VInd2 VInd2 VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VInd VInd VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VI2videal VI2videal VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VI1videal VI1videal VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VIclassicideal VIclassicideal VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VIclassic2 VIclassic2 VSS sw_load vdc={vdc} Rin={Rin}
+XLOAD_VIclassic VIclassic VSS sw_load vdc={vdc} Rin={Rin}
 
 .TRAN 1u {stopsim} uic
 
