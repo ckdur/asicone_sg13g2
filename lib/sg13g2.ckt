@@ -3,12 +3,12 @@
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AN2D1_1 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-M_u2_M_u3 net6 a1 x_u2_net6 vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u3_M_u2 z net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u2_M_u4 x_u2_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u3_M_u3 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u2 net6 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u3 net6 a1 x_u2_net6 vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u3_M_u2 z net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u2_M_u4 x_u2_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u3_M_u3 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u2 net6 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -19,12 +19,12 @@ M_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AN2D1_2 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-M_u2_M_u3 net6 a1 x_u2_net6 vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u3_M_u2 z net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u2_M_u4 x_u2_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u3_M_u3 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u2 net6 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u3 net6 a1 x_u2_net6 vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u3_M_u2 z net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u2_M_u4 x_u2_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u3_M_u3 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u2 net6 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -35,12 +35,12 @@ M_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AN2D1_3 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-M_u2_M_u3 net6 a1 x_u2_net6 vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u3_M_u2 z net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u2_M_u4 x_u2_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u3_M_u3 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u2 net6 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u3 net6 a1 x_u2_net6 vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u3_M_u2 z net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u2_M_u4 x_u2_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u3_M_u3 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u2 net6 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -51,12 +51,12 @@ M_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AN2D1 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-M_u2_M_u3 net6 a1 x_u2_net6 vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u3_M_u2 z net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u2_M_u4 x_u2_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u3_M_u3 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u2 net6 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u3 net6 a1 x_u2_net6 vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u3_M_u2 z net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u2_M_u4 x_u2_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u3_M_u3 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u2 net6 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -67,14 +67,14 @@ M_u2_M_u1 net6 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AO21D1_1 a1 a2 b vdd vss z
 *.PININFO a1:I a2:I b:I z:O vdd:B vss:B 
-MI7 net32 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u7 net59 a1 net32 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI6 net59 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI8_M_u2 z net59 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u3 net22 a1 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI8_M_u3 z net59 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u4 net22 a2 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI7 net32 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u7 net59 a1 net32 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI6 net59 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI8_M_u2 z net59 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u3 net22 a1 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI8_M_u3 z net59 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u4 net22 a2 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -85,14 +85,14 @@ M_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AO21D1_2 a1 a2 b vdd vss z
 *.PININFO a1:I a2:I b:I z:O vdd:B vss:B 
-MI7 net32 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u7 net59 a1 net32 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI6 net59 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI8_M_u2 z net59 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u3 net22 a1 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI8_M_u3 z net59 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u4 net22 a2 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI7 net32 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u7 net59 a1 net32 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI6 net59 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI8_M_u2 z net59 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u3 net22 a1 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI8_M_u3 z net59 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u4 net22 a2 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -103,14 +103,14 @@ M_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AO21D1_3 a1 a2 b vdd vss z
 *.PININFO a1:I a2:I b:I z:O vdd:B vss:B 
-MI7 net32 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u7 net59 a1 net32 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI6 net59 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI8_M_u2 z net59 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u3 net22 a1 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI8_M_u3 z net59 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u4 net22 a2 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI7 net32 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u7 net59 a1 net32 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI6 net59 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI8_M_u2 z net59 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u3 net22 a1 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI8_M_u3 z net59 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u4 net22 a2 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -121,14 +121,14 @@ M_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AO21D1 a1 a2 b vdd vss z
 *.PININFO a1:I a2:I b:I z:O vdd:B vss:B 
-MI7 net32 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u7 net59 a1 net32 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI6 net59 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI8_M_u2 z net59 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u3 net22 a1 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI8_M_u3 z net59 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u4 net22 a2 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI7 net32 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u7 net59 a1 net32 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI6 net59 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI8_M_u2 z net59 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u3 net22 a1 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI8_M_u3 z net59 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u4 net22 a2 net59 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -139,12 +139,12 @@ M_u2 net22 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AOI21D1_1 a1 a2 b vdd vss zn
 *.PININFO a1:I a2:I b:I zn:O vdd:B vss:B 
-MI2 zn a1 net27 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI3 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u7 zn b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u4 net13 a2 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net13 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI2 zn a1 net27 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI3 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u7 zn b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u4 net13 a2 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net13 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -155,12 +155,12 @@ M_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AOI21D1_2 a1 a2 b vdd vss zn
 *.PININFO a1:I a2:I b:I zn:O vdd:B vss:B 
-MI2 zn a1 net27 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI3 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u7 zn b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u4 net13 a2 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net13 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI2 zn a1 net27 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI3 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u7 zn b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u4 net13 a2 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net13 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -171,12 +171,12 @@ M_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AOI21D1_3 a1 a2 b vdd vss zn
 *.PININFO a1:I a2:I b:I zn:O vdd:B vss:B 
-MI2 zn a1 net27 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI3 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u7 zn b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u4 net13 a2 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net13 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI2 zn a1 net27 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI3 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u7 zn b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u4 net13 a2 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net13 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -187,12 +187,12 @@ M_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_AOI21D1 a1 a2 b vdd vss zn
 *.PININFO a1:I a2:I b:I zn:O vdd:B vss:B 
-MI2 zn a1 net27 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI3 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u7 zn b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u4 net13 a2 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net13 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI2 zn a1 net27 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI3 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u7 zn b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u4 net13 a2 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net13 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -203,10 +203,10 @@ M_u3 net13 a1 zn vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_BUFFD1_1 i vdd vss z
 *.PININFO i:I z:O vdd:B vss:B 
-M_u3_M_u2 z net8 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u2_M_u2 net8 i vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u3_M_u3 z net8 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u3_M_u2 z net8 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u2_M_u2 net8 i vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u3_M_u3 z net8 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -217,10 +217,10 @@ M_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_BUFFD1_2 i vdd vss z
 *.PININFO i:I z:O vdd:B vss:B 
-M_u3_M_u2 z net8 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u2_M_u2 net8 i vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u3_M_u3 z net8 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u3_M_u2 z net8 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u2_M_u2 net8 i vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u3_M_u3 z net8 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -231,10 +231,10 @@ M_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_BUFFD1_3 i vdd vss z
 *.PININFO i:I z:O vdd:B vss:B 
-M_u3_M_u2 z net8 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u2_M_u2 net8 i vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u3_M_u3 z net8 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u3_M_u2 z net8 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u2_M_u2 net8 i vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u3_M_u3 z net8 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -245,10 +245,10 @@ M_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_BUFFD1 i vdd vss z
 *.PININFO i:I z:O vdd:B vss:B 
-M_u3_M_u2 z net8 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u2_M_u2 net8 i vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u3_M_u3 z net8 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u3_M_u2 z net8 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u2_M_u2 net8 i vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u3_M_u3 z net8 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -259,34 +259,34 @@ M_u2_M_u3 net8 i vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_DFCNQD1_1 cdn cp d q vdd vss
 *.PININFO cdn:I cp:I d:I q:O vdd:B vss:B 
-Mcpbn incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=0 $flip=0
-Mcpbp incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=0 $flip=0
-Mcpn incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=1 $flip=1
-Mcpp incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=1 $flip=1
-MI4 net52 incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=3 $flip=1
-MI7 net85 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=3 $flip=1
-Mdd0n d0 d net52 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=4 $flip=1
-Mdd0p d0 d net85 vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=4 $flip=1
-MI47 d0 incp net59 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=5 $flip=0
-MI45 d0 incpb net98 vdd sg13_lv_pmos l=1.300e-07 w=3.300e-07 $pos=5 $flip=0
-MI48 net59 d1 net62 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=6 $flip=0
-MI43 net98 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.050e-07 $pos=6 $flip=0
-Mcdn0n net62 cdn vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=7 $flip=0
-Md0d1n d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.300e-07 $pos=8 $flip=1
-Mcdn0p net98 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=8 $flip=0
-Mswd1d2n d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=4.900e-07 $pos=9 $flip=0
-Mdod1p d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.150e-07 $pos=9 $flip=1
-MI23 d2 incpb net57 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=10 $flip=0
-Mswd1d2p d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=1.030e-06 $pos=10 $flip=0
-MI26 d2 incp net88 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=11 $flip=0
-MI24 net57 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=12 $flip=0
-MI28 net88 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=12 $flip=0
-Mcdn1n net37 cdn vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=13 $flip=1
-Mcdn1p d3 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=13 $flip=1
-Md2d3n d3 d2 net37 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=14 $flip=1
-Md2d3p d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=14 $flip=0
-Mobp q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06 $pos=15 $flip=1
-Mobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
+XMcpbn incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=0 $flip=0
+XMcpbp incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=0 $flip=0
+XMcpn incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=1 $flip=1
+XMcpp incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=1 $flip=1
+XMI4 net52 incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=3 $flip=1
+XMI7 net85 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=3 $flip=1
+XMdd0n d0 d net52 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=4 $flip=1
+XMdd0p d0 d net85 vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=4 $flip=1
+XMI47 d0 incp net59 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=5 $flip=0
+XMI45 d0 incpb net98 vdd sg13_lv_pmos l=1.300e-07 w=3.300e-07 $pos=5 $flip=0
+XMI48 net59 d1 net62 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=6 $flip=0
+XMI43 net98 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.050e-07 $pos=6 $flip=0
+XMcdn0n net62 cdn vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=7 $flip=0
+XMd0d1n d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.300e-07 $pos=8 $flip=1
+XMcdn0p net98 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=8 $flip=0
+XMswd1d2n d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=4.900e-07 $pos=9 $flip=0
+XMdod1p d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.150e-07 $pos=9 $flip=1
+XMI23 d2 incpb net57 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=10 $flip=0
+XMswd1d2p d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=1.030e-06 $pos=10 $flip=0
+XMI26 d2 incp net88 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=11 $flip=0
+XMI24 net57 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=12 $flip=0
+XMI28 net88 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=12 $flip=0
+XMcdn1n net37 cdn vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=13 $flip=1
+XMcdn1p d3 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=13 $flip=1
+XMd2d3n d3 d2 net37 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=14 $flip=1
+XMd2d3p d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=14 $flip=0
+XMobp q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06 $pos=15 $flip=1
+XMobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
 .ENDS
 
 
@@ -297,34 +297,34 @@ Mobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
 ** Lib name: sg13g2
 .SUBCKT sg13g2_DFCNQD1_2 cdn cp d q vdd vss
 *.PININFO cdn:I cp:I d:I q:O vdd:B vss:B 
-Mcpbn incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=0 $flip=0
-Mcpbp incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=0 $flip=0
-Mcpn incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=1 $flip=1
-Mcpp incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=1 $flip=1
-MI4 net52 incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=3 $flip=1
-MI7 net85 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=3 $flip=1
-Mdd0n d0 d net52 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=4 $flip=1
-Mdd0p d0 d net85 vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=4 $flip=1
-MI47 d0 incp net59 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=5 $flip=0
-MI45 d0 incpb net98 vdd sg13_lv_pmos l=1.300e-07 w=3.300e-07 $pos=5 $flip=0
-MI48 net59 d1 net62 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=6 $flip=0
-MI43 net98 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.050e-07 $pos=6 $flip=0
-Mcdn0n net62 cdn vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=7 $flip=0
-Md0d1n d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.300e-07 $pos=8 $flip=1
-Mcdn0p net98 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=8 $flip=0
-Mswd1d2n d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=4.900e-07 $pos=9 $flip=0
-Mdod1p d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.150e-07 $pos=9 $flip=1
-MI23 d2 incpb net57 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=10 $flip=0
-Mswd1d2p d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=1.030e-06 $pos=10 $flip=0
-MI26 d2 incp net88 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=11 $flip=0
-MI24 net57 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=12 $flip=0
-MI28 net88 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=12 $flip=0
-Mcdn1n net37 cdn vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=13 $flip=1
-Mcdn1p d3 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=13 $flip=1
-Md2d3n d3 d2 net37 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=14 $flip=1
-Md2d3p d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=14 $flip=0
-Mobp q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06 $pos=15 $flip=1
-Mobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
+XMcpbn incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=0 $flip=0
+XMcpbp incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=0 $flip=0
+XMcpn incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=1 $flip=1
+XMcpp incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=1 $flip=1
+XMI4 net52 incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=3 $flip=1
+XMI7 net85 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=3 $flip=1
+XMdd0n d0 d net52 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=4 $flip=1
+XMdd0p d0 d net85 vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=4 $flip=1
+XMI47 d0 incp net59 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=5 $flip=0
+XMI45 d0 incpb net98 vdd sg13_lv_pmos l=1.300e-07 w=3.300e-07 $pos=5 $flip=0
+XMI48 net59 d1 net62 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=6 $flip=0
+XMI43 net98 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.050e-07 $pos=6 $flip=0
+XMcdn0n net62 cdn vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=7 $flip=0
+XMd0d1n d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.300e-07 $pos=8 $flip=1
+XMcdn0p net98 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=8 $flip=0
+XMswd1d2n d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=4.900e-07 $pos=9 $flip=0
+XMdod1p d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.150e-07 $pos=9 $flip=1
+XMI23 d2 incpb net57 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=10 $flip=0
+XMswd1d2p d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=1.030e-06 $pos=10 $flip=0
+XMI26 d2 incp net88 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=11 $flip=0
+XMI24 net57 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=12 $flip=0
+XMI28 net88 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=12 $flip=0
+XMcdn1n net37 cdn vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=13 $flip=1
+XMcdn1p d3 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=13 $flip=1
+XMd2d3n d3 d2 net37 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=14 $flip=1
+XMd2d3p d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=14 $flip=0
+XMobp q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06 $pos=15 $flip=1
+XMobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
 .ENDS
 
 
@@ -335,34 +335,34 @@ Mobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
 ** Lib name: sg13g2
 .SUBCKT sg13g2_DFCNQD1_3 cdn cp d q vdd vss
 *.PININFO cdn:I cp:I d:I q:O vdd:B vss:B 
-Mcpbn incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=0 $flip=0
-Mcpbp incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=0 $flip=0
-Mcpn incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=1 $flip=1
-Mcpp incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=1 $flip=1
-MI4 net52 incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=3 $flip=1
-MI7 net85 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=3 $flip=1
-Mdd0n d0 d net52 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=4 $flip=1
-Mdd0p d0 d net85 vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=4 $flip=1
-MI47 d0 incp net59 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=5 $flip=0
-MI45 d0 incpb net98 vdd sg13_lv_pmos l=1.300e-07 w=3.300e-07 $pos=5 $flip=0
-MI48 net59 d1 net62 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=6 $flip=0
-MI43 net98 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.050e-07 $pos=6 $flip=0
-Mcdn0n net62 cdn vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=7 $flip=0
-Md0d1n d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.300e-07 $pos=8 $flip=1
-Mcdn0p net98 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=8 $flip=0
-Mswd1d2n d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=4.900e-07 $pos=9 $flip=0
-Mdod1p d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.150e-07 $pos=9 $flip=1
-MI23 d2 incpb net57 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=10 $flip=0
-Mswd1d2p d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=1.030e-06 $pos=10 $flip=0
-MI26 d2 incp net88 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=11 $flip=0
-MI24 net57 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=12 $flip=0
-MI28 net88 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=12 $flip=0
-Mcdn1n net37 cdn vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=13 $flip=1
-Mcdn1p d3 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=13 $flip=1
-Md2d3n d3 d2 net37 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=14 $flip=1
-Md2d3p d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=14 $flip=0
-Mobp q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06 $pos=15 $flip=1
-Mobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
+XMcpbn incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=0 $flip=0
+XMcpbp incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=0 $flip=0
+XMcpn incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=1 $flip=1
+XMcpp incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=1 $flip=1
+XMI4 net52 incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=3 $flip=1
+XMI7 net85 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=3 $flip=1
+XMdd0n d0 d net52 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=4 $flip=1
+XMdd0p d0 d net85 vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=4 $flip=1
+XMI47 d0 incp net59 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=5 $flip=0
+XMI45 d0 incpb net98 vdd sg13_lv_pmos l=1.300e-07 w=3.300e-07 $pos=5 $flip=0
+XMI48 net59 d1 net62 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=6 $flip=0
+XMI43 net98 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.050e-07 $pos=6 $flip=0
+XMcdn0n net62 cdn vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=7 $flip=0
+XMd0d1n d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.300e-07 $pos=8 $flip=1
+XMcdn0p net98 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=8 $flip=0
+XMswd1d2n d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=4.900e-07 $pos=9 $flip=0
+XMdod1p d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.150e-07 $pos=9 $flip=1
+XMI23 d2 incpb net57 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=10 $flip=0
+XMswd1d2p d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=1.030e-06 $pos=10 $flip=0
+XMI26 d2 incp net88 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=11 $flip=0
+XMI24 net57 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=12 $flip=0
+XMI28 net88 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=12 $flip=0
+XMcdn1n net37 cdn vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=13 $flip=1
+XMcdn1p d3 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=13 $flip=1
+XMd2d3n d3 d2 net37 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=14 $flip=1
+XMd2d3p d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=14 $flip=0
+XMobp q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06 $pos=15 $flip=1
+XMobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
 .ENDS
 
 
@@ -373,34 +373,34 @@ Mobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
 ** Lib name: sg13g2
 .SUBCKT sg13g2_DFCNQD1 cdn cp d q vdd vss
 *.PININFO cdn:I cp:I d:I q:O vdd:B vss:B 
-Mcpbn incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=0 $flip=0
-Mcpbp incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=0 $flip=0
-Mcpn incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=1 $flip=1
-Mcpp incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=1 $flip=1
-MI4 net52 incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=3 $flip=1
-MI7 net85 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=3 $flip=1
-Mdd0n d0 d net52 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=4 $flip=1
-Mdd0p d0 d net85 vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=4 $flip=1
-MI47 d0 incp net59 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=5 $flip=0
-MI45 d0 incpb net98 vdd sg13_lv_pmos l=1.300e-07 w=3.300e-07 $pos=5 $flip=0
-MI48 net59 d1 net62 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=6 $flip=0
-MI43 net98 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.050e-07 $pos=6 $flip=0
-Mcdn0n net62 cdn vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=7 $flip=0
-Md0d1n d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.300e-07 $pos=8 $flip=1
-Mcdn0p net98 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=8 $flip=0
-Mswd1d2n d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=4.900e-07 $pos=9 $flip=0
-Mdod1p d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.150e-07 $pos=9 $flip=1
-MI23 d2 incpb net57 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=10 $flip=0
-Mswd1d2p d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=1.030e-06 $pos=10 $flip=0
-MI26 d2 incp net88 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=11 $flip=0
-MI24 net57 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=12 $flip=0
-MI28 net88 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=12 $flip=0
-Mcdn1n net37 cdn vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=13 $flip=1
-Mcdn1p d3 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=13 $flip=1
-Md2d3n d3 d2 net37 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=14 $flip=1
-Md2d3p d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=14 $flip=0
-Mobp q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06 $pos=15 $flip=1
-Mobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
+XMcpbn incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=0 $flip=0
+XMcpbp incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=0 $flip=0
+XMcpn incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=1 $flip=1
+XMcpp incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07 $pos=1 $flip=1
+XMI4 net52 incpb vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=3 $flip=1
+XMI7 net85 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=3 $flip=1
+XMdd0n d0 d net52 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07 $pos=4 $flip=1
+XMdd0p d0 d net85 vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07 $pos=4 $flip=1
+XMI47 d0 incp net59 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=5 $flip=0
+XMI45 d0 incpb net98 vdd sg13_lv_pmos l=1.300e-07 w=3.300e-07 $pos=5 $flip=0
+XMI48 net59 d1 net62 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=6 $flip=0
+XMI43 net98 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=3.050e-07 $pos=6 $flip=0
+XMcdn0n net62 cdn vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=7 $flip=0
+XMd0d1n d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.300e-07 $pos=8 $flip=1
+XMcdn0p net98 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=8 $flip=0
+XMswd1d2n d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=4.900e-07 $pos=9 $flip=0
+XMdod1p d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.150e-07 $pos=9 $flip=1
+XMI23 d2 incpb net57 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=10 $flip=0
+XMswd1d2p d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=1.030e-06 $pos=10 $flip=0
+XMI26 d2 incp net88 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=11 $flip=0
+XMI24 net57 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07 $pos=12 $flip=0
+XMI28 net88 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07 $pos=12 $flip=0
+XMcdn1n net37 cdn vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=13 $flip=1
+XMcdn1p d3 cdn vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=13 $flip=1
+XMd2d3n d3 d2 net37 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=14 $flip=1
+XMd2d3p d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.900e-07 $pos=14 $flip=0
+XMobp q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06 $pos=15 $flip=1
+XMobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
 .ENDS
 
 
@@ -411,30 +411,30 @@ Mobn q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07 $pos=16 $flip=1
 ** Lib name: sg13g2
 .SUBCKT sg13g2_DFQD1_1 cp d q vdd vss
 *.PININFO cp:I d:I q:O vdd:B vss:B 
-MI4 net43 incpb vss vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
-MI23 d2 incpb net42 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI5 d0 d net43 vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
-MI47 d0 incp net50 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI48 net50 d1 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI24 net42 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI50 d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=3.750e-07
-MI32_M_u2 incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI31_M_u2 incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI27_M_u2 q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI53_M_u2 d3 d2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI13_M_u2 d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.550e-07
-MI6 d0 d net66 vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
-MI32_M_u3 incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI31_M_u3 incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI27_M_u3 q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI53_M_u3 d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI13_M_u3 d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
-MI7 net66 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07
-MI52 d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=9.750e-07
-MI28 net74 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI26 d2 incp net74 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI45 d0 incpb net84 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI4 net43 incpb vss vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
+XMI23 d2 incpb net42 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI5 d0 d net43 vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
+XMI47 d0 incp net50 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI48 net50 d1 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI24 net42 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI50 d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=3.750e-07
+XMI32_M_u2 incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI31_M_u2 incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI27_M_u2 q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI53_M_u2 d3 d2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI13_M_u2 d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.550e-07
+XMI6 d0 d net66 vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
+XMI32_M_u3 incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI31_M_u3 incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI27_M_u3 q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI53_M_u3 d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI13_M_u3 d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
+XMI7 net66 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07
+XMI52 d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=9.750e-07
+XMI28 net74 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI26 d2 incp net74 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI45 d0 incpb net84 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
 .ENDS
 
 
@@ -445,30 +445,30 @@ MI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_DFQD1_2 cp d q vdd vss
 *.PININFO cp:I d:I q:O vdd:B vss:B 
-MI4 net43 incpb vss vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
-MI23 d2 incpb net42 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI5 d0 d net43 vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
-MI47 d0 incp net50 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI48 net50 d1 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI24 net42 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI50 d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=3.750e-07
-MI32_M_u2 incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI31_M_u2 incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI27_M_u2 q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI53_M_u2 d3 d2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI13_M_u2 d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.550e-07
-MI6 d0 d net66 vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
-MI32_M_u3 incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI31_M_u3 incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI27_M_u3 q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI53_M_u3 d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI13_M_u3 d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
-MI7 net66 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07
-MI52 d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=9.750e-07
-MI28 net74 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI26 d2 incp net74 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI45 d0 incpb net84 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI4 net43 incpb vss vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
+XMI23 d2 incpb net42 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI5 d0 d net43 vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
+XMI47 d0 incp net50 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI48 net50 d1 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI24 net42 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI50 d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=3.750e-07
+XMI32_M_u2 incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI31_M_u2 incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI27_M_u2 q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI53_M_u2 d3 d2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI13_M_u2 d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.550e-07
+XMI6 d0 d net66 vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
+XMI32_M_u3 incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI31_M_u3 incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI27_M_u3 q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI53_M_u3 d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI13_M_u3 d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
+XMI7 net66 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07
+XMI52 d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=9.750e-07
+XMI28 net74 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI26 d2 incp net74 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI45 d0 incpb net84 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
 .ENDS
 
 
@@ -479,30 +479,30 @@ MI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_DFQD1_3 cp d q vdd vss
 *.PININFO cp:I d:I q:O vdd:B vss:B 
-MI4 net43 incpb vss vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
-MI23 d2 incpb net42 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI5 d0 d net43 vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
-MI47 d0 incp net50 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI48 net50 d1 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI24 net42 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI50 d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=3.750e-07
-MI32_M_u2 incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI31_M_u2 incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI27_M_u2 q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI53_M_u2 d3 d2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI13_M_u2 d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.550e-07
-MI6 d0 d net66 vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
-MI32_M_u3 incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI31_M_u3 incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI27_M_u3 q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI53_M_u3 d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI13_M_u3 d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
-MI7 net66 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07
-MI52 d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=9.750e-07
-MI28 net74 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI26 d2 incp net74 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI45 d0 incpb net84 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI4 net43 incpb vss vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
+XMI23 d2 incpb net42 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI5 d0 d net43 vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
+XMI47 d0 incp net50 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI48 net50 d1 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI24 net42 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI50 d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=3.750e-07
+XMI32_M_u2 incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI31_M_u2 incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI27_M_u2 q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI53_M_u2 d3 d2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI13_M_u2 d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.550e-07
+XMI6 d0 d net66 vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
+XMI32_M_u3 incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI31_M_u3 incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI27_M_u3 q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI53_M_u3 d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI13_M_u3 d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
+XMI7 net66 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07
+XMI52 d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=9.750e-07
+XMI28 net74 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI26 d2 incp net74 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI45 d0 incpb net84 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
 .ENDS
 
 
@@ -513,30 +513,30 @@ MI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_DFQD1 cp d q vdd vss
 *.PININFO cp:I d:I q:O vdd:B vss:B 
-MI4 net43 incpb vss vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
-MI23 d2 incpb net42 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI5 d0 d net43 vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
-MI47 d0 incp net50 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI48 net50 d1 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI24 net42 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
-MI50 d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=3.750e-07
-MI32_M_u2 incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI31_M_u2 incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI27_M_u2 q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI53_M_u2 d3 d2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI13_M_u2 d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.550e-07
-MI6 d0 d net66 vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
-MI32_M_u3 incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI31_M_u3 incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI27_M_u3 q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI53_M_u3 d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI13_M_u3 d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
-MI7 net66 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07
-MI52 d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=9.750e-07
-MI28 net74 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI26 d2 incp net74 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI45 d0 incpb net84 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
-MI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI4 net43 incpb vss vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
+XMI23 d2 incpb net42 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI5 d0 d net43 vss sg13_lv_nmos l=1.300e-07 w=4.050e-07
+XMI47 d0 incp net50 vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI48 net50 d1 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI24 net42 d3 vss vss sg13_lv_nmos l=1.300e-07 w=2.450e-07
+XMI50 d1 incp d2 vss sg13_lv_nmos l=1.300e-07 w=3.750e-07
+XMI32_M_u2 incp incpb vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI31_M_u2 incpb cp vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI27_M_u2 q d3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI53_M_u2 d3 d2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI13_M_u2 d1 d0 vss vss sg13_lv_nmos l=1.300e-07 w=4.550e-07
+XMI6 d0 d net66 vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
+XMI32_M_u3 incp incpb vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI31_M_u3 incpb cp vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI27_M_u3 q d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI53_M_u3 d3 d2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI13_M_u3 d1 d0 vdd vdd sg13_lv_pmos l=1.300e-07 w=6.900e-07
+XMI7 net66 incp vdd vdd sg13_lv_pmos l=1.300e-07 w=8.100e-07
+XMI52 d1 incpb d2 vdd sg13_lv_pmos l=1.300e-07 w=9.750e-07
+XMI28 net74 d3 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI26 d2 incp net74 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI45 d0 incpb net84 vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
+XMI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
 .ENDS
 
 
@@ -707,8 +707,8 @@ MI43 net84 d1 vdd vdd sg13_lv_pmos l=1.300e-07 w=2.750e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_INVD1_1 i z vss vdd
 *.PININFO i:I z:O vss:B vdd:B
-M0 z i vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM0 z i vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -719,8 +719,8 @@ M1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_INVD1_2 i z vss vdd
 *.PININFO i:I z:O vss:B vdd:B
-M0 z i vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM0 z i vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -731,8 +731,8 @@ M1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_INVD1_3 i z vss vdd
 *.PININFO i:I z:O vss:B vdd:B
-M0 z i vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM0 z i vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -743,8 +743,8 @@ M1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_INVD1 i z vss vdd
 *.PININFO i:I z:O vss:B vdd:B
-M0 z i vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM0 z i vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -755,18 +755,18 @@ M1 z i vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_MUX2D1_1 i0 i1 s vdd vss z
 *.PININFO i0:I i1:I s:I z:O vdd:B vss:B 
-MI15_M_u3 net46 s net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MU7_M_u3 net48 net42 net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI20_M_u2 net46 i1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI19_M_u2 net48 i0 vss vss sg13_lv_nmos l=1.300e-07 w=5.050e-07
-MI18_M_u2 net42 s vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MU29_M_u2 z net28 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI15_M_u2 net46 net42 net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MU7_M_u2 net48 s net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI20_M_u3 net46 i1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI19_M_u3 net48 i0 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.100e-07
-MI18_M_u3 net42 s vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
+XMI15_M_u3 net46 s net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMU7_M_u3 net48 net42 net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI20_M_u2 net46 i1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI19_M_u2 net48 i0 vss vss sg13_lv_nmos l=1.300e-07 w=5.050e-07
+XMI18_M_u2 net42 s vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMU29_M_u2 z net28 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI15_M_u2 net46 net42 net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMU7_M_u2 net48 s net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI20_M_u3 net46 i1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI19_M_u3 net48 i0 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.100e-07
+XMI18_M_u3 net42 s vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
 .ENDS
 
 
@@ -777,18 +777,18 @@ MU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_MUX2D1_2 i0 i1 s vdd vss z
 *.PININFO i0:I i1:I s:I z:O vdd:B vss:B 
-MI15_M_u3 net46 s net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MU7_M_u3 net48 net42 net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI20_M_u2 net46 i1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI19_M_u2 net48 i0 vss vss sg13_lv_nmos l=1.300e-07 w=5.050e-07
-MI18_M_u2 net42 s vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MU29_M_u2 z net28 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI15_M_u2 net46 net42 net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MU7_M_u2 net48 s net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI20_M_u3 net46 i1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI19_M_u3 net48 i0 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.100e-07
-MI18_M_u3 net42 s vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
+XMI15_M_u3 net46 s net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMU7_M_u3 net48 net42 net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI20_M_u2 net46 i1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI19_M_u2 net48 i0 vss vss sg13_lv_nmos l=1.300e-07 w=5.050e-07
+XMI18_M_u2 net42 s vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMU29_M_u2 z net28 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI15_M_u2 net46 net42 net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMU7_M_u2 net48 s net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI20_M_u3 net46 i1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI19_M_u3 net48 i0 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.100e-07
+XMI18_M_u3 net42 s vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
 .ENDS
 
 
@@ -799,18 +799,18 @@ MU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_MUX2D1_3 i0 i1 s vdd vss z
 *.PININFO i0:I i1:I s:I z:O vdd:B vss:B 
-MI15_M_u3 net46 s net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MU7_M_u3 net48 net42 net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI20_M_u2 net46 i1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI19_M_u2 net48 i0 vss vss sg13_lv_nmos l=1.300e-07 w=5.050e-07
-MI18_M_u2 net42 s vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MU29_M_u2 z net28 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI15_M_u2 net46 net42 net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MU7_M_u2 net48 s net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI20_M_u3 net46 i1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI19_M_u3 net48 i0 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.100e-07
-MI18_M_u3 net42 s vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
+XMI15_M_u3 net46 s net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMU7_M_u3 net48 net42 net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI20_M_u2 net46 i1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI19_M_u2 net48 i0 vss vss sg13_lv_nmos l=1.300e-07 w=5.050e-07
+XMI18_M_u2 net42 s vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMU29_M_u2 z net28 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI15_M_u2 net46 net42 net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMU7_M_u2 net48 s net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI20_M_u3 net46 i1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI19_M_u3 net48 i0 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.100e-07
+XMI18_M_u3 net42 s vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
 .ENDS
 
 
@@ -821,18 +821,18 @@ MU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_MUX2D1 i0 i1 s vdd vss z
 *.PININFO i0:I i1:I s:I z:O vdd:B vss:B 
-MI15_M_u3 net46 s net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MU7_M_u3 net48 net42 net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI20_M_u2 net46 i1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI19_M_u2 net48 i0 vss vss sg13_lv_nmos l=1.300e-07 w=5.050e-07
-MI18_M_u2 net42 s vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MU29_M_u2 z net28 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI15_M_u2 net46 net42 net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MU7_M_u2 net48 s net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI20_M_u3 net46 i1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI19_M_u3 net48 i0 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.100e-07
-MI18_M_u3 net42 s vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
+XMI15_M_u3 net46 s net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMU7_M_u3 net48 net42 net28 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI20_M_u2 net46 i1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI19_M_u2 net48 i0 vss vss sg13_lv_nmos l=1.300e-07 w=5.050e-07
+XMI18_M_u2 net42 s vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMU29_M_u2 z net28 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI15_M_u2 net46 net42 net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMU7_M_u2 net48 s net28 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI20_M_u3 net46 i1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI19_M_u3 net48 i0 vdd vdd sg13_lv_pmos l=1.300e-07 w=9.100e-07
+XMI18_M_u3 net42 s vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
 .ENDS
 
 
@@ -843,10 +843,10 @@ MU29_M_u3 z net28 vdd vdd sg13_lv_pmos l=1.300e-07 w=7.700e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND2D1_1 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-MI1_M_u3 zn a1 xi1_net6 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u4 xi1_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u3 zn a1 xi1_net6 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u4 xi1_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -857,10 +857,10 @@ MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND2D1_2 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-MI1_M_u3 zn a1 xi1_net6 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u4 xi1_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u3 zn a1 xi1_net6 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u4 xi1_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -871,10 +871,10 @@ MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND2D1_3 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-MI1_M_u3 zn a1 xi1_net6 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u4 xi1_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u3 zn a1 xi1_net6 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u4 xi1_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -885,10 +885,10 @@ MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND2D1 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-MI1_M_u3 zn a1 xi1_net6 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u4 xi1_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u3 zn a1 xi1_net6 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u4 xi1_net6 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -899,12 +899,12 @@ MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND3D1_1 a1 a2 a3 vdd vss zn
 *.PININFO a1:I a2:I a3:I zn:O vdd:B vss:B 
-MI1_M_u4 zn a1 xi1_net10 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u5 xi1_net10 a2 xi1_net13 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u6 xi1_net13 a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u3 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u4 zn a1 xi1_net10 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u5 xi1_net10 a2 xi1_net13 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u6 xi1_net13 a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u3 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -915,12 +915,12 @@ MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND3D1_2 a1 a2 a3 vdd vss zn
 *.PININFO a1:I a2:I a3:I zn:O vdd:B vss:B 
-MI1_M_u4 zn a1 xi1_net10 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u5 xi1_net10 a2 xi1_net13 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u6 xi1_net13 a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u3 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u4 zn a1 xi1_net10 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u5 xi1_net10 a2 xi1_net13 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u6 xi1_net13 a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u3 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -931,12 +931,12 @@ MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND3D1_3 a1 a2 a3 vdd vss zn
 *.PININFO a1:I a2:I a3:I zn:O vdd:B vss:B 
-MI1_M_u4 zn a1 xi1_net10 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u5 xi1_net10 a2 xi1_net13 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u6 xi1_net13 a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u3 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u4 zn a1 xi1_net10 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u5 xi1_net10 a2 xi1_net13 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u6 xi1_net13 a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u3 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -947,12 +947,12 @@ MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND3D1 a1 a2 a3 vdd vss zn
 *.PININFO a1:I a2:I a3:I zn:O vdd:B vss:B 
-MI1_M_u4 zn a1 xi1_net10 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u5 xi1_net10 a2 xi1_net13 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u6 xi1_net13 a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u3 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u4 zn a1 xi1_net10 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u5 xi1_net10 a2 xi1_net13 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u6 xi1_net13 a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u3 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -963,14 +963,14 @@ MI1_M_u2 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND4D1_1 a1 a2 a3 a4 vdd vss zn
 *.PININFO a1:I a2:I a3:I a4:I zn:O vdd:B vss:B 
-MI3 p0 a2 p1 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI5 p2 a4 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4 p1 a3 p2 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MU53 zn a1 p0 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI7 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI2 zn a4 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI3 p0 a2 p1 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI5 p2 a4 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4 p1 a3 p2 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMU53 zn a1 p0 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI7 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI2 zn a4 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -981,14 +981,14 @@ MI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND4D1_2 a1 a2 a3 a4 vdd vss zn
 *.PININFO a1:I a2:I a3:I a4:I zn:O vdd:B vss:B 
-MI3 p0 a2 p1 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI5 p2 a4 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4 p1 a3 p2 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MU53 zn a1 p0 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI7 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI2 zn a4 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI3 p0 a2 p1 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI5 p2 a4 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4 p1 a3 p2 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMU53 zn a1 p0 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI7 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI2 zn a4 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -999,14 +999,14 @@ MI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND4D1_3 a1 a2 a3 a4 vdd vss zn
 *.PININFO a1:I a2:I a3:I a4:I zn:O vdd:B vss:B 
-MI3 p0 a2 p1 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI5 p2 a4 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4 p1 a3 p2 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MU53 zn a1 p0 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI7 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI2 zn a4 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI3 p0 a2 p1 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI5 p2 a4 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4 p1 a3 p2 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMU53 zn a1 p0 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI7 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI2 zn a4 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1017,14 +1017,14 @@ MI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_ND4D1 a1 a2 a3 a4 vdd vss zn
 *.PININFO a1:I a2:I a3:I a4:I zn:O vdd:B vss:B 
-MI3 p0 a2 p1 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI5 p2 a4 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4 p1 a3 p2 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MU53 zn a1 p0 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI7 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI2 zn a4 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI3 p0 a2 p1 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI5 p2 a4 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4 p1 a3 p2 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMU53 zn a1 p0 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI7 zn a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI2 zn a4 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1 zn a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1035,10 +1035,10 @@ MI0 zn a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_NR2D1_1 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-MI1_M_u4 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u3 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u2 zn a1 xi1_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u4 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u3 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u2 zn a1 xi1_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1049,10 +1049,10 @@ MI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_NR2D1_2 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-MI1_M_u4 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u3 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u2 zn a1 xi1_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u4 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u3 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u2 zn a1 xi1_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1063,10 +1063,10 @@ MI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_NR2D1_3 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-MI1_M_u4 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u3 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u2 zn a1 xi1_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u4 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u3 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u2 zn a1 xi1_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1077,10 +1077,10 @@ MI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_NR2D1 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-MI1_M_u4 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u3 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI1_M_u2 zn a1 xi1_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u4 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u3 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI1_M_u2 zn a1 xi1_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1091,15 +1091,15 @@ MI1_M_u1 xi1_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_NR3D1_1 a1 a2 a3 vdd vss zn
 *.PININFO a1:I a2:I a3:I zn:O vdd:B vss:B 
-M_u4 zn a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI2 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI3 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4_0 net37_0_ a2 net34_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u1_0 net34_0_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u1_1 net34_1_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI4_1 net37_1_ a2 net34_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_0 zn a1 net37_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u4 zn a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI2 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI3 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4_0 net37_0_ a2 net34_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u1_0 net34_0_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u1_1 net34_1_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI4_1 net37_1_ a2 net34_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_0 zn a1 net37_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1110,15 +1110,15 @@ MI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_NR3D1_2 a1 a2 a3 vdd vss zn
 *.PININFO a1:I a2:I a3:I zn:O vdd:B vss:B 
-M_u4 zn a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI2 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI3 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4_0 net37_0_ a2 net34_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u1_0 net34_0_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u1_1 net34_1_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI4_1 net37_1_ a2 net34_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_0 zn a1 net37_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u4 zn a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI2 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI3 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4_0 net37_0_ a2 net34_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u1_0 net34_0_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u1_1 net34_1_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI4_1 net37_1_ a2 net34_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_0 zn a1 net37_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1129,15 +1129,15 @@ MI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_NR3D1_3 a1 a2 a3 vdd vss zn
 *.PININFO a1:I a2:I a3:I zn:O vdd:B vss:B 
-M_u4 zn a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI2 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI3 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4_0 net37_0_ a2 net34_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u1_0 net34_0_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u1_1 net34_1_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI4_1 net37_1_ a2 net34_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_0 zn a1 net37_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u4 zn a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI2 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI3 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4_0 net37_0_ a2 net34_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u1_0 net34_0_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u1_1 net34_1_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI4_1 net37_1_ a2 net34_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_0 zn a1 net37_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1148,15 +1148,15 @@ MI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_NR3D1 a1 a2 a3 vdd vss zn
 *.PININFO a1:I a2:I a3:I zn:O vdd:B vss:B 
-M_u4 zn a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI2 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI3 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4_0 net37_0_ a2 net34_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u1_0 net34_0_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u1_1 net34_1_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI4_1 net37_1_ a2 net34_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_0 zn a1 net37_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u4 zn a3 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI2 zn a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI3 zn a1 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4_0 net37_0_ a2 net34_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u1_0 net34_0_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u1_1 net34_1_ a3 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI4_1 net37_1_ a2 net34_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_0 zn a1 net37_0_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1167,14 +1167,14 @@ MI5_1 zn a1 net37_1_ vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OA21D1_1 a1 a2 b vdd vss z
 *.PININFO a1:I a2:I b:I z:O vdd:B vss:B 
-MI12 net14 a2 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI11 net14 a1 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI6 net20 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI8_M_u2 z net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI9 net14 a1 net24 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI8_M_u3 z net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net14 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI12 net14 a2 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI11 net14 a1 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI6 net20 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI8_M_u2 z net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI9 net14 a1 net24 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI8_M_u3 z net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net14 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1185,14 +1185,14 @@ MI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OA21D1_2 a1 a2 b vdd vss z
 *.PININFO a1:I a2:I b:I z:O vdd:B vss:B 
-MI12 net14 a2 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI11 net14 a1 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI6 net20 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI8_M_u2 z net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI9 net14 a1 net24 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI8_M_u3 z net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net14 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI12 net14 a2 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI11 net14 a1 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI6 net20 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI8_M_u2 z net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI9 net14 a1 net24 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI8_M_u3 z net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net14 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1203,14 +1203,14 @@ MI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OA21D1_3 a1 a2 b vdd vss z
 *.PININFO a1:I a2:I b:I z:O vdd:B vss:B 
-MI12 net14 a2 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI11 net14 a1 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI6 net20 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI8_M_u2 z net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI9 net14 a1 net24 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI8_M_u3 z net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net14 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI12 net14 a2 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI11 net14 a1 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI6 net20 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI8_M_u2 z net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI9 net14 a1 net24 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI8_M_u3 z net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net14 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1221,14 +1221,14 @@ MI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OA21D1 a1 a2 b vdd vss z
 *.PININFO a1:I a2:I b:I z:O vdd:B vss:B 
-MI12 net14 a2 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI11 net14 a1 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI6 net20 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI8_M_u2 z net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI9 net14 a1 net24 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI8_M_u3 z net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u2 net14 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI12 net14 a2 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI11 net14 a1 net20 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI6 net20 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI8_M_u2 z net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI9 net14 a1 net24 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI8_M_u3 z net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net14 b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1239,12 +1239,12 @@ MI7 net24 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OAI21D1_1 a1 a2 b vdd vss zn
 *.PININFO a1:I a2:I b:I zn:O vdd:B vss:B 
-M_u2 zn a1 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u3 zn a2 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u4 net15 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI16_MI12 zn a1 xi16_net11 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u9 zn b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 zn a1 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u3 zn a2 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u4 net15 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI16_MI12 zn a1 xi16_net11 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u9 zn b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1255,12 +1255,12 @@ MI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OAI21D1_2 a1 a2 b vdd vss zn
 *.PININFO a1:I a2:I b:I zn:O vdd:B vss:B 
-M_u2 zn a1 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u3 zn a2 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u4 net15 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI16_MI12 zn a1 xi16_net11 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u9 zn b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 zn a1 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u3 zn a2 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u4 net15 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI16_MI12 zn a1 xi16_net11 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u9 zn b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1271,12 +1271,12 @@ MI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OAI21D1_3 a1 a2 b vdd vss zn
 *.PININFO a1:I a2:I b:I zn:O vdd:B vss:B 
-M_u2 zn a1 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u3 zn a2 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u4 net15 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI16_MI12 zn a1 xi16_net11 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u9 zn b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 zn a1 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u3 zn a2 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u4 net15 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI16_MI12 zn a1 xi16_net11 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u9 zn b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1287,12 +1287,12 @@ MI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OAI21D1 a1 a2 b vdd vss zn
 *.PININFO a1:I a2:I b:I zn:O vdd:B vss:B 
-M_u2 zn a1 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u3 zn a2 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u4 net15 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI16_MI12 zn a1 xi16_net11 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u9 zn b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 zn a1 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u3 zn a2 net15 vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u4 net15 b vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI16_MI12 zn a1 xi16_net11 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u9 zn b vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1303,12 +1303,12 @@ MI16_MI13 xi16_net11 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OR2D1_1 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-MU1_M_u2 z net7 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u4 net7 a1 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u3 net7 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u2 net7 a1 x_u7_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MU1_M_u3 z net7 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMU1_M_u2 z net7 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u4 net7 a1 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u3 net7 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u2 net7 a1 x_u7_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMU1_M_u3 z net7 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1319,12 +1319,12 @@ M_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OR2D1_2 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-MU1_M_u2 z net7 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u4 net7 a1 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u3 net7 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u2 net7 a1 x_u7_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MU1_M_u3 z net7 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMU1_M_u2 z net7 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u4 net7 a1 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u3 net7 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u2 net7 a1 x_u7_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMU1_M_u3 z net7 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1335,12 +1335,12 @@ M_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OR2D1_3 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-MU1_M_u2 z net7 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u4 net7 a1 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u3 net7 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u2 net7 a1 x_u7_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MU1_M_u3 z net7 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMU1_M_u2 z net7 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u4 net7 a1 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u3 net7 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u2 net7 a1 x_u7_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMU1_M_u3 z net7 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1351,12 +1351,12 @@ M_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_OR2D1 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-MU1_M_u2 z net7 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u4 net7 a1 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u3 net7 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
-M_u7_M_u2 net7 a1 x_u7_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MU1_M_u3 z net7 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMU1_M_u2 z net7 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u4 net7 a1 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u3 net7 a2 vss vss sg13_lv_nmos l=1.300e-07 w=6.350e-07
+XM_u7_M_u2 net7 a1 x_u7_net8 vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMU1_M_u3 z net7 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1407,8 +1407,8 @@ M_u7_M_u1 x_u7_net8 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_TIEH_1 vdd vss z
 *.PININFO z:O vdd:B vss:B 
-M_u2 net6 net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net6 net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1419,8 +1419,8 @@ M_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_TIEH_2 vdd vss z
 *.PININFO z:O vdd:B vss:B 
-M_u2 net6 net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net6 net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1431,8 +1431,8 @@ M_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_TIEH_3 vdd vss z
 *.PININFO z:O vdd:B vss:B 
-M_u2 net6 net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net6 net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1443,8 +1443,8 @@ M_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_TIEH vdd vss z
 *.PININFO z:O vdd:B vss:B 
-M_u2 net6 net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 net6 net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1455,8 +1455,8 @@ M_u1 z net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_TIEL_1 vdd vss zn
 *.PININFO zn:O vdd:B vss:B 
-M_u2 zn net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 zn net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1467,8 +1467,8 @@ M_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_TIEL_2 vdd vss zn
 *.PININFO zn:O vdd:B vss:B 
-M_u2 zn net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 zn net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1479,8 +1479,8 @@ M_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_TIEL_3 vdd vss zn
 *.PININFO zn:O vdd:B vss:B 
-M_u2 zn net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 zn net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1491,8 +1491,8 @@ M_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_TIEL vdd vss zn
 *.PININFO zn:O vdd:B vss:B 
-M_u2 zn net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u2 zn net6 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 .ENDS
 
 
@@ -1503,18 +1503,18 @@ M_u1 net6 net6 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
 ** Lib name: sg13g2
 .SUBCKT sg13g2_XNR2D1_1 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-M_u2_M_u2 net4 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u5_M_u2 net6 net4 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u4_M_u2 zn net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u8_M_u2 net10 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u6_M_u3 net4 a1 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u7_M_u3 net6 net10 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u6_M_u2 net4 net10 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u2_M_u3 net4 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u5_M_u3 net6 net4 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u4_M_u3 zn net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u8_M_u3 net10 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u2_M_u2 net4 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u5_M_u2 net6 net4 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u4_M_u2 zn net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u8_M_u2 net10 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u6_M_u3 net4 a1 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u7_M_u3 net6 net10 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u6_M_u2 net4 net10 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u2_M_u3 net4 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u5_M_u3 net6 net4 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u4_M_u3 zn net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u8_M_u3 net10 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -1525,18 +1525,18 @@ M_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_XNR2D1_2 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-M_u2_M_u2 net4 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u5_M_u2 net6 net4 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u4_M_u2 zn net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u8_M_u2 net10 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u6_M_u3 net4 a1 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u7_M_u3 net6 net10 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u6_M_u2 net4 net10 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u2_M_u3 net4 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u5_M_u3 net6 net4 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u4_M_u3 zn net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u8_M_u3 net10 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u2_M_u2 net4 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u5_M_u2 net6 net4 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u4_M_u2 zn net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u8_M_u2 net10 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u6_M_u3 net4 a1 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u7_M_u3 net6 net10 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u6_M_u2 net4 net10 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u2_M_u3 net4 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u5_M_u3 net6 net4 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u4_M_u3 zn net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u8_M_u3 net10 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -1547,18 +1547,18 @@ M_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_XNR2D1_3 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-M_u2_M_u2 net4 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u5_M_u2 net6 net4 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u4_M_u2 zn net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u8_M_u2 net10 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u6_M_u3 net4 a1 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u7_M_u3 net6 net10 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u6_M_u2 net4 net10 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u2_M_u3 net4 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u5_M_u3 net6 net4 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u4_M_u3 zn net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u8_M_u3 net10 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u2_M_u2 net4 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u5_M_u2 net6 net4 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u4_M_u2 zn net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u8_M_u2 net10 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u6_M_u3 net4 a1 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u7_M_u3 net6 net10 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u6_M_u2 net4 net10 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u2_M_u3 net4 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u5_M_u3 net6 net4 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u4_M_u3 zn net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u8_M_u3 net10 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -1569,18 +1569,18 @@ M_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_XNR2D1 a1 a2 vdd vss zn
 *.PININFO a1:I a2:I zn:O vdd:B vss:B 
-M_u2_M_u2 net4 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u5_M_u2 net6 net4 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u4_M_u2 zn net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-M_u8_M_u2 net10 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u6_M_u3 net4 a1 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u7_M_u3 net6 net10 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-M_u6_M_u2 net4 net10 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u2_M_u3 net4 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u5_M_u3 net6 net4 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u4_M_u3 zn net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-M_u8_M_u3 net10 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-M_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u2_M_u2 net4 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u5_M_u2 net6 net4 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u4_M_u2 zn net14 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XM_u8_M_u2 net10 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u6_M_u3 net4 a1 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u7_M_u3 net6 net10 net14 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XM_u6_M_u2 net4 net10 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u2_M_u3 net4 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u5_M_u3 net6 net4 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u4_M_u3 zn net14 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XM_u8_M_u3 net10 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XM_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -1591,18 +1591,18 @@ M_u7_M_u2 net6 a1 net14 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_XOR2D1_1 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-MI6_M_u3 net41 a1 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI2_M_u3 net27 net23 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI7_M_u2 net41 net27 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI3_M_u2 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4_M_u2 z net21 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI5_M_u2 net23 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI6_M_u2 net41 net23 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI2_M_u2 net27 a1 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI7_M_u3 net41 net27 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI3_M_u3 net27 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI4_M_u3 z net21 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI6_M_u3 net41 a1 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI2_M_u3 net27 net23 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI7_M_u2 net41 net27 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI3_M_u2 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4_M_u2 z net21 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI5_M_u2 net23 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI6_M_u2 net41 net23 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI2_M_u2 net27 a1 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI7_M_u3 net41 net27 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI3_M_u3 net27 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI4_M_u3 z net21 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -1613,18 +1613,18 @@ MI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_XOR2D1_2 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-MI6_M_u3 net41 a1 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI2_M_u3 net27 net23 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI7_M_u2 net41 net27 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI3_M_u2 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4_M_u2 z net21 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI5_M_u2 net23 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI6_M_u2 net41 net23 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI2_M_u2 net27 a1 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI7_M_u3 net41 net27 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI3_M_u3 net27 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI4_M_u3 z net21 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI6_M_u3 net41 a1 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI2_M_u3 net27 net23 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI7_M_u2 net41 net27 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI3_M_u2 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4_M_u2 z net21 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI5_M_u2 net23 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI6_M_u2 net41 net23 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI2_M_u2 net27 a1 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI7_M_u3 net41 net27 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI3_M_u3 net27 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI4_M_u3 z net21 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -1635,18 +1635,18 @@ MI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_XOR2D1_3 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-MI6_M_u3 net41 a1 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI2_M_u3 net27 net23 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI7_M_u2 net41 net27 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI3_M_u2 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4_M_u2 z net21 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI5_M_u2 net23 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI6_M_u2 net41 net23 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI2_M_u2 net27 a1 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI7_M_u3 net41 net27 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI3_M_u3 net27 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI4_M_u3 z net21 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI6_M_u3 net41 a1 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI2_M_u3 net27 net23 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI7_M_u2 net41 net27 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI3_M_u2 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4_M_u2 z net21 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI5_M_u2 net23 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI6_M_u2 net41 net23 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI2_M_u2 net27 a1 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI7_M_u3 net41 net27 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI3_M_u3 net27 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI4_M_u3 z net21 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
@@ -1657,18 +1657,18 @@ MI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 ** Lib name: sg13g2
 .SUBCKT sg13g2_XOR2D1 a1 a2 vdd vss z
 *.PININFO a1:I a2:I z:O vdd:B vss:B 
-MI6_M_u3 net41 a1 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI2_M_u3 net27 net23 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI7_M_u2 net41 net27 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI3_M_u2 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI4_M_u2 z net21 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
-MI5_M_u2 net23 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
-MI6_M_u2 net41 net23 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI2_M_u2 net27 a1 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI7_M_u3 net41 net27 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
-MI3_M_u3 net27 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI4_M_u3 z net21 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
-MI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI6_M_u3 net41 a1 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI2_M_u3 net27 net23 net21 vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI7_M_u2 net41 net27 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI3_M_u2 net27 a2 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI4_M_u2 z net21 vss vss sg13_lv_nmos l=1.300e-07 w=7.000e-07
+XMI5_M_u2 net23 a1 vss vss sg13_lv_nmos l=1.300e-07 w=3.500e-07
+XMI6_M_u2 net41 net23 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI2_M_u2 net27 a1 net21 vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI7_M_u3 net41 net27 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
+XMI3_M_u3 net27 a2 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI4_M_u3 z net21 vdd vdd sg13_lv_pmos l=1.300e-07 w=1.100e-06
+XMI5_M_u3 net23 a1 vdd vdd sg13_lv_pmos l=1.300e-07 w=5.500e-07
 .ENDS
 
 
