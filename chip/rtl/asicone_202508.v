@@ -18,6 +18,22 @@ module asicone_202508 (
   pad_mosi_pad,
   pad_miso_pad,
   pad_sclk_pad,
+
+  pad_RO_101_Drain_Force_pad,
+  pad_RO_101_Drain_Sense_pad,
+  pad_RO_101_extra_load_pad,
+  pad_RO_101_Vout_pad,
+  pad_RO_101_DUT_gate_pad,
+
+  pad_RO_13_Drain_Force_pad,
+  pad_RO_13_Drain_Sense_pad,
+  pad_RO_13_extra_load_pad,
+  pad_RO_13_Vout_pad,
+  pad_RO_13_DUT_gate_pad,
+  pad_RO_RST_B_pad,
+
+  ROVDD,
+  RO2VDD,
   AVDD,
   VDD,
   VSS,
@@ -43,6 +59,22 @@ module asicone_202508 (
   inout pad_mosi_pad;
   inout pad_miso_pad;
   inout pad_sclk_pad;
+
+  inout pad_RO_101_Drain_Force_pad;
+  inout pad_RO_101_Drain_Sense_pad;
+  inout pad_RO_101_extra_load_pad;
+  inout pad_RO_101_Vout_pad;
+  inout pad_RO_101_DUT_gate_pad;
+
+  inout pad_RO_13_Drain_Force_pad;
+  inout pad_RO_13_Drain_Sense_pad;
+  inout pad_RO_13_extra_load_pad;
+  inout pad_RO_13_Vout_pad;
+  inout pad_RO_13_DUT_gate_pad;
+  inout pad_RO_RST_B_pad;
+
+  inout ROVDD;
+  inout RO2VDD;
   inout AVDD;
   inout VSS;
   inout VDD;
@@ -89,6 +121,32 @@ module asicone_202508 (
   wire pad_miso_c2p;
   wire pad_sclk_pad;
   wire pad_sclk_p2c;
+
+  wire pad_RO_101_Drain_Force_pad;
+  wire pad_RO_101_Drain_Force_padres;
+  wire pad_RO_101_Drain_Sense_pad;
+  wire pad_RO_101_Drain_Sense_padres;
+  wire pad_RO_101_extra_load_pad;
+  wire pad_RO_101_extra_load_padres;
+  wire pad_RO_13_Drain_Force_pad;
+  wire pad_RO_13_Drain_Force_padres;
+  wire pad_RO_13_Drain_Sense_pad;
+  wire pad_RO_13_Drain_Sense_padres;
+  wire pad_RO_13_extra_load_pad;
+  wire pad_RO_13_extra_load_padres;
+  wire pad_RO_101_Vout_pad;
+  wire pad_RO_101_Vout_c2p;
+  wire pad_RO_13_Vout_pad;
+  wire pad_RO_13_Vout_c2p;
+  wire pad_RO_101_DUT_gate_pad;
+  wire pad_RO_101_DUT_gate_p2c;
+  wire pad_RO_13_DUT_gate_pad;
+  wire pad_RO_13_DUT_gate_p2c;
+  wire pad_RO_RST_B_pad;
+  wire pad_RO_RST_B_p2c;
+
+  wire ROVDD;
+  wire RO2VDD;
   wire AVDD;
   wire VSS;
   wire VDD;
@@ -154,38 +212,35 @@ module asicone_202508 (
   sg13g2_IOPadIn pad_sclk(.pad(pad_sclk_pad), .p2c(pad_sclk_p2c));
   sg13g2_bpd70 bd_pad_sclk();
 
-  //sg13g2_IOPadAnalog pad_dum_15();
-  //sg13g2_bpd70 bd_pad_dum_15();
-  sg13g2_IOPadAnalog pad_dum_14();
-  sg13g2_bpd70 bd_pad_dum_14();
-  sg13g2_IOPadAnalog pad_dum_13();
-  sg13g2_bpd70 bd_pad_dum_13();
-  sg13g2_IOPadAnalog pad_dum_12();
-  sg13g2_bpd70 bd_pad_dum_12();
-  sg13g2_IOPadAnalog pad_dum_11();
-  sg13g2_bpd70 bd_pad_dum_11();
-  sg13g2_IOPadAnalog pad_dum_10();
-  sg13g2_bpd70 bd_pad_dum_10();
-  sg13g2_IOPadAnalog pad_dum_9();
-  sg13g2_bpd70 bd_pad_dum_9();
-  sg13g2_IOPadAnalog pad_dum_8();
-  sg13g2_bpd70 bd_pad_dum_8();
-  sg13g2_IOPadAnalog pad_dum_7();
-  sg13g2_bpd70 bd_pad_dum_7();
-  sg13g2_IOPadAnalog pad_dum_6();
-  sg13g2_bpd70 bd_pad_dum_6();
-  sg13g2_IOPadAnalog pad_dum_5();
-  sg13g2_bpd70 bd_pad_dum_5();
-  sg13g2_IOPadAnalog pad_dum_4();
-  sg13g2_bpd70 bd_pad_dum_4();
-  sg13g2_IOPadAnalog pad_dum_3();
-  sg13g2_bpd70 bd_pad_dum_3();
-  sg13g2_IOPadAnalog pad_dum_2();
-  sg13g2_bpd70 bd_pad_dum_2();
-  sg13g2_IOPadAnalog pad_dum_1();
-  sg13g2_bpd70 bd_pad_dum_1();
-  //sg13g2_IOPadAnalog pad_dum_0();
-  //sg13g2_bpd70 bd_pad_dum_0();
+  sg13g2_IOPadAnalog pad_RO_101_Drain_Force(.pad(pad_RO_101_Drain_Force_pad), .padres(pad_RO_101_Drain_Force_padres));
+  sg13g2_bpd70 bd_pad_RO_101_Drain_Force();
+  sg13g2_IOPadAnalog pad_RO_101_Drain_Sense(.pad(pad_RO_101_Drain_Sense_pad), .padres(pad_RO_101_Drain_Sense_padres));
+  sg13g2_bpd70 bd_pad_RO_101_Drain_Sense();
+  sg13g2_IOPadAnalog pad_RO_101_extra_load(.pad(pad_RO_101_extra_load_pad), .padres(pad_RO_101_extra_load_padres));
+  sg13g2_bpd70 bd_pad_RO_101_extra_load();
+  sg13g2_IOPadAnalog pad_RO_13_Drain_Force(.pad(pad_RO_13_Drain_Force_pad), .padres(pad_RO_13_Drain_Force_padres));
+  sg13g2_bpd70 bd_pad_RO_13_Drain_Force();
+  sg13g2_IOPadAnalog pad_RO_13_Drain_Sense(.pad(pad_RO_13_Drain_Sense_pad), .padres(pad_RO_13_Drain_Sense_padres));
+  sg13g2_bpd70 bd_pad_RO_13_Drain_Sense();
+  sg13g2_IOPadAnalog pad_RO_13_extra_load(.pad(pad_RO_13_extra_load_pad), .padres(pad_RO_13_extra_load_padres));
+  sg13g2_bpd70 bd_pad_RO_13_extra_load();
+  sg13g2_IOPadAnalog pad_RO_VDD(.pad(ROVDD), .padres(pad_RO_VDD_padres));
+  sg13g2_IOPadAnalog pad_RO2_VDD(.pad(RO2VDD), .padres(pad_RO2_VDD_padres));
+  sg13g2_bpd70 bd_pad_RO2_VDD();
+  sg13g2_bpd70 bd_pad_RO_VDD();
+  sg13g2_IOPadVssExt pad_RO_VSS();
+  sg13g2_bpd70 bd_pad_RO_VSS();
+  sg13g2_IOPadOut16mA pad_RO_101_Vout(.pad(pad_RO_101_Vout_pad), .c2p(pad_RO_101_Vout_c2p));
+  sg13g2_bpd70 bd_pad_RO_101_Vout();
+  sg13g2_IOPadOut16mA pad_RO_13_Vout(.pad(pad_RO_13_Vout_pad), .c2p(pad_RO_13_Vout_c2p));
+  sg13g2_bpd70 bd_pad_RO_13_Vout();
+  sg13g2_IOPadIn pad_RO_101_DUT_gate(.pad(pad_RO_101_DUT_gate_pad), .p2c(pad_RO_101_DUT_gate_p2c));
+  sg13g2_bpd70 bd_pad_RO_101_DUT_gate();
+  sg13g2_IOPadIn pad_RO_13_DUT_gate(.pad(pad_RO_13_DUT_gate_pad), .p2c(pad_RO_13_DUT_gate_p2c));
+  sg13g2_bpd70 bd_pad_RO_13_DUT_gate();
+  sg13g2_IOPadIn pad_RO_RST_B(.pad(pad_RO_RST_B_pad), .p2c(pad_RO_RST_B_p2c));
+  sg13g2_bpd70 bd_pad_RO_RST_B();
+
   sg13g2_Filler4000 FILLER_0();
   sg13g2_Filler200 FILLER_1();
   sg13g2_Filler4000 FILLER_2();
@@ -265,5 +320,35 @@ module asicone_202508 (
     .DATA(pad_mosi_p2c), 
     .DOUT_DAT(pad_miso_c2p), .DOUT_EN(),
     .RST(pad_adc_rst_p2c), .R(R), .RD(RD)
+  );
+
+  top_101 ro_101(
+    .n_RO_control(R[0]),
+    .RO_control(R[1]),
+    .DUT_gate(pad_RO_101_DUT_gate_p2c),
+    .DUT_Footer(R[2]),
+    .DUT_Header(R[3]),
+    .Drain_Sense(pad_RO_101_Drain_Sense_padres),
+    .Drain_Force(pad_RO_101_Drain_Force_padres),
+    .VDD(ROVDD),
+    .VSS(VSS),
+    .RSTB(pad_RO_RST_B_p2c),
+    .extra_load(pad_RO_101_extra_load_padres),
+    .OUT(pad_RO_101_Vout_c2p)
+  );
+
+  top_13 ro_13(
+    .n_RO_control(R[8]),
+    .RO_control(R[9]),
+    .DUT_gate(pad_RO_13_DUT_gate_p2c),
+    .DUT_Footer(R[10]),
+    .DUT_Header(R[11]),
+    .Drain_Sense(pad_RO_13_Drain_Sense_padres),
+    .Drain_Force(pad_RO_13_Drain_Force_padres),
+    .VDD(RO2VDD),
+    .VSS(VSS),
+    .RSTB(pad_RO_RST_B_p2c),
+    .extra_load(pad_RO_13_extra_load_padres),
+    .OUT(pad_RO_13_Vout_c2p)
   );
 endmodule

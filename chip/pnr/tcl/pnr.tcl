@@ -95,6 +95,8 @@ read_def -floorplan_initialize $RTL_DIR/${TOP}.block.def
 add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power
 add_global_connection -net VSS -inst_pattern .* -pin_pattern {^vss$} -ground
 
+add_global_connection -net ROVDD -inst_pattern "ro_101" -pin_pattern {^VDD$} -power
+add_global_connection -net RO2VDD -inst_pattern "ro_13" -pin_pattern {^VDD$} -power
 add_global_connection -net AVDD -inst_pattern "adc" -pin_pattern {^AVDD$} -power
 add_global_connection -net VDD -inst_pattern "\(adc|spi\)" -pin_pattern {^VDD$} -power
 add_global_connection -net VSS -inst_pattern "\(adc|spi\)" -pin_pattern {^VSS$} -ground
@@ -106,7 +108,7 @@ add_global_connection -net VDDIO -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pa
 add_global_connection -net VSSIO -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^iovss$}
 add_global_connection -net VSS -inst_pattern "\(pad|FILLER|CORNER\).*" -pin_pattern {^sub$}
 
-set_voltage_domain -name CORE -power VDD -ground VSS -secondary_power {AVDD}
+set_voltage_domain -name CORE -power VDD -ground VSS -secondary_power {AVDD ROVDD RO2VDD}
 
 # Flag some pins as special. If not, global routing will fail
 source tcl/padring.tcl
@@ -252,6 +254,7 @@ add_pdn_connect \
 
 pdngen
 
+catch
 ###################################
 ## Placement
 ####################################
