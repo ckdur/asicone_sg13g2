@@ -84,7 +84,7 @@ if {[file exists $env(PNR_DIR)/$env(TOP).openlane.fp.tcl]} {
   # FORMAT: initialize_floorplan [-utilization util] [-aspect_ratio ratio] [-core_space space | {bottom top left right}] [-die_area {lx ly ux uy}] [-core_area {lx ly ux uy}] [-sites site_name]
   source $env(PNR_DIR)/$env(TOP).openlane.fp.tcl
 } else {
-  initialize_floorplan -site obssite -aspect_ratio [expr $PX/$PY] -utilization [expr $PR*100] -core_space "$margin $margin $margin $margin"
+  initialize_floorplan -site obssite -aspect_ratio [expr 1.0*$PY/$PX] -utilization [expr $PR*100] -core_space "$margin $margin $margin $margin"
 }
 
 add_global_connection -net VDD -inst_pattern .* -pin_pattern {^vdd$} -power

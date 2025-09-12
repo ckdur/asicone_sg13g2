@@ -34,7 +34,7 @@ endif
 ifeq ($(TOP),SPI)
 	SPIX_DIR=$(ROOT_DIR)/digital/rtl/spix
 	SYN_SRC?=$(SPIX_DIR)/spi.v
-	PX:=1
+	PX:=3
 	PY:=1
 endif
 

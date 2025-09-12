@@ -81,7 +81,7 @@ set siteobj [[[::ord::get_db] findLib $techname] findSite $techsite]
 set row   [::ord::dbu_to_microns [$siteobj getHeight]]
 set track [::ord::dbu_to_microns [$siteobj getWidth]]
 set pitch [expr 32*$row]
-set margin [expr 5*$row]
+set margin [expr 5.5*$row]
 
 set padsize 180.000
 set top_metal "TopMetal2"
@@ -173,7 +173,7 @@ make_tracks TopMetal2 -x_offset 2.0  -x_pitch 4.0  -y_offset 2.0 -y_pitch 4.0
 #    -distance [expr $row*16]\
 #    -tapcell_master "$TAPCells"
 
-tapcell -halo_width_x [expr 3*$row] -halo_width_y [expr 3*$row]
+tapcell -halo_width_x [expr $row] -halo_width_y [expr $row]
 
 #source ${ROOT_DIR}/lib/library.sg13g2.tcl
 set_macro_extension 10
@@ -193,9 +193,9 @@ define_pdn_grid -name Core
 add_pdn_ring \
 	-grid Core \
 	-layers "TopMetal1 Metal5" \
-	-widths "6 6" \
+	-widths "5 5" \
 	-spacings "1.64 1.64" \
-	-core_offset "$row $row" \
+	-core_offset "1 1" \
 	-connect_to_pads
 
 add_pdn_stripe \
@@ -229,7 +229,7 @@ define_pdn_grid \
     -default \
     -name macro \
     -grid_over_pg_pins \
-    -halo "5 5"
+    -halo "0 0"
 
 #add_pdn_ring \
 #    -grid macro \
@@ -250,11 +250,14 @@ define_pdn_grid \
 add_pdn_connect \
     -grid macro \
     -layers "Metal5 TopMetal1"
+
+add_pdn_connect \
+    -grid macro \
+    -layers "Metal2 Metal5"
 }
 
 pdngen
 
-catch
 ###################################
 ## Placement
 ####################################
