@@ -3,14 +3,13 @@
 ## Contents:
 
 - Self-generated 5-bit SAR ADC (SARADC). Source code to be published.
+- Feed-forward 101-element ring oscillator.
+- Feed-forward 13-element ring oscillator.
 - SPI core.
 - All digital cells are custom-made. 18-track cells (What a waste I am right?)
     - sg13g2 for custom-made regular cells
     - sg13g2f for floating-body cells (For the ADC)
 - 38 pins. Using regular IO.
-
-We still working on the feed-forward ring oscillators. Once finished, will be
-put in the list.
 
 ## Versions of software
 

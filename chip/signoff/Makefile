@@ -75,6 +75,9 @@ $(GDSFILL): $(GDS)
 view: $(GDSFILL)
 	klayout -nn $(PDK_KNFILE) -s $(GDSFILL)
 
+edit: $(GDSFILL)
+	klayout -nn $(PDK_KNFILE) -e -s $(GDSFILL)
+
 drc: $(GDSFILL)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py --path=$(GDSFILL) --mp=10 --run_dir=$(SIGN_DIR)/reports/ --topcell=$(TOP) --run_mode=flat --density_thr=10 --antenna
 
@@ -108,7 +111,7 @@ reports_no_filler/%.lvsdb: $(IO_MOD_GDS) $(PADRING_DIR)/cells/sg13g2_io_mod.cdl
 
 submit: $(GDSFINAL) $(SPICE) reports/$(TOP).lvsdb reports/$(TOP).fill_$(TOP)_full.lyrdb
 	mkdir -p $(SIGN_DIR)/submit
-	mkdir -p $(SIGN_DIR)/submit/ngspice
+	mkdir -p $(SIGN_DIR)/submit/sim
 	mkdir -p $(SIGN_DIR)/submit/drc
 	mkdir -p $(SIGN_DIR)/submit/drc/reports
 	mkdir -p $(SIGN_DIR)/submit/lvs
@@ -128,8 +131,8 @@ submit: $(GDSFINAL) $(SPICE) reports/$(TOP).lvsdb reports/$(TOP).fill_$(TOP)_ful
 	cp reports/drc_run_* $(SIGN_DIR)/submit/drc/reports/
 	cp reports/$(TOP).fill_* $(SIGN_DIR)/submit/drc/reports/
 	make -C $(ROOT_DIR)/saradc_auto/sim/ question
-	cp -r $(ROOT_DIR)/saradc_auto/sim/question/* $(SIGN_DIR)/submit/ngspice/
-	cp -r $(ROOT_DIR)/saradc_auto/sim/question/* $(SIGN_DIR)/submit/ngspice/
+	cp -r $(ROOT_DIR)/saradc_auto/sim/question/* $(SIGN_DIR)/submit/sim/
+	cp -r $(ROOT_DIR)/saradc_auto/sim/question/* $(SIGN_DIR)/submit/sim/
 	cp -r $(ROOT_DIR)/digital $(SIGN_DIR)/submit/digital
 	rm -rf $(SIGN_DIR)/submit/digital/rtl/aes
 	rm -rf $(SIGN_DIR)/submit/digital/rtl/spix/.git
