@@ -7,3 +7,6 @@
 [submodule "ro_reliability"]
 	path = ro_reliability
 	url = ssh://git@gitlab.symbioticeda.com:20022/Juan_25/ro_reliability_to_sept2025.git
+[submodule "padring"]
+	path = padring
+	url = https://github.com/ckdur/padring.git

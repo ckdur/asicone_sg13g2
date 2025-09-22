@@ -6,18 +6,20 @@ SIGN_DIR=$(abspath ../signoff)
 SEAL_DIR=$(abspath ../sealring)
 PNR_DIR=$(abspath ../pnr)
 CELLS_DIR=$(abspath ./cells)
+PADRING_EXE_DIR=$(abspath ../../padring)
 
 DEF=$(PADRING_DIR)/outputs/padring.def
 GDS=$(PADRING_DIR)/outputs/padring.gds
+PADRING_EXE=$(PADRING_EXE_DIR)/build/padring
 
 export SIGN_DIR
 export ROOT_DIR
 
 all: $(DEF)
 
-$(DEF): $(SYN_NET) $(PRJ_DIR)/rtl/${TOP}.padring.cfg
+$(DEF): $(SYN_NET) $(PRJ_DIR)/rtl/${TOP}.padring.cfg $(PADRING_EXE)
 	mkdir -p $(PADRING_DIR)/outputs
-	padring -v --lef $(ROOT_DIR)/lib/sg13g2_io.custom.lef --lef $(CELLS_DIR)/sg13g2_io_mod.lef --lef $(CELLS_DIR)/sg13g2_bondpad.lef --svg $(PADRING_DIR)/outputs/padring.svg --def $(DEF) --ver $(PADRING_DIR)/outputs/padring.v --csv $(PADRING_DIR)/outputs/padring.csv $(PRJ_DIR)/rtl/${TOP}.padring.cfg | tee $(PADRING_DIR)/padring.log
+	$(PADRING_EXE) -v --lef $(ROOT_DIR)/lib/sg13g2_io.custom.lef --lef $(CELLS_DIR)/sg13g2_io_mod.lef --lef $(CELLS_DIR)/sg13g2_bondpad.lef --svg $(PADRING_DIR)/outputs/padring.svg --def $(DEF) --ver $(PADRING_DIR)/outputs/padring.v --csv $(PADRING_DIR)/outputs/padring.csv $(PRJ_DIR)/rtl/${TOP}.padring.cfg | tee $(PADRING_DIR)/padring.log
 	sed -i "s|PLACED|FIXED|g" $(DEF)
 
 gds: $(GDS)
@@ -44,6 +46,11 @@ view: $(GDS)
 
 clean:
 	rm -vrf fv/ outputs reports *.size *.log DesignLib
+
+# Dependency to compile the padring utility
+$(PADRING_EXE): $(PADRING_EXE_DIR)/CMakeLists.txt
+	mkdir -p $(PADRING_EXE_DIR)/build
+	cd $(PADRING_EXE_DIR)/build && cmake .. && make
 
 .PHONY: all manual clean
 
