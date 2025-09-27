@@ -65,7 +65,7 @@ $(SIM_DIR)/outputs/saradc_tb.xyce.%.csv: $(TB_ANA_XYCE_SRC) $(CDL_XYCE_SRC) $(DE
 	cp $(TB_ANA_XYCE_SRC) $(SIM_DIR)/outputs/saradc_tb.$*.sp
 	cp $(ROOT_DIR)/src/saradc_tb_body.sp $(SIM_DIR)/outputs
 	cp $(ROOT_DIR)/src/dac_r2r_ideal.sp $(SIM_DIR)/outputs
-	sed -i -e 's/{DEF_FCLK}/$*/g ; s/saradc_tb.xyce/saradc_tb.xyce.$*/g ; s/mos_tt/$(CORNER)/g' $(SIM_DIR)/outputs/saradc_tb.$*.sp
+	sed -i -e 's/{DEF_FCLK}/$*/g ; s/saradc_tb.xyce/saradc_tb.xyce.$*/g ; s/mos_tt/$(CORNER)/g ; s|{PDK_ROOT}|$(PDK_ROOT)|g ; s|{PDK}|$(PDK)|g' $(SIM_DIR)/outputs/saradc_tb.$*.sp
 	cd $(SIM_DIR)/outputs/ && mpirun $(XYCE_RUN_COMMAND) $(SIM_DIR)/outputs/saradc_tb.$*.sp | tee $(SIM_DIR)/outputs/saradc_tb.$*.log
 
 $(SIM_DIR)/outputs/saradc_tb.xyce.%.pdf: $(SIM_DIR)/outputs/saradc_tb.xyce.%.csv $(SIM_DIR)/scripts/plot.vin_vout.xyce.gnu $(SIM_DIR)/scripts/plot.result.xyce.gnu

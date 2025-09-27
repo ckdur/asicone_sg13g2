@@ -5,12 +5,12 @@
 * Include the models
 * TODO: make it depending on PDK_ROOT
 
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerMOSlv.lib mos_tt
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerMOShv.lib mos_tt
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerCAP.lib cap_typ
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerRES.lib res_typ
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerHBT.lib hbt_typ
-.inc /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/diodes.lib
+.lib {PDK_ROOT}/{PDK}/libs.tech/xyce/models/cornerMOSlv.lib mos_tt
+.lib {PDK_ROOT}/{PDK}/libs.tech/xyce/models/cornerMOShv.lib mos_tt
+.lib {PDK_ROOT}/{PDK}/libs.tech/xyce/models/cornerCAP.lib cap_typ
+.lib {PDK_ROOT}/{PDK}/libs.tech/xyce/models/cornerRES.lib res_typ
+.lib {PDK_ROOT}/{PDK}/libs.tech/xyce/models/cornerHBT.lib hbt_typ
+.inc {PDK_ROOT}/{PDK}/libs.tech/xyce/models/diodes.lib
 
 .inc SARADC_CELL_INVX16_ASCAP.ckt
 .inc SARADC_CELL_INVX0_ASSW.ckt

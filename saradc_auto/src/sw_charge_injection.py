@@ -56,6 +56,8 @@ if __name__ == "__main__":
         new_content = new_content.replace("{delay}", delay_str)
         new_content = new_content.replace("sw_charge_injection.xyce", "sw_charge_injection.xyce."+name)
         new_content = new_content.replace("mos_tt", "mos_tt")
+        new_content = new_content.replace("{PDK_ROOT}", os.environ['PDK_ROOT'])
+        new_content = new_content.replace("{PDK}", os.environ['PDK'])
 
         netlist_path = "{}/sw_charge_injection.xyce.{}.sp".format(run_dir, name)
         data_path = "{}/sw_charge_injection.xyce.{}.csv".format(run_dir, name)

@@ -10,12 +10,12 @@
 
 * Include the models
 * TODO: make it depending on PDK_ROOT
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerCAP.lib cap_typ
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerRES.lib res_typ
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerHBT.lib hbt_typ
-.include /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/diodes.lib
+.lib {PDK_ROOT}/{PDK}/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.lib {PDK_ROOT}/{PDK}/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
+.lib {PDK_ROOT}/{PDK}/libs.tech/ngspice/models/cornerCAP.lib cap_typ
+.lib {PDK_ROOT}/{PDK}/libs.tech/ngspice/models/cornerRES.lib res_typ
+.lib {PDK_ROOT}/{PDK}/libs.tech/ngspice/models/cornerHBT.lib hbt_typ
+.include {PDK_ROOT}/{PDK}/libs.tech/ngspice/models/diodes.lib
 
 * Include the actual netlist
 * NOTE: The design needs to pass LVS for this to work

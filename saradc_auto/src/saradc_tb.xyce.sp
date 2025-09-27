@@ -3,14 +3,16 @@
 .options tnom=25 temp=25 gminsteps=0 warn=1 klu=1 acct=1 method=gear trtol=1
 
 * Include the models
-* TODO: make it depending on PDK_ROOT
+* TODO: These variables doesnt work (obviously), but seriously, the simulators should have a way
+*.param PDK="ihp-sg13g2"
+*.param PDK_ROOT="/opt/ext/OpenPDKs"
 
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerMOSlv.lib mos_tt
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerMOShv.lib mos_tt
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerCAP.lib cap_typ
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerRES.lib res_typ
-.lib /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/cornerHBT.lib hbt_typ
-.inc /opt/ext/OpenPDKs/IHP-Open-PDK/ihp-sg13g2/libs.tech/xyce/models/diodes.lib
+.lib {PDK_ROOT}/{PDK}/libs.tech/xyce/models/cornerMOSlv.lib mos_tt
+.lib {PDK_ROOT}/{PDK}/libs.tech/xyce/models/cornerMOShv.lib mos_tt
+.lib {PDK_ROOT}/{PDK}/libs.tech/xyce/models/cornerCAP.lib cap_typ
+.lib {PDK_ROOT}/{PDK}/libs.tech/xyce/models/cornerRES.lib res_typ
+.lib {PDK_ROOT}/{PDK}/libs.tech/xyce/models/cornerHBT.lib hbt_typ
+.inc {PDK_ROOT}/{PDK}/libs.tech/xyce/models/diodes.lib
 
 * SARADC cells
 .inc sg13g2f.ckt

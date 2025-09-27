@@ -30,6 +30,8 @@ if __name__ == "__main__":
         new_content = content.replace("{vi}", volt_str)
         new_content = new_content.replace("cap_linearity.xyce", "cap_linearity.xyce."+volt_str)
         new_content = new_content.replace("mos_tt", "mos_tt")
+        new_content = new_content.replace("{PDK_ROOT}", os.environ['PDK_ROOT'])
+        new_content = new_content.replace("{PDK}", os.environ['PDK'])
 
         netlist_path = "{}/cap_linearity.xyce.{}.sp".format(run_dir, volt_str)
 
