@@ -1,5 +1,7 @@
 # ASICONE IHP sg13g2
 
+![Capture of ASICONE 2025/09](asicone_202509_capture.png)
+
 ## Contents:
 
 - Self-generated 5-bit SAR ADC (SARADC).
