@@ -1,4 +1,0 @@
-vdd,inputOutput,supply
-vss,inputOutput,ground
-i,input,signal
-zn,inputOutput,supply

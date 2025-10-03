@@ -10,3 +10,6 @@
 [submodule "padring"]
 	path = padring
 	url = https://github.com/ckdur/padring.git
+[submodule "saradc_auto"]
+	path = saradc_auto
+	url = git@github.com:ckdur/saradc_auto.git
