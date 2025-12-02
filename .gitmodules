@@ -6,10 +6,10 @@
 	url = https://github.com/ckdur/spix.git
 [submodule "ro_reliability"]
 	path = ro_reliability
-	url = ssh://git@gitlab.symbioticeda.com:20022/Juan_25/ro_reliability_to_sept2025.git
+	url = http://gitlab.symbioticeda.com/Juan_25/ro_reliability_to_sept2025.git
 [submodule "padring"]
 	path = padring
 	url = https://github.com/ckdur/padring.git
 [submodule "saradc_auto"]
 	path = saradc_auto
-	url = git@github.com:ckdur/saradc_auto.git
+	url = http://gitlab.symbioticeda.com/ckdur.iso/saradc_auto.git
