@@ -3,7 +3,7 @@
 # This is an example of running all the steps for the different designs
 # in the asicone 202509
 
-set -x
+set -e -x
 
 # Digital flow. Synthesis and PnR of the SPI
 make -C digital/syn all
@@ -41,9 +41,9 @@ make -C chip/pnr all
 
 #  TODO: This is the only step that returns error for some reason
 #        It generates the GDS correctly tho
-set +x
+set +e
 make -C chip/signoff gds
-set -x
+set -e
 
 make -C chip/signoff filler
 make -C chip/signoff drc
