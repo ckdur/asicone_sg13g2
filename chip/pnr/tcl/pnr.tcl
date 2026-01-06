@@ -262,6 +262,20 @@ pdngen
 ## Placement
 ####################################
 
+# Position the io terminals before global placement
+foreach inst [$::block getInsts] {
+  set name_inst [$inst getName]
+  set master [$inst getMaster]
+  set pins [$master getMTerms]
+  foreach pin $pins {
+    set pin_name [$pin getName]
+    if {$pin_name == "pad"} {
+      place_io_terminals $name_inst/pad
+      break
+    }
+  }
+}
+
 # -density 1.0 -overflow 0.9 -init_density_penalty 0.0001 -initial_place_max_iter 20 -bin_grid_count 64
 global_placement -density 0.85
 
