@@ -62,6 +62,7 @@ drc_no_filler: $(GDS)
 
 $(SPICE): $(ROOT_DIR)/lib/$(TECH).cdl $(CDLS) $(NET)
 	cat $(ROOT_DIR)/lib/$(TECH).cdl $(CDLS) $(NET) > $(SPICE)
+	sed -i -e "s|{PDK_ROOT}|$(PDK_ROOT)|g ; s|{PDK}|$(PDK)|g" $(SPICE)
 
 lvs_no_filler: $(GDS) $(SPICE)
 #	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py --layout=$(GDS) --netlist=$(SPICE) --run_dir=$(SIGN_DIR)/reports_no_filler/ --topcell=$(TOP) --run_mode=flat --verbose
