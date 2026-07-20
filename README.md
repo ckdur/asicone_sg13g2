@@ -8,10 +8,13 @@
 - Feed-forward 101-element ring oscillator.
 - Feed-forward 13-element ring oscillator.
 - SPI core.
-- All digital cells are custom-made. 18-track cells (What a waste I am right?)
+- All digital cells are custom-made. 18-track cells (Which is experimental)
     - sg13g2 for custom-made regular cells
     - sg13g2f for floating-body cells (For the ADC)
 - 38 pins. Using regular IO.
+
+This chip was not designed for industrial purposes. Only for research and evaluation
+of open-source tools and the IHP `sg13g2` PDK.
 
 ## Filestructure
 
@@ -58,9 +61,11 @@ The structure is done by [project]/[step|type]. Hope is not confusing.
   doesn't have RC extraction of any kind, and makes the characterization impossible.
 - We do not use OpenROAD-flow-scripts. The flow is custom.
 
-May god forgive my actions and make this chip work.
+May god give us the blessing of this chip working.
 
 # Acknoledge
 
 - SARADC paper: [Read it here.](https://ieeexplore.ieee.org/document/11002493)
-- Symbiotic EDA sponsored this project.
+- Symbiotic EDA which uses this design for evaluation of tools.
+- The University of Tokyo, which uses this design for research purposes only.
+
