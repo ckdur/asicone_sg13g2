@@ -2,6 +2,8 @@
 
 ![Capture of ASICONE 2025/09](asicone_202509_capture.png)
 
+![Photo of ASICONE 2025/09](asicone_202509_photo.jpg)
+
 ## Contents:
 
 - Self-generated 5-bit SAR ADC (SARADC).
