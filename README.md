@@ -4,6 +4,12 @@
 
 ![Photo of ASICONE 2025/09](asicone_202509_photo.jpg)
 
+## Report
+
+The full report of the chip (design, tapeout sequence of September 2025, measurement setup,
+and the ADC, ring oscillator and SPI results compared with simulation) is in
+[report/README.md](report/README.md), also as [PDF](report/report.pdf).
+
 ## Contents:
 
 - Self-generated 5-bit SAR ADC (SARADC).
