@@ -209,7 +209,10 @@ analog netlist (capacitors and switches as cells) and the logic; OpenROAD places
 scripted pattern (a ``circle'' pattern with Metal5/TopMetal1 bridges for bits 1 and 3), routes the special
 nets (plates, references, top plates) with custom Tcl, and routes the rest with the detailed router. The
 taped-out version used the flat flow now kept as \texttt{pnr\_legacy/}. Macro size
-\SI{566.44}{\micro m} $\times$ \SI{361.08}{\micro m}, 24\,198 transistors.
+\SI{566.44}{\micro m} $\times$ \SI{361.08}{\micro m}, 24\,198 transistors. The taped-out netlists, DEF,
+GDS and reports are archived in the release \texttt{tapeout-T594} of \texttt{saradc\_auto}
+(\url{https://github.com/ckdur/saradc_auto/releases/tag/tapeout-T594}); its \texttt{SARADC.gds} is
+identical, layer by layer, to the \texttt{SARADC} cell of the submitted chip GDS.
 
 \paragraph{Design-time simulation.} Before tapeout the ADC was verified at schematic level with
 ngspice and Xyce at \SI{1.8}{V}: transient conversions (only a few samples were possible at the
@@ -770,8 +773,10 @@ caught issues 1--3 in minutes.
 \begin{description}
   \item[Chip] \texttt{asicone\_sg13g2} (\texttt{chip/}, \texttt{digital/}, \texttt{ro\_reliability/},
         \texttt{saradc\_auto/}); submission copy in \nolinkurl{TO_Sep2025/asicone_202509}. Note that
-        \nolinkurl{saradc_auto/pnr/outputs} now holds the hierarchical ADC; the taped-out ADC is in
-        \nolinkurl{saradc_auto/*/outputs.tapeout}.
+        \nolinkurl{saradc_auto/pnr/outputs} now holds the hierarchical ADC; the taped-out ADC
+        (\nolinkurl{saradc_auto/*/outputs.tapeout}, git-ignored) is archived in the release
+        \texttt{tapeout-T594}: \url{https://github.com/ckdur/saradc_auto/releases/tag/tapeout-T594}
+        (mirror: \url{https://gitlab.symbioticeda.com/ckdur.iso/saradc_auto/-/releases/tapeout-T594}).
   \item[ADC bench] \nolinkurl{RISCVConsole/software/mso}: \texttt{adc\_sweep.sh}, then\newline
         \texttt{make -C report RESULTS=../results/sweep\_20261022}. \newline Simulation:
         \texttt{saradc\_auto/sim} (\texttt{char.sh}), extraction \nolinkurl{saradc_auto/pex/split.py}.

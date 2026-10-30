@@ -5,7 +5,7 @@
 # 10 Reproducing this report
 
 Chip  
-`asicone_sg13g2` (`chip/`, `digital/`, `ro_reliability/`, `saradc_auto/`); submission copy in `TO_Sep2025/asicone_202509`. Note that `saradc_auto/pnr/outputs` now holds the hierarchical ADC; the taped-out ADC is in `saradc_auto/*/outputs.tapeout`.
+`asicone_sg13g2` (`chip/`, `digital/`, `ro_reliability/`, `saradc_auto/`); submission copy in `TO_Sep2025/asicone_202509`. Note that `saradc_auto/pnr/outputs` now holds the hierarchical ADC; the taped-out ADC (`saradc_auto/*/outputs.tapeout`, git-ignored) is archived in the release `tapeout-T594`: <https://github.com/ckdur/saradc_auto/releases/tag/tapeout-T594> (mirror: <https://gitlab.symbioticeda.com/ckdur.iso/saradc_auto/-/releases/tapeout-T594>).
 
 ADC bench  
 `RISCVConsole/software/mso`: `adc_sweep.sh`, then  

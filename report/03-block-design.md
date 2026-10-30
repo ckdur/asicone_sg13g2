@@ -22,7 +22,7 @@ The ADC is a fully differential, top-plate-sampling charge-redistribution SAR AD
 
 #### Generator and flow.
 
-`saradc_auto` produces the ADC from RTL: Yosys synthesizes the analog netlist (capacitors and switches as cells) and the logic; OpenROAD places the DAC array with a scripted pattern (a “circle” pattern with Metal5/TopMetal1 bridges for bits 1 and 3), routes the special nets (plates, references, top plates) with custom Tcl, and routes the rest with the detailed router. The taped-out version used the flat flow now kept as `pnr_legacy/`. Macro size 566.44 μm × 361.08 μm, 24 198 transistors.
+`saradc_auto` produces the ADC from RTL: Yosys synthesizes the analog netlist (capacitors and switches as cells) and the logic; OpenROAD places the DAC array with a scripted pattern (a “circle” pattern with Metal5/TopMetal1 bridges for bits 1 and 3), routes the special nets (plates, references, top plates) with custom Tcl, and routes the rest with the detailed router. The taped-out version used the flat flow now kept as `pnr_legacy/`. Macro size 566.44 μm × 361.08 μm, 24 198 transistors. The taped-out netlists, DEF, GDS and reports are archived in the release `tapeout-T594` of `saradc_auto` (<https://github.com/ckdur/saradc_auto/releases/tag/tapeout-T594>); its `SARADC.gds` is identical, layer by layer, to the `SARADC` cell of the submitted chip GDS.
 
 #### Design-time simulation.
 
