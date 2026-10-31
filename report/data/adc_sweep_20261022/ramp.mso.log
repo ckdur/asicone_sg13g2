@@ -1,0 +1,8 @@
+Device: MSO20BL(2.0)()
+DDS ramp bias range: [-2000, 2000] mV, max ampl 6800 mV
+DDS0: ramp freq=217.983 Hz ampl=700 mV bias=450 mV en=1
+Scope: 50000 samples/s
+CH1: n=8192 min=0.094 V max=0.836 V avg=0.457 V pk-pk=0.742 V freq=217.99 Hz
+CH2: n=8192 min=-0.025 V max=0.005 V avg=-0.012 V pk-pk=0.030 V
+Saved /home/ckdur/Documents/SymbioticEDA/RISCVConsole/software/mso/results/sweep_20261022/ramp.scope.csv
+DDS running for 60 s

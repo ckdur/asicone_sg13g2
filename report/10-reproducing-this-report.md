@@ -17,6 +17,9 @@ RO bench
 `make -C report RESULTS=../results/ro_20261029`.  
 Simulation and extraction: `ro_reliability/sim` (`ro_sim.py`, `pex/run_all.sh`).
 
+Bench data  
+A copy of both result directories (raw captures, CSV, logs; RISCVConsole `c32ae7a`) is in `report/data/adc_sweep_20261022` and `report/data/ro_20261029`; copy one back to `results/` to re-run its report.
+
 SPI  
 `report/sim/run.sh` (iverilog).
 

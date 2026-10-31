@@ -783,6 +783,9 @@ caught issues 1--3 in minutes.
   \item[RO bench] \nolinkurl{RISCVConsole/software/ro}: \texttt{ro\_run.sh}, then\newline
         \texttt{make -C report RESULTS=../results/ro\_20261029}. \newline Simulation and extraction:
         \nolinkurl{ro_reliability/sim} (\texttt{ro\_sim.py}, \texttt{pex/run\_all.sh}).
+  \item[Bench data] A copy of both result directories (raw captures, CSV, logs; RISCVConsole
+        \texttt{c32ae7a}) is in \nolinkurl{report/data/adc_sweep_20261022} and
+        \nolinkurl{report/data/ro_20261029}; copy one back to \nolinkurl{results/} to re-run its report.
   \item[SPI] \texttt{report/sim/run.sh} (iverilog).
   \item[Board] \nolinkurl{pcbs/IHP130_ASICONE_ADP_QFN48_0p5Q_Adapter} (KiCad, BOM, CPL).
   \item[This document] \texttt{latexmk -pdf report.tex} in \texttt{report/}.

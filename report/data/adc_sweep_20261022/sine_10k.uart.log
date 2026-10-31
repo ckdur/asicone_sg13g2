@@ -1,0 +1,23 @@
+
+RATONA Demo:       2026-10- 2-13:10:48-96a42d6-dirty
+Got TL_CLK: 50000000
+Got NUM_CORES: 1
+Got TIMEBASE: 50000Found 'sifive,gpio0'
+Found '/soc/spi@64002000'
+Found 'console,adcfifo0'
+
+
+
+Welcome! Doing the test!
+
+ADC detected!
+ADC capture: 65536 samples in 45880 us (1428421 samples/s)
+Empty polls: 21228
+Min: 2, Max: 29
+First samples:
+4 4 5 5 6 6 7 7 9 9 10 10 11 11 11 12 
+12 13 14 14 15 15 15 16 16 17 17 18 19 19 19 20 
+Finished!
+BOOT FAILED
+CODE: 00000007
+TRAP: 00000001

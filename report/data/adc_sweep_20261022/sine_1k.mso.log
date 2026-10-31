@@ -1,0 +1,8 @@
+Device: MSO20BL(2.0)()
+DDS sine bias range: [-2000, 2000] mV, max ampl 6800 mV
+DDS0: sine freq=1024.519 Hz ampl=360 mV bias=565 mV en=1
+Scope: 200000 samples/s
+CH1: n=8192 min=0.371 V max=0.796 V avg=0.573 V pk-pk=0.425 V freq=1024.30 Hz
+CH2: n=8192 min=-0.025 V max=0.005 V avg=-0.005 V pk-pk=0.030 V
+Saved /home/ckdur/Documents/SymbioticEDA/RISCVConsole/software/mso/results/sweep_20261022/sine_1k.scope.csv
+DDS running for 60 s

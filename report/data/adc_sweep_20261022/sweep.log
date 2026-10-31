@@ -1,0 +1,35 @@
+=== ramp: ramp 217.98270089285717 Hz (10 cycles) ampl=700 mV bias=450 mV
+CH1: n=8192 min=0.094 V max=0.836 V avg=0.457 V pk-pk=0.742 V freq=217.99 Hz
+ADC capture: 65536 samples in 45880 us (1428421 samples/s)
+Min: 0, Max: 31
+=== sine_1k: sine 1024.5186941964287 Hz (47 cycles) ampl=360 mV bias=565 mV
+CH1: n=8192 min=0.371 V max=0.796 V avg=0.573 V pk-pk=0.425 V freq=1024.30 Hz
+ADC capture: 65536 samples in 45880 us (1428421 samples/s)
+Min: 2, Max: 29
+=== sine_10k: sine 9961.809430803572 Hz (457 cycles) ampl=360 mV bias=565 mV
+CH1: n=8192 min=0.371 V max=0.776 V avg=0.571 V pk-pk=0.405 V freq=9962.19 Hz
+ADC capture: 65536 samples in 45880 us (1428421 samples/s)
+Min: 2, Max: 29
+=== sine_50k: sine 49983.433314732145 Hz (2293 cycles) ampl=360 mV bias=565 mV
+CH1: n=8192 min=0.361 V max=0.776 V avg=0.574 V pk-pk=0.415 V freq=49968.77 Hz
+ADC capture: 65536 samples in 45860 us (1429044 samples/s)
+Min: 2, Max: 29
+=== sine_100k: sine 100075.85797991072 Hz (4591 cycles) ampl=360 mV bias=565 mV
+CH1: n=8192 min=0.371 V max=0.816 V avg=0.580 V pk-pk=0.445 V freq=100075.06 Hz
+ADC capture: 65536 samples in 45880 us (1428421 samples/s)
+Min: 2, Max: 29
+=== sine_200k: sine 199955.53152901787 Hz (9173 cycles) ampl=360 mV bias=565 mV
+CH1: n=8192 min=0.361 V max=0.786 V avg=0.576 V pk-pk=0.425 V freq=199962.10 Hz
+ADC capture: 65536 samples in 45880 us (1428421 samples/s)
+Min: 3, Max: 28
+=== sine_300k: sine 300009.5912388393 Hz (13763 cycles) ampl=360 mV bias=565 mV
+CH1: n=8192 min=0.361 V max=0.786 V avg=0.574 V pk-pk=0.425 V freq=300053.81 Hz
+ADC capture: 65536 samples in 45880 us (1428421 samples/s)
+Min: 3, Max: 28
+=== sine_500k: sine 499986.9210379465 Hz (22937 cycles) ampl=360 mV bias=565 mV
+CH1: n=8192 min=0.351 V max=0.796 V avg=0.578 V pk-pk=0.445 V freq=500131.61 Hz
+ADC capture: 65536 samples in 45880 us (1428421 samples/s)
+Min: 5, Max: 26
+=== sine_650k: sine 650002.6157924108 Hz (29819 cycles) ampl=360 mV bias=565 mV
+ADC capture: 65536 samples in 45880 us (1428421 samples/s)
+Min: 0, Max: 0
