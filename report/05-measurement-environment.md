@@ -11,6 +11,8 @@
 
 ## 5.1 Equipment and signal chain
 
+The bench is kept in two repositories: the adapter board in `pcbs` (<https://gitlab.symbioticeda.com/ckdur.iso/pcbs>), and the FPGA SoC with the bench scripts and report generators in `RISCVConsole` (<https://github.com/ckdur/RISCVConsole>, branch `adc-sim-comparison`, commit `c32ae7a`); Section [10](10-reproducing-this-report.md#10-reproducing-this-report) describes how to repeat the measurements.
+
 |  |  |
 |:---|:---|
 | Device under test | ASICONE in a QFN48 clamshell socket on the adapter board |
@@ -43,7 +45,7 @@ flowchart LR
 
 ## 5.2 Adapter board
 
-A two-layer 85.5 mm × 85.5 mm board (KiCad, `pcbs/IHP130_ASICONE_ADP_QFN48_0p5Q_Adapter`, assembled from the JLCPCB BOM/CPL files) that plugs into the ULX3S 2×<!-- -->20 header and carries everything the chip needs. All passives are 1206.
+A two-layer 85.5 mm × 85.5 mm board (KiCad, `pcbs/IHP130_ASICONE_ADP_QFN48_0p5Q_Adapter` in <https://gitlab.symbioticeda.com/ckdur.iso/pcbs>, assembled from the JLCPCB BOM/CPL files) that plugs into the ULX3S 2×<!-- -->20 header and carries everything the chip needs. All passives are 1206.
 
 | Ref. | Part | Function |
 |:---|:---|:---|

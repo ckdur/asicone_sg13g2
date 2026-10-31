@@ -372,6 +372,11 @@ the instruments, the JTAG adapter and the FPGA to the host PC.}
 \end{figure}
 
 \subsection{Equipment and signal chain}
+The bench is kept in two repositories: the adapter board in \texttt{pcbs}
+(\url{https://gitlab.symbioticeda.com/ckdur.iso/pcbs}), and the FPGA SoC with the bench scripts and
+report generators in \texttt{RISCVConsole} (\url{https://github.com/ckdur/RISCVConsole}, branch
+\texttt{adc-sim-comparison}, commit \texttt{c32ae7a}); Section~\ref{sec:repro} describes how to repeat the
+measurements.
 \begin{table}[H]\centering\small
 \begin{tabular}{lp{0.66\linewidth}}
 \toprule
@@ -418,8 +423,8 @@ DC & Multimeter VC830L; bench supply (Wanptek) available for supply sweeps throu
 
 \subsection{Adapter board}
 \label{sec:board}
-A two-layer \SI{85.5}{mm} $\times$ \SI{85.5}{mm} board (KiCad, \nolinkurl{pcbs/IHP130_ASICONE_ADP_QFN48_0p5Q_Adapter},
-assembled from the JLCPCB BOM/CPL files) that plugs into the ULX3S 2$\times$20 header and carries
+A two-layer \SI{85.5}{mm} $\times$ \SI{85.5}{mm} board (KiCad, \nolinkurl{pcbs/IHP130_ASICONE_ADP_QFN48_0p5Q_Adapter}
+in \url{https://gitlab.symbioticeda.com/ckdur.iso/pcbs}, assembled from the JLCPCB BOM/CPL files) that plugs into the ULX3S 2$\times$20 header and carries
 everything the chip needs. All passives are 1206.
 \begin{table}[H]\centering\small
 \begin{tabular}{llp{0.5\linewidth}}
@@ -770,6 +775,10 @@ caught issues 1--3 in minutes.
 
 %=====================================================================
 \section{Reproducing this report}
+\label{sec:repro}
+The measurements are repeated with RISCVConsole (\url{https://github.com/ckdur/RISCVConsole}, branch
+\texttt{adc-sim-comparison}, commit \texttt{c32ae7a}) on the bench of Section~\ref{sec:bench}, built from
+the adapter board in \url{https://gitlab.symbioticeda.com/ckdur.iso/pcbs} (commit \texttt{3b43187}).
 \begin{description}
   \item[Chip] \texttt{asicone\_sg13g2} (\texttt{chip/}, \texttt{digital/}, \texttt{ro\_reliability/},
         \texttt{saradc\_auto/}); submission copy in \nolinkurl{TO_Sep2025/asicone_202509}. Note that
@@ -783,11 +792,16 @@ caught issues 1--3 in minutes.
   \item[RO bench] \nolinkurl{RISCVConsole/software/ro}: \texttt{ro\_run.sh}, then\newline
         \texttt{make -C report RESULTS=../results/ro\_20261029}. \newline Simulation and extraction:
         \nolinkurl{ro_reliability/sim} (\texttt{ro\_sim.py}, \texttt{pex/run\_all.sh}).
-  \item[Bench data] A copy of both result directories (raw captures, CSV, logs; RISCVConsole
-        \texttt{c32ae7a}) is in \nolinkurl{report/data/adc_sweep_20261022} and
-        \nolinkurl{report/data/ro_20261029}; copy one back to \nolinkurl{results/} to re-run its report.
+  \item[Bench data] The measured data of this report (raw captures, CSV, logs) is kept here, in
+        \nolinkurl{report/data/adc_sweep_20261022} and \nolinkurl{report/data/ro_20261029}. To rebuild
+        the bench reports without the bench, copy them into a RISCVConsole checkout as
+        \nolinkurl{software/mso/results/sweep_20261022} and \nolinkurl{software/ro/results/ro_20261029}
+        and run the two \texttt{make} commands above. With Matplotlib 3.11.2 this gives the same
+        \texttt{results.json}, tables and figures as this report (\nolinkurl{fig/adc_*.pdf} and
+        \nolinkurl{fig/ro_*.pdf} are the bench reports' \nolinkurl{fig/*.pdf}).
   \item[SPI] \texttt{report/sim/run.sh} (iverilog).
-  \item[Board] \nolinkurl{pcbs/IHP130_ASICONE_ADP_QFN48_0p5Q_Adapter} (KiCad, BOM, CPL).
+  \item[Board] \nolinkurl{pcbs/IHP130_ASICONE_ADP_QFN48_0p5Q_Adapter} (KiCad, BOM, CPL),
+        \url{https://gitlab.symbioticeda.com/ckdur.iso/pcbs}.
   \item[This document] \texttt{latexmk -pdf report.tex} in \texttt{report/}.
 \end{description}
 
